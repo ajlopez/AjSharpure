@@ -336,5 +336,14 @@
             PersistentList list = (PersistentList)PersistentList.Create(numbers);
             list[0] = 1;
         }
+
+        [TestMethod]
+        public void ShouldGetEmptyListIfNoElements()
+        {
+            IPersistentList list = PersistentList.Create(new ArrayList());
+
+            Assert.IsNotNull(list);
+            Assert.IsInstanceOfType(list, typeof(EmptyList));
+        }
     }
 }

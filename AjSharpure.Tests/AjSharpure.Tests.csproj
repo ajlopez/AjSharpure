@@ -41,6 +41,7 @@
     <Compile Include="AddIntegersFunction.cs" />
     <Compile Include="ConsTests.cs" />
     <Compile Include="DeferredSequenceFunction.cs" />
+    <Compile Include="DefinedFunctionTests.cs" />
     <Compile Include="EmptyListTests.cs" />
     <Compile Include="EnumeratorSequenceTests.cs" />
     <Compile Include="ExpressionsSimpleTests.cs" />

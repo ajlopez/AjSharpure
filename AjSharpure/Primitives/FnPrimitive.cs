@@ -13,19 +13,10 @@
         public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
         {
             Symbol symbol = (Symbol)arguments[0];
+            object[] argumentNames = (object[])arguments[1];
+            IExpression body = Utilities.ToExpression(arguments[2]);
 
-            object value = arguments[1];
-
-            if (Utilities.IsEvaluable(value))
-            {
-                IExpression expression = Utilities.ToExpression(arguments[1]);
-
-                value = expression.Evaluate(machine, environment);
-            }
-
-            environment.SetValue(symbol.FullName, value);
-
-            return value;
+            return new DefinedFunction(symbol.Name, argumentNames, body);
         }
 
         public bool IsMacro
