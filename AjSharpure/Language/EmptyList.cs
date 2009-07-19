@@ -94,58 +94,58 @@
 
         public int Add(object value)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public bool Contains(object value)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public int IndexOf(object value)
         {
-            throw new NotImplementedException();
+            return -1;
         }
 
         public void Insert(int index, object value)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public bool IsFixedSize
         {
-            get { throw new NotImplementedException(); }
+            get { return true; }
         }
 
         public bool IsReadOnly
         {
-            get { throw new NotImplementedException(); }
+            get { return true; }
         }
 
         public void Remove(object value)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public void RemoveAt(int index)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public object this[int index]
         {
             get
             {
-                throw new NotImplementedException();
+                throw new NotSupportedException();
             }
             set
             {
-                throw new NotImplementedException();
+                throw new NotSupportedException();
             }
         }
 

@@ -22,6 +22,7 @@
             this.environment.SetValue("set!", new SetBangPrimitive());
             this.environment.SetValue("list", new ListPrimitive());
             this.environment.SetValue("def", new DefPrimitive());
+            this.environment.SetValue("fn", new FnPrimitive());
             this.environment.SetValue(".", new DotPrimitive());
 
             this.environment.SetValue("AjSharpure.Utilities", typeof(Utilities));

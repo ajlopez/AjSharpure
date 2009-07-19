@@ -320,5 +320,20 @@
             Assert.IsInstanceOfType(value, typeof(int));
             Assert.AreNotEqual(0, (int) value);
         }
+
+        [TestMethod]
+        public void ShouldEvaluateDefinedFunction()
+        {
+            Parser parser = new Parser("(def simple-list (fn simple-list [x y] (list x y))) (simple-list 1 2)");
+            Machine machine = new Machine();
+
+            object value = machine.Evaluate(parser.ParseForm());
+            object result = machine.Evaluate(parser.ParseForm());
+
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IList));
+            Assert.AreEqual(2, ((IList) result).Count);
+        }
     }
 }
