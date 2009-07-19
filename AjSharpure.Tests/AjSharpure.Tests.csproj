@@ -36,6 +36,8 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddIntegersFunction.cs" />
@@ -45,6 +47,7 @@
     <Compile Include="EmptyListTests.cs" />
     <Compile Include="EnumeratorSequenceTests.cs" />
     <Compile Include="ExpressionsSimpleTests.cs" />
+    <Compile Include="FakePersistentMap.cs" />
     <Compile Include="KeywordTests.cs" />
     <Compile Include="LazySequenceTests.cs" />
     <Compile Include="LexerTests.cs" />

@@ -88,13 +88,25 @@
 
         public static ISequence ToSequence(object obj)
         {
+            if (obj is BaseSequence)
+                return (BaseSequence) obj;
+
+            if (obj is LazySequence)
+                return ((LazySequence)obj).ToSequence();
+
+            return ToSequenceFrom(obj);
+        }
+
+        public static ISequence ToSequenceFrom(object obj)
+        {
+            if (obj is ISequenceable)
+                return ((ISequenceable)obj).ToSequence();
             if (obj == null)
                 return null;
+            if (obj is IEnumerable)
+                return EnumeratorSequence.Create(((IEnumerable)obj).GetEnumerator());
 
-            if (obj is ISequence)
-                return (ISequence) obj;
-
-            throw new NotImplementedException();
+            throw new ArgumentException("Don't know how to create ISequence from: " + obj.GetType().Name);
         }
 
         public static bool Equiv(object obj1, object obj2)

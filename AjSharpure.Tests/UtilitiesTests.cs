@@ -101,9 +101,16 @@
         }
 
         [TestMethod]
-        public void ShouldConvertEmptySequenceToEmptySequence()
+        public void ShouldConvertEmptySequenceToNull()
         {
-            Assert.IsTrue(EmptyList.Instance == Utilities.ToSequence(EmptyList.Instance));
+            Assert.IsNull(Utilities.ToSequence(EmptyList.Instance));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ShouldRaiseIfTryToConvertIntegerToSequence()
+        {
+            Utilities.ToSequence(2);
         }
 
         [TestMethod]

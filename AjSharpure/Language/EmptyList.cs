@@ -81,7 +81,6 @@
 
         public override bool Equals(object obj)
         {
-            // TODO what if obj == null
             return (obj is ISequential || obj is IList) && Utilities.ToSequence(obj) == null;
         }
 

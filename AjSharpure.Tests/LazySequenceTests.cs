@@ -59,7 +59,7 @@
         }
 
         [TestMethod]
-        public void ShouldCreateWithMeta()
+        public void ShouldCreateWithNullMetadata()
         {
             LazySequence sequence = new LazySequence(new NumberSequenceFunction(0));
 
@@ -67,6 +67,19 @@
 
             Assert.IsNotNull(iobj);
             Assert.IsInstanceOfType(iobj, typeof(LazySequence));
+            Assert.IsTrue(iobj != sequence);
+        }
+
+        [TestMethod]
+        public void ShouldCreateWithMetadata()
+        {
+            LazySequence sequence = new LazySequence(new NumberSequenceFunction(0));
+
+            IObject iobj = sequence.WithMetadata(FakePersistentMap.Instance);
+
+            Assert.IsNotNull(iobj);
+            Assert.IsInstanceOfType(iobj, typeof(LazySequence));
+            Assert.IsTrue(iobj != sequence);
         }
 
         [TestMethod]
@@ -130,7 +143,7 @@
         public void ShouldGetHashCode()
         {
             LazySequence sequence = new LazySequence(new DeferredSequenceFunction(EmptyList.Instance));
-            Assert.AreEqual(sequence.GetHashCode(), EmptyList.Instance.GetHashCode());
+            Assert.AreEqual(sequence.GetHashCode(), Utilities.Hash(EmptyList.Instance.ToSequence()));
         }
 
         [TestMethod]
