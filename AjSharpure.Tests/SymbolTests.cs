@@ -101,5 +101,17 @@
             Assert.IsNotNull(iobj);
             Assert.IsTrue(symbol == iobj);
         }
+
+        [TestMethod]
+        public void ShouldCreateSymbolWithMetadata()
+        {
+            Symbol symbol = Symbol.Create("bar");
+            IObject iobj = symbol.WithMetadata(FakePersistentMap.Instance);
+
+            Assert.IsNotNull(iobj);
+            Assert.IsTrue(symbol != iobj);
+            Assert.IsNotNull(iobj.Metadata);
+            Assert.IsTrue(iobj.Metadata == FakePersistentMap.Instance);
+        }
     }
 }

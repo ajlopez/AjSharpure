@@ -8,7 +8,7 @@
     using AjSharpure.Expressions;
     using AjSharpure.Language;
 
-    public class FnPrimitive : IFunction
+    public class FnStarPrimitive : IFunction
     {
         public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
         {

@@ -67,6 +67,7 @@
     <Compile Include="Language\BaseSequence.cs" />
     <Compile Include="Language\Cons.cs" />
     <Compile Include="Language\EmptyList.cs" />
+    <Compile Include="Language\EmptyListEnumerator.cs" />
     <Compile Include="Language\EnumeratorSequence.cs" />
     <Compile Include="Language\IAssociative.cs" />
     <Compile Include="Language\ICounted.cs" />

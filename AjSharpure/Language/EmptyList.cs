@@ -173,7 +173,7 @@
 
         public IEnumerator GetEnumerator()
         {
-            throw new NotImplementedException();
+            return EmptyListEnumerator.Instance;
         }
 
         #endregion

@@ -107,6 +107,30 @@
         }
 
         [TestMethod]
+        public void ShouldCreateWithConsAsIPersistentCollectionAndNumberSequence()
+        {
+            LazySequence seq = new LazySequence(new NumberSequenceFunction(1));
+            IPersistentCollection coll = ((IPersistentCollection)seq).Cons(0);
+
+            Assert.IsNotNull(coll);
+            Assert.IsInstanceOfType(coll, typeof(ISequence));
+
+            ISequence sequence = (ISequence)coll;
+
+            object value = sequence.First();
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(int));
+            Assert.AreEqual(0, (int)value);
+
+            value = sequence.Next().First();
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(int));
+            Assert.AreEqual(1, (int)value);
+        }
+
+        [TestMethod]
         public void ShouldCreateWithConsSequenceAndNumberSequence()
         {
             ISequence sequence = new LazySequence(new NumberSequenceFunction(1));
@@ -319,6 +343,26 @@
         {
             LazySequence sequence = new LazySequence(new NumberSequenceFunction(0));
             sequence[0] = 1;
+        }
+
+        [TestMethod]
+        public void ShouldGetEmptyListAsEmpty()
+        {
+            LazySequence sequence = new LazySequence(new NumberSequenceFunction(0));
+            ISequence empty = sequence.Empty;
+
+            Assert.IsNotNull(empty);
+            Assert.IsInstanceOfType(empty, typeof(EmptyList));
+        }
+
+        [TestMethod]
+        public void ShouldGetEmptyListAsIPersistentCollection()
+        {
+            LazySequence sequence = new LazySequence(new NumberSequenceFunction(0));
+            IPersistentCollection empty = ((IPersistentCollection)sequence).Empty;
+
+            Assert.IsNotNull(empty);
+            Assert.IsInstanceOfType(empty, typeof(EmptyList));
         }
     }
 }

@@ -57,5 +57,16 @@
             Assert.IsInstanceOfType(iobj, typeof(EnumeratorSequence));
             Assert.IsTrue(sequence == iobj);
         }
+
+        [TestMethod]
+        public void ShouldCreateSequenceWithMetadata()
+        {
+            EnumeratorSequence sequence = EnumeratorSequence.Create((new int[] { 1, 2, 3 }).GetEnumerator());
+            IObject iobj = sequence.WithMetadata(FakePersistentMap.Instance);
+
+            Assert.IsNotNull(iobj);
+            Assert.IsInstanceOfType(iobj, typeof(EnumeratorSequence));
+            Assert.IsTrue(sequence != iobj);
+        }
     }
 }

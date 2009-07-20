@@ -1,9 +1,10 @@
 ﻿namespace AjSharpure.Tests
 {
     using System;
-    using System.Text;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
 
     using AjSharpure.Language;
 
@@ -181,6 +182,23 @@
         public void ShouldRaiseWhenSetValue()
         {
             EmptyList.Instance[0] = 1;
+        }
+
+        [TestMethod]
+        public void ShouldGetHashCode()
+        {
+            Assert.AreEqual(1, EmptyList.Instance.GetHashCode());
+        }
+
+        [TestMethod]
+        public void ShouldGetEnumerator()
+        {
+            IEnumerator enumerator = EmptyList.Instance.GetEnumerator();
+
+            Assert.IsNotNull(enumerator);
+            Assert.IsFalse(enumerator.MoveNext());
+            enumerator.Reset();
+            Assert.IsFalse(enumerator.MoveNext());
         }
     }
 }
