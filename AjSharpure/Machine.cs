@@ -22,6 +22,7 @@
             this.environment.SetValue("set!", new SetBangPrimitive());
             this.environment.SetValue("list", new ListPrimitive());
             this.environment.SetValue("def", new DefPrimitive());
+            this.environment.SetValue("do", new DoPrimitive());
             this.environment.SetValue("fn", new FnStarPrimitive());
             this.environment.SetValue(".", new DotPrimitive());
 

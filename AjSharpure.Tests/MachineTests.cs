@@ -335,5 +335,53 @@
             Assert.IsInstanceOfType(result, typeof(IList));
             Assert.AreEqual(2, ((IList) result).Count);
         }
+
+        [TestMethod]
+        public void ShouldEvaluateSimpleDo()
+        {
+            Parser parser = new Parser("(do 1 2 3)");
+            Machine machine = new Machine();
+
+            object value = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(int));
+            Assert.AreEqual(3, value);
+        }
+
+        [TestMethod]
+        public void ShouldEvaluateDoWithSymbols()
+        {
+            Parser parser = new Parser("(def x 1) (def y 2) (def z 3) (do x y z)");
+            Machine machine = new Machine();
+
+            machine.Evaluate(parser.ParseForm());
+            machine.Evaluate(parser.ParseForm());
+            machine.Evaluate(parser.ParseForm());
+            object value = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(int));
+            Assert.AreEqual(3, value);
+        }
+
+        [TestMethod]
+        public void ShouldEvaluateDoWithExpression()
+        {
+            Parser parser = new Parser("(do 1 2 (list 1 2 3))");
+            Machine machine = new Machine();
+
+            object value = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(IList));
+
+            IList list = (IList)value;
+
+            Assert.AreEqual(3, list.Count);
+            Assert.AreEqual(1, list[0]);
+            Assert.AreEqual(2, list[1]);
+            Assert.AreEqual(3, list[2]);
+        }
     }
 }
