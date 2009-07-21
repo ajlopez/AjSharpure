@@ -1,7 +1,7 @@
 ﻿namespace AjSharpure
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections;
     using System.Linq;
     using System.Text;
 
@@ -20,6 +20,9 @@
             if (obj is ISequenceable)
                 return ((ISequenceable)obj).ToSequence();
 
+            if (obj is IEnumerable)
+                return EnumeratorSequence.Create(((IEnumerable)obj).GetEnumerator());
+
             throw new ArgumentException("Don't know how to create ISequence from " + obj.GetType().FullName);
         }
 
@@ -31,6 +34,65 @@
                 return new Cons(obj, (ISequence)coll);
             else
                 return new Cons(obj, ToSequence(coll));
+        }
+
+        public static object First(object obj)
+        {
+            if (obj is ISequence)
+                return ((ISequence)obj).First();
+
+            if (obj is IEnumerable)
+            {
+                IEnumerator enumerator = ((IEnumerable)obj).GetEnumerator();
+
+                if (enumerator.MoveNext())
+                    return enumerator.Current;
+
+                return null;
+            }
+
+            ISequence sequence = ToSequence(obj);
+
+            if (sequence == null)
+                return null;
+
+            return sequence.First();
+        }
+
+        public static ISequence Next(object obj)
+        {
+            if (obj is ISequence)
+                return ((ISequence)obj).Next();
+
+            ISequence sequence = ToSequence(obj);
+
+            if (sequence == null)
+                return null;
+
+            return sequence.Next();
+        }
+
+        public static ISequence More(object obj)
+        {
+            if (obj is ISequence)
+                return ((ISequence)obj).More();
+
+            ISequence sequence = ToSequence(obj);
+
+            if (sequence == null)
+                return EmptyList.Instance;
+
+            return sequence.More();
+        }
+
+        public static object Second(object obj)
+        {
+            return First(Next(obj));
+        }
+
+        public static object Third(object obj)
+        {
+            return First(Next(Next(obj)));
         }
 
         public static object NthElement(object obj, int index)

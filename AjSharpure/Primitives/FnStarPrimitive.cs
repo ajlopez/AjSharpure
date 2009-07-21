@@ -12,11 +12,22 @@
     {
         public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
         {
-            Symbol symbol = (Symbol)arguments[0];
-            object[] argumentNames = (object[])arguments[1];
-            IExpression body = Utilities.ToExpression(arguments[2]);
+            object[] argumentNames;
+            IExpression body;
 
-            return new DefinedFunction(symbol.Name, argumentNames, body);
+            if (arguments[0] is Symbol)
+            {
+                Symbol symbol = (Symbol)arguments[0];
+                argumentNames = (object[])arguments[1];
+                body = Utilities.ToExpression(arguments[2]);
+
+                return new DefinedFunction(symbol.Name, argumentNames, body);
+            }
+
+            argumentNames = (object[])arguments[0];
+            body = Utilities.ToExpression(arguments[1]);
+
+            return new DefinedFunction(null, argumentNames, body);
         }
 
         public bool IsMacro

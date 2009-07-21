@@ -30,7 +30,7 @@
             this.environment.SetValue("do", new DoPrimitive());
             this.environment.SetValue("loop", new LoopPrimitive());
             this.environment.SetValue("recur", new RecurPrimitive());
-            this.environment.SetValue("fn", new FnStarPrimitive());
+            this.environment.SetValue("fn*", new FnStarPrimitive());
             this.environment.SetValue(".", new DotPrimitive());
             this.environment.SetValue("+", new AddPrimitive());
             this.environment.SetValue("*", new MultiplyPrimitive());

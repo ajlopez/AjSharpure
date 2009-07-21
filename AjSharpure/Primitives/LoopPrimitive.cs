@@ -13,46 +13,46 @@
     {
         public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
         {
+            if (arguments == null || arguments.Length==0)
+                return null;
+
             object result = null;
             ValueEnvironment newenv = null;
+            string[] names = null;
 
-            while (true)
+            newenv = new ValueEnvironment(environment);
+
+            object argument = arguments[0];
+
+            if (argument != null)
             {
-                if (arguments != null)
-                    foreach (object argument in arguments)
-                    {
-                        if (newenv == null) // first argument
-                        {
-                            newenv = new ValueEnvironment(environment);
+                if (!(argument is ICollection))
+                    throw new InvalidOperationException("Let must receive a list as first argument");
 
-                            if (argument != null)
-                            {
-                                if (!(argument is ICollection))
-                                    throw new InvalidOperationException("Let must receive a list as first argument");
-
-                                Utilities.EvaluateBindings(machine, newenv, (ICollection)argument);
-                            }
-                        }
-                        else
-                            result = machine.Evaluate(argument, newenv);
-                    }
-
-                if (result != null && result is RecursionData)
-                {
-                    RecursionData data = (RecursionData)result;
-
-                    if (Utilities.GetArity(data.Arguments) != Utilities.GetArity(arguments))
-                        throw new InvalidOperationException("Invalid recursion data");
-
-                    arguments = data.Arguments;
-
-                    result = null;
-
-                    continue;
-                }
-
-                return result;
+                names = Utilities.EvaluateBindings(machine, newenv, (ICollection)argument);
             }
+
+            for (int k=1; k<arguments.Length; k++)
+                result = machine.Evaluate(arguments[k], newenv);
+
+            while (result != null && result is RecursionData)
+            {
+                RecursionData data = (RecursionData)result;
+
+                if (Utilities.GetArity(data.Arguments) != Utilities.GetArity(names))
+                    throw new InvalidOperationException("Invalid recursion data");
+
+                newenv = new ValueEnvironment(environment);
+                result = null;
+
+                for (int k = 0; k < names.Length; k++)
+                    newenv.SetLocalValue(names[k], data.Arguments[k]);
+
+                for (int k = 1; k < arguments.Length; k++)
+                    result = machine.Evaluate(arguments[k], newenv);
+            }
+
+            return result;
         }
 
         public bool IsMacro

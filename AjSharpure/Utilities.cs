@@ -137,13 +137,14 @@
             return false;
         }
 
-        public static void EvaluateBindings(Machine machine, ValueEnvironment newenv, ICollection bindings)
+        public static string[] EvaluateBindings(Machine machine, ValueEnvironment newenv, ICollection bindings)
         {
             if ((bindings.Count % 2) != 0)
                 throw new InvalidOperationException("Let should receive a collection as first argument with even length");
 
             int k = 0;
             string name = null;
+            string[] names = new string[bindings.Count / 2];
 
             foreach (object obj in bindings)
             {
@@ -156,12 +157,16 @@
                         name = (string)obj;
                     else
                         throw new InvalidOperationException("Let expect a symbol or a string to name a value");
+
+                    names[k / 2] = name;
                 }
                 else
                     newenv.SetLocalValue(name, machine.Evaluate(obj, newenv));
 
                 k++;
             }
+
+            return names;
         }
 
         public static int GetArity(object[] array)

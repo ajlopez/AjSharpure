@@ -27,12 +27,34 @@
         {
             ValueEnvironment newenv = new ValueEnvironment(environment);
 
+            if (this.name != null)
+                newenv.SetLocalValue(this.name, this);
+
             int k=0;
 
             foreach (Symbol argname in this.arguments)
                 newenv.SetLocalValue(argname.Name, argumentValues[k++]);
 
-            return this.expression.Evaluate(machine, newenv);
+            object result = this.expression.Evaluate(machine, newenv);
+
+            while (result != null && result is RecursionData)
+            {
+                RecursionData data = (RecursionData)result;
+
+                if (Utilities.GetArity(data.Arguments) != Utilities.GetArity(this.arguments))
+                    throw new InvalidOperationException("Invalid recursion data");
+
+                newenv = new ValueEnvironment(environment);
+
+                k = 0;
+
+                foreach (Symbol argname in this.arguments)
+                    newenv.SetLocalValue(argname.Name, data.Arguments[k++]);
+
+                result = this.expression.Evaluate(machine, newenv);
+            }
+
+            return result;
         }
 
         public bool  IsMacro

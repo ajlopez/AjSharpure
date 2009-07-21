@@ -77,5 +77,60 @@
             Assert.IsInstanceOfType(value, typeof(char));
             Assert.AreEqual('o', value);
         }
+
+        [TestMethod]
+        public void ShouldGetFirst()
+        {
+            Assert.IsNull(Operations.First(null));
+            Assert.IsNull(Operations.First(EmptyList.Instance));
+            Assert.AreEqual(1, Operations.First(new int[] { 1, 2, 3 }));
+            Assert.AreEqual('f', Operations.First("foo"));
+        }
+
+        [TestMethod]
+        public void ShouldGetSecond()
+        {
+            Assert.IsNull(Operations.Second(null));
+            Assert.IsNull(Operations.Second(EmptyList.Instance));
+            Assert.AreEqual(2, Operations.Second(new int[] { 1, 2, 3 }));
+            Assert.AreEqual('o', Operations.Second("foo"));
+        }
+
+        [TestMethod]
+        public void ShouldGetThird()
+        {
+            Assert.IsNull(Operations.Third(null));
+            Assert.IsNull(Operations.Third(EmptyList.Instance));
+            Assert.AreEqual(3, Operations.Third(new int[] { 1, 2, 3 }));
+            Assert.AreEqual('o', Operations.Third("foo"));
+        }
+
+        [TestMethod]
+        public void ShouldGetNext()
+        {
+            Assert.IsNull(Operations.Next(null));
+            Assert.IsNull(Operations.Next(EmptyList.Instance));
+
+            ISequence result = Operations.Next(new int[] { 1, 2, 3 });
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2, result.First());
+            Assert.AreEqual(3, result.Next().First());
+        }
+
+        [TestMethod]
+        public void ShouldGetMore()
+        {
+            Assert.AreEqual(EmptyList.Instance, Operations.More(null));
+            Assert.AreEqual(EmptyList.Instance, Operations.More(EmptyList.Instance));
+
+            ISequence result = Operations.More(new int[] { 1, 2, 3 });
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2, result.First());
+            Assert.AreEqual(3, result.Next().First());
+        }
     }
 }

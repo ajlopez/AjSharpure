@@ -324,7 +324,7 @@
         [TestMethod]
         public void ShouldEvaluateDefinedFunction()
         {
-            Parser parser = new Parser("(def simple-list (fn simple-list [x y] (list x y))) (simple-list 1 2)");
+            Parser parser = new Parser("(def simple-list (fn* simple-list [x y] (list x y))) (simple-list 1 2)");
             Machine machine = new Machine();
 
             object value = machine.Evaluate(parser.ParseForm());
@@ -476,6 +476,27 @@
         public void ShouldEvaluateSimpleLoopWithRecur()
         {
             Parser parser = new Parser("(loop [x true y (list 1 2)] (if x (recur false (list 1 2 3)) y)");
+            Machine machine = new Machine();
+
+            object value;
+
+            value = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(IList));
+
+            IList list = (IList)value;
+
+            Assert.AreEqual(3, list.Count);
+            Assert.AreEqual(1, list[0]);
+            Assert.AreEqual(2, list[1]);
+            Assert.AreEqual(3, list[2]);
+        }
+
+        [TestMethod]
+        public void ShouldEvaluateLoopWithRecur()
+        {
+            Parser parser = new Parser("(loop [x true y (list 1 2) z1 1 z2 2 z3 3] (if x (recur false (list z1 z2 z3) 2 3 4) y)");
             Machine machine = new Machine();
 
             object value;
@@ -700,6 +721,36 @@
             Machine machine = new Machine();
 
             machine.Evaluate(parser.ParseForm());
+        }
+
+        [TestMethod]
+        public void ShouldEvaluateRecursiveAnonymousFactorialFunction()
+        {
+            Parser parser = new Parser("((fn* fact [x] (if (<= x 1) 1 (* x (fact (- x 1))))) 3)");
+            Machine machine = new Machine();
+
+            object result = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(int));
+            Assert.AreEqual(6, result);
+
+            Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
+        public void ShouldEvaluateAnonymousFactorialFunctionWithTailRecursion()
+        {
+            Parser parser = new Parser("((fn* [x y] (if (<= x 1) y (recur (- x 1) (* x y)))) 3 1)");
+            Machine machine = new Machine();
+
+            object result = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(int));
+            Assert.AreEqual(6, result);
+
+            Assert.IsNull(parser.ParseForm());
         }
     }
 }
