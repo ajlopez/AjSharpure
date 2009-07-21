@@ -125,5 +125,16 @@
 
             return false;
         }
+
+        public static bool IsFalse(object obj)
+        {
+            if (obj == null)
+                return true;
+
+            if (obj is bool && ((bool)obj)==false)
+                return true;
+
+            return false;
+        }
     }
 }

@@ -120,5 +120,21 @@
 
             Assert.IsTrue(sequence == Utilities.ToSequence(sequence));
         }
+
+        [TestMethod]
+        public void ShouldEvaluateNilFalseAsFalseAndEverythingElseToNotFalse()
+        {
+            Assert.IsTrue(Utilities.IsFalse(null));
+            Assert.IsTrue(Utilities.IsFalse(false));
+
+            Assert.IsFalse(Utilities.IsFalse(true));
+            Assert.IsFalse(Utilities.IsFalse("false"));
+            Assert.IsFalse(Utilities.IsFalse(0));
+            Assert.IsFalse(Utilities.IsFalse(123));
+            Assert.IsFalse(Utilities.IsFalse("foo"));
+            Assert.IsFalse(Utilities.IsFalse(Symbol.Create("false")));
+            Assert.IsFalse(Utilities.IsFalse(Symbol.Create("true")));
+            Assert.IsFalse(Utilities.IsFalse(Symbol.Create("nil")));
+        }
     }
 }

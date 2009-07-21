@@ -18,10 +18,15 @@
 
         public Machine()
         {
+            this.environment.SetValue("true", true);
+            this.environment.SetValue("false", false);
+            this.environment.SetValue("nil", null);
             this.environment.SetValue("quote", new QuotePrimitive());
             this.environment.SetValue("set!", new SetBangPrimitive());
             this.environment.SetValue("list", new ListPrimitive());
             this.environment.SetValue("def", new DefPrimitive());
+            this.environment.SetValue("let", new LetPrimitive());
+            this.environment.SetValue("if", new IfPrimitive());
             this.environment.SetValue("do", new DoPrimitive());
             this.environment.SetValue("fn", new FnStarPrimitive());
             this.environment.SetValue(".", new DotPrimitive());

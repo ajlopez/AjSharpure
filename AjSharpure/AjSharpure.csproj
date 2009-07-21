@@ -90,6 +90,8 @@
     <Compile Include="Language\Symbol.cs" />
     <Compile Include="Machine.cs" />
     <Compile Include="Operations.cs" />
+    <Compile Include="Primitives\IfPrimitive.cs" />
+    <Compile Include="Primitives\LetPrimitive.cs" />
     <Compile Include="Primitives\DoPrimitive.cs" />
     <Compile Include="Primitives\DefPrimitive.cs" />
     <Compile Include="Primitives\DotPrimitive.cs" />

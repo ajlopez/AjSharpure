@@ -1,0 +1,7 @@
+
+- Nested let
+- Dot primitive as in Clojure (current implementation is a hack)
+- list as PersistentList
+- vectors as PersistentVector
+- implements PersistentMap
+- Var implementation with multithreading support

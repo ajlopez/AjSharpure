@@ -383,5 +383,93 @@
             Assert.AreEqual(2, list[1]);
             Assert.AreEqual(3, list[2]);
         }
+
+        [TestMethod]
+        public void ShouldEvaluateSimpleLet()
+        {
+            Parser parser = new Parser("(let [x 1] x)");
+            Machine machine = new Machine();
+
+            object value = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(int));
+            Assert.AreEqual(1, value);
+        }
+
+        [TestMethod]
+        public void ShouldEvaluateTrueFalseAndNil()
+        {
+            Parser parser = new Parser("true false nil");
+            Machine machine = new Machine();
+
+            object value;
+
+            value = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(bool));
+            Assert.IsTrue((bool)value);
+
+            value = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(bool));
+            Assert.IsFalse((bool)value);
+
+            value = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNull(value);
+        }
+
+        [TestMethod]
+        public void ShouldEvaluateSimpleIf()
+        {
+            Parser parser = new Parser("(if true 1)");
+            Machine machine = new Machine();
+
+            object value;
+
+            value = machine.Evaluate(parser.ParseForm());
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(int));
+            Assert.AreEqual(1, value);
+        }
+
+        [TestMethod]
+        public void ShouldEvaluateSimpleIfElse()
+        {
+            Parser parser = new Parser("(if false 1 2)");
+            Machine machine = new Machine();
+
+            object value;
+
+            value = machine.Evaluate(parser.ParseForm());
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(int));
+            Assert.AreEqual(2, value);
+        }
+
+        [TestMethod]
+        public void ShouldEvaluateIf()
+        {
+            Parser parser = new Parser("(def x true) (if x (list 1 2 3))");
+            Machine machine = new Machine();
+
+            object value;
+
+            machine.Evaluate(parser.ParseForm());
+            value = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(IList));
+
+            IList list = (IList)value;
+
+            Assert.AreEqual(3, list.Count);
+            Assert.AreEqual(1, list[0]);
+            Assert.AreEqual(2, list[1]);
+            Assert.AreEqual(3, list[2]);
+        }
     }
 }
