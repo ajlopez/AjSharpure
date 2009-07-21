@@ -27,7 +27,7 @@
                         if (!(argument is ICollection))
                             throw new InvalidOperationException("Let must receive a list as first argument");
 
-                        EvaluateBindings(machine, newenv, (ICollection)argument);
+                        Utilities.EvaluateBindings(machine, newenv, (ICollection)argument);
                     }
                 }
                 else
@@ -40,33 +40,6 @@
         public bool IsMacro
         {
             get { return true; }
-        }
-
-        private static void EvaluateBindings(Machine machine, ValueEnvironment newenv, ICollection bindings)
-        {
-            if ((bindings.Count % 2) != 0)
-                throw new InvalidOperationException("Let should receive a collection as first argument with even length");
-
-            int k = 0;
-            string name = null;
-
-            foreach (object obj in bindings) 
-            {
-                if ((k % 2) == 0)
-                {
-                    // TODO review if Name or FullName
-                    if (obj is INamed)
-                        name = ((INamed)obj).FullName;
-                    else if (obj is string)
-                        name = (string)obj;
-                    else
-                        throw new InvalidOperationException("Let expect a symbol or a string to name a value");
-                }
-                else
-                    newenv.SetLocalValue(name, machine.Evaluate(obj, newenv));
-
-                k++;
-            }
         }
     }
 }

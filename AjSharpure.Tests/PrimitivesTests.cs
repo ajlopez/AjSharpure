@@ -172,5 +172,37 @@
             Assert.IsInstanceOfType(result, typeof(int));
             Assert.AreEqual(2, result);
         }
+
+        [TestMethod]
+        public void ShouldEvaluateSimpleRecur()
+        {
+            RecurPrimitive recurprim = new RecurPrimitive();
+
+            object result = recurprim.Apply(null, null, new object[] { 1, 2, 3 });
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(RecursionData));
+
+            RecursionData data = (RecursionData)result;
+
+            Assert.IsNotNull(data.Arguments);
+            Assert.AreEqual(3, data.Arguments.Length);
+            Assert.AreEqual(1, data.Arguments[0]);
+            Assert.AreEqual(2, data.Arguments[1]);
+            Assert.AreEqual(3, data.Arguments[2]);
+        }
+
+        [TestMethod]
+        public void ShouldEvaluateLoopWithTwoBindingsAndWithoutRecur()
+        {
+            LoopPrimitive loopprim = new LoopPrimitive();
+            Machine machine = new Machine();
+
+            object result = loopprim.Apply(machine, machine.Environment, new object[] { new object[] { Symbol.Create("x"), 1, Symbol.Create("y"), Symbol.Create("x") }, Symbol.Create("y") });
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(int));
+            Assert.AreEqual(1, result);
+        }
     }
 }

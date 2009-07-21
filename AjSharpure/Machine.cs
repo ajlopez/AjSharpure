@@ -28,8 +28,19 @@
             this.environment.SetValue("let", new LetPrimitive());
             this.environment.SetValue("if", new IfPrimitive());
             this.environment.SetValue("do", new DoPrimitive());
+            this.environment.SetValue("loop", new LoopPrimitive());
+            this.environment.SetValue("recur", new RecurPrimitive());
             this.environment.SetValue("fn", new FnStarPrimitive());
             this.environment.SetValue(".", new DotPrimitive());
+            this.environment.SetValue("+", new AddPrimitive());
+            this.environment.SetValue("*", new MultiplyPrimitive());
+            this.environment.SetValue("-", new SubtractPrimitive());
+            this.environment.SetValue("/", new DividePrimitive());
+            this.environment.SetValue("=", new EqualPrimitive());
+            this.environment.SetValue("<", new LessPrimitive());
+            this.environment.SetValue(">", new GreaterPrimitive());
+            this.environment.SetValue("<=", new LessEqualPrimitive());
+            this.environment.SetValue(">=", new GreaterEqualPrimitive());
 
             this.environment.SetValue("AjSharpure.Utilities", typeof(Utilities));
         }

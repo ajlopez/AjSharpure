@@ -471,5 +471,235 @@
             Assert.AreEqual(2, list[1]);
             Assert.AreEqual(3, list[2]);
         }
+
+        [TestMethod]
+        public void ShouldEvaluateSimpleLoopWithRecur()
+        {
+            Parser parser = new Parser("(loop [x true y (list 1 2)] (if x (recur false (list 1 2 3)) y)");
+            Machine machine = new Machine();
+
+            object value;
+
+            value = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(IList));
+
+            IList list = (IList)value;
+
+            Assert.AreEqual(3, list.Count);
+            Assert.AreEqual(1, list[0]);
+            Assert.AreEqual(2, list[1]);
+            Assert.AreEqual(3, list[2]);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ShouldRaiseIfRecurArityDoesNotMatchLoopArity()
+        {
+            Parser parser = new Parser("(loop [x true y (list 1 2)] (if x (recur (list 1 2 3)) y)");
+            Machine machine = new Machine();
+
+            machine.Evaluate(parser.ParseForm());
+        }
+
+        [TestMethod]
+        public void ShouldAddNumbers()
+        {
+            Parser parser = new Parser("(+) (+ 1) (+ 1 2) (+ 1 2 3)");
+            Machine machine = new Machine();
+
+            Assert.AreEqual(0, machine.Evaluate(parser.ParseForm()));
+            Assert.AreEqual(1, machine.Evaluate(parser.ParseForm()));
+            Assert.AreEqual(3, machine.Evaluate(parser.ParseForm()));
+            Assert.AreEqual(6, machine.Evaluate(parser.ParseForm()));
+
+            Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
+        public void ShouldSubtractNumbers()
+        {
+            Parser parser = new Parser("(- 1) (- 1 2) (- 1 2 3)");
+            Machine machine = new Machine();
+
+            Assert.AreEqual(-1, machine.Evaluate(parser.ParseForm()));
+            Assert.AreEqual(-1, machine.Evaluate(parser.ParseForm()));
+            Assert.AreEqual(-4, machine.Evaluate(parser.ParseForm()));
+
+            Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
+        public void ShouldMultiplyNumbers()
+        {
+            Parser parser = new Parser("(*) (* 1) (* 1 2) (* 1 2 3)");
+            Machine machine = new Machine();
+
+            Assert.AreEqual(1, machine.Evaluate(parser.ParseForm()));
+            Assert.AreEqual(1, machine.Evaluate(parser.ParseForm()));
+            Assert.AreEqual(2, machine.Evaluate(parser.ParseForm()));
+            Assert.AreEqual(6, machine.Evaluate(parser.ParseForm()));
+
+            Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
+        public void ShouldDivideNumbers()
+        {
+            Parser parser = new Parser("(/ 2) (/ 1 2) (/ 1 2 3)");
+            Machine machine = new Machine();
+
+            Assert.AreEqual(1.0/2, machine.Evaluate(parser.ParseForm()));
+            Assert.AreEqual(1.0/2, machine.Evaluate(parser.ParseForm()));
+            Assert.AreEqual(1.0/2/3, machine.Evaluate(parser.ParseForm()));
+
+            Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
+        public void ShouldEvaluateEqualsWithNumbers()
+        {
+            Parser parser = new Parser("(= 1) (= 1 1) (= 1 1 1) (= 1 2) (= 1 2 1)");
+            Machine machine = new Machine();
+
+            Assert.IsTrue((bool)machine.Evaluate(parser.ParseForm()));
+            Assert.IsTrue((bool)machine.Evaluate(parser.ParseForm()));
+            Assert.IsTrue((bool)machine.Evaluate(parser.ParseForm()));
+            Assert.IsFalse((bool)machine.Evaluate(parser.ParseForm()));
+            Assert.IsFalse((bool)machine.Evaluate(parser.ParseForm()));
+
+            Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
+        public void ShouldEvaluateLessWithNumbers()
+        {
+            Parser parser = new Parser("(< 1) (< 1 2) (< 1 2 3) (< 1 1) (< 1 0 1)");
+            Machine machine = new Machine();
+
+            Assert.IsTrue((bool)machine.Evaluate(parser.ParseForm()));
+            Assert.IsTrue((bool)machine.Evaluate(parser.ParseForm()));
+            Assert.IsTrue((bool)machine.Evaluate(parser.ParseForm()));
+            Assert.IsFalse((bool)machine.Evaluate(parser.ParseForm()));
+            Assert.IsFalse((bool)machine.Evaluate(parser.ParseForm()));
+
+            Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
+        public void ShouldEvaluateLessEqualWithNumbers()
+        {
+            Parser parser = new Parser("(<= 1) (<= 1 2) (<= 1 2 3) (<= 1 1) (<= 1 0 1)");
+            Machine machine = new Machine();
+
+            Assert.IsTrue((bool)machine.Evaluate(parser.ParseForm()));
+            Assert.IsTrue((bool)machine.Evaluate(parser.ParseForm()));
+            Assert.IsTrue((bool)machine.Evaluate(parser.ParseForm()));
+            Assert.IsTrue((bool)machine.Evaluate(parser.ParseForm()));
+            Assert.IsFalse((bool)machine.Evaluate(parser.ParseForm()));
+
+            Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
+        public void ShouldEvaluateGreaterWithNumbers()
+        {
+            Parser parser = new Parser("(> 1) (> 2 1 ) (> 2 1 0) (> 1 1) (> 1 0 1)");
+            Machine machine = new Machine();
+
+            Assert.IsTrue((bool)machine.Evaluate(parser.ParseForm()));
+            Assert.IsTrue((bool)machine.Evaluate(parser.ParseForm()));
+            Assert.IsTrue((bool)machine.Evaluate(parser.ParseForm()));
+            Assert.IsFalse((bool)machine.Evaluate(parser.ParseForm()));
+            Assert.IsFalse((bool)machine.Evaluate(parser.ParseForm()));
+
+            Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
+        public void ShouldEvaluateGreaterEqualWithNumbers()
+        {
+            Parser parser = new Parser("(>= 1) (>= 2 1 ) (>= 2 1 0) (>= 1 1) (>= 1 0 1)");
+            Machine machine = new Machine();
+
+            Assert.IsTrue((bool)machine.Evaluate(parser.ParseForm()));
+            Assert.IsTrue((bool)machine.Evaluate(parser.ParseForm()));
+            Assert.IsTrue((bool)machine.Evaluate(parser.ParseForm()));
+            Assert.IsTrue((bool)machine.Evaluate(parser.ParseForm()));
+            Assert.IsFalse((bool)machine.Evaluate(parser.ParseForm()));
+
+            Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ShouldRaiseIfSubtractWithoutParameters()
+        {
+            Parser parser = new Parser("(-)");
+            Machine machine = new Machine();
+
+            machine.Evaluate(parser.ParseForm());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ShouldRaiseIfDivideWithoutParameters()
+        {
+            Parser parser = new Parser("(/)");
+            Machine machine = new Machine();
+
+            machine.Evaluate(parser.ParseForm());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ShouldRaiseIfEqualsWithoutParameters()
+        {
+            Parser parser = new Parser("(=)");
+            Machine machine = new Machine();
+ 
+            machine.Evaluate(parser.ParseForm());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ShouldRaiseIfLessWithoutParameters()
+        {
+            Parser parser = new Parser("(<)");
+            Machine machine = new Machine();
+
+            machine.Evaluate(parser.ParseForm());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ShouldRaiseIfGreaterWithoutParameters()
+        {
+            Parser parser = new Parser("(>)");
+            Machine machine = new Machine();
+
+            machine.Evaluate(parser.ParseForm());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ShouldRaiseIfLessEqualWithoutParameters()
+        {
+            Parser parser = new Parser("(<=)");
+            Machine machine = new Machine();
+
+            machine.Evaluate(parser.ParseForm());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ShouldRaiseIfGreaterEqualWithoutParameters()
+        {
+            Parser parser = new Parser("(>=)");
+            Machine machine = new Machine();
+
+            machine.Evaluate(parser.ParseForm());
+        }
     }
 }

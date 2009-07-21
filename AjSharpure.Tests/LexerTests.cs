@@ -254,5 +254,24 @@
 
             Assert.IsNull(lexer.NextToken());
         }
+
+        [TestMethod]
+        public void ShouldParseSpecialNames()
+        {
+            string names = "+ - * / > < = == >= <=";
+            Lexer lexer = new Lexer(names);
+            Token token;
+
+            foreach (string name in names.Split(' '))
+            {
+                token = lexer.NextToken();
+
+                Assert.IsNotNull(token);
+                Assert.AreEqual(TokenType.Symbol, token.TokenType);
+                Assert.AreEqual(name, token.Value);
+            }
+
+            Assert.IsNull(lexer.NextToken());
+        }
     }
 }

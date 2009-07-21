@@ -54,11 +54,13 @@
     <Compile Include="MachineTests.cs" />
     <Compile Include="NullSequenceFunction.cs" />
     <Compile Include="NumberSequenceFunction.cs" />
+    <Compile Include="NumbersTests.cs" />
     <Compile Include="OperationsTests.cs" />
     <Compile Include="ParserTests.cs" />
     <Compile Include="PersistenListTests.cs" />
     <Compile Include="PrimitivesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecursionDataTests.cs" />
     <Compile Include="SymbolTests.cs" />
     <Compile Include="UtilitiesTests.cs" />
     <Compile Include="ValueEnvironmentTests.cs" />

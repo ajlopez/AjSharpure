@@ -136,5 +136,38 @@
             Assert.IsFalse(Utilities.IsFalse(Symbol.Create("true")));
             Assert.IsFalse(Utilities.IsFalse(Symbol.Create("nil")));
         }
+
+        [TestMethod]
+        public void ShouldCompareNumbers()
+        {
+            Assert.AreEqual(0, Utilities.Compare(0, 0));
+            Assert.AreEqual(0, Utilities.Compare(1, 1));
+            Assert.AreEqual(-1, Utilities.Compare(0, 1));
+            Assert.AreEqual(-1, Utilities.Compare(1, 2));
+            Assert.AreEqual(1, Utilities.Compare(1, 0));
+            Assert.AreEqual(1, Utilities.Compare(2, 1));
+        }
+
+        [TestMethod]
+        public void ShouldCompareStrings()
+        {
+            Assert.AreEqual(0, Utilities.Compare(string.Empty, string.Empty));
+            Assert.AreEqual(0, Utilities.Compare("foo", "foo"));
+            Assert.AreEqual(-1, Utilities.Compare("bar", "foo"));
+            Assert.AreEqual(-1, Utilities.Compare("aa", "ab"));
+            Assert.AreEqual(1, Utilities.Compare("foo", "bar"));
+            Assert.AreEqual(1, Utilities.Compare("ab", "aa"));
+        }
+
+        [TestMethod]
+        public void ShouldCompareSymbols()
+        {
+            Assert.AreEqual(0, Utilities.Compare(Symbol.Create("a"), Symbol.Create("a")));
+            Assert.AreEqual(0, Utilities.Compare(Symbol.Create("foo"), Symbol.Create("foo")));
+            Assert.AreEqual(-1, Utilities.Compare(Symbol.Create("bar"), Symbol.Create("foo")));
+            Assert.AreEqual(-1, Utilities.Compare(Symbol.Create("aa"), Symbol.Create("ab")));
+            Assert.AreEqual(1, Utilities.Compare(Symbol.Create("foo"), Symbol.Create("bar")));
+            Assert.AreEqual(1, Utilities.Compare(Symbol.Create("ab"), Symbol.Create("aa")));
+        }
     }
 }
