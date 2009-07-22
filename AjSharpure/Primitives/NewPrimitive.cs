@@ -21,7 +21,8 @@
 
             if (!(result is Type))
             {
-                type = Utilities.GetType(name);
+                if (name is INamed || name is string)
+                    type = Utilities.GetType(name);
 
                 if (type == null)
                     throw new ArgumentException("New should receive a type name");

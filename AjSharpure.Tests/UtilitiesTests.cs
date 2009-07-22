@@ -177,6 +177,12 @@
         }
 
         [TestMethod]
+        public void ShouldReturnNullForUnknownType()
+        {
+            Assert.IsNull(Utilities.GetType("123"));
+        }
+
+        [TestMethod]
         public void ShouldReturnSystemIOFileInfoTypeUsingString()
         {
             Type type = Utilities.GetType("System.IO.FileInfo");

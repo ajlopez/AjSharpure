@@ -424,6 +424,34 @@
         }
 
         [TestMethod]
+        public void ShouldEvaluateDotInvocationOnInstance()
+        {
+            Parser parser = new Parser("(def x 1) (. x ToString)");
+            Machine machine = new Machine();
+
+            machine.Evaluate(parser.ParseForm());
+            object value = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(string));
+            Assert.AreEqual("1", value);
+        }
+
+        [TestMethod]
+        public void ShouldEvaluateDotInvocationOnInstanceUsingList()
+        {
+            Parser parser = new Parser("(def x 123) (. (. x ToString) (Substring 1)");
+            Machine machine = new Machine();
+
+            machine.Evaluate(parser.ParseForm());
+            object value = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(string));
+            Assert.AreEqual("23", value);
+        }
+
+        [TestMethod]
         public void ShouldEvaluateDefinedFunction()
         {
             Parser parser = new Parser("(def simple-list (fn* simple-list [x y] (list x y))) (simple-list 1 2)");
