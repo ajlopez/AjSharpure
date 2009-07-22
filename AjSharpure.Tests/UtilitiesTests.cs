@@ -199,5 +199,61 @@
             Assert.IsNotNull(type);
             Assert.AreEqual("System.IO.FileInfo", type.FullName);
         }
+
+        [TestMethod]
+        public void ShouldGetSimpleEquals()
+        {
+            Assert.IsTrue(Utilities.Equals(null, null));
+            Assert.IsTrue(Utilities.Equals("foo", "foo"));
+            Assert.IsTrue(Utilities.Equals(Symbol.Create("bar"), Symbol.Create("bar")));
+            Assert.IsTrue(Utilities.Equals(Variable.Intern("foo","bar",null),Variable.Intern("foo","bar",null)));
+        }
+
+        [TestMethod]
+        public void ShouldGetTwoListsAsEquals()
+        {
+            IList list1 = new ArrayList();
+            IList list2 = new ArrayList();
+
+            for (int k=1; k<=10; k++) 
+            {
+                list1.Add(k);
+                list2.Add(k);
+            }
+
+            Assert.IsTrue(Utilities.Equals(list1, list2));
+            Assert.IsTrue(Utilities.Equals(list2, list1));
+        }
+
+        [TestMethod]
+        public void ShouldGetTwoListsAsNotEquals()
+        {
+            IList list1 = new ArrayList();
+            IList list2 = new ArrayList();
+
+            for (int k = 1; k <= 10; k++)
+            {
+                list1.Add(k);
+                list2.Add(k);
+            }
+
+            list2.Add(11);
+
+            Assert.IsFalse(Utilities.Equals(list1, list2));
+            Assert.IsFalse(Utilities.Equals(list2, list1));
+        }
+
+        [TestMethod]
+        public void ShouldGetTwoArraysAsEquals()
+        {
+            Assert.IsTrue(Utilities.Equals(new int[] {1,2,3}, new int[] {1,2,3}));
+        }
+
+        [TestMethod]
+        public void ShouldGetTwoArraysAsNotEquals()
+        {
+            Assert.IsFalse(Utilities.Equals(new int[] { 1, 2, 3, 4 }, new int[] { 1, 2, 3 }));
+            Assert.IsFalse(Utilities.Equals(new int[] { 1, 2, 3 }, new int[] { 1, 2, 3, 4 }));
+        }
     }
 }

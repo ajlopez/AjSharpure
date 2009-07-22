@@ -1,0 +1,2 @@
+﻿(def
+ rest (fn* rest [x] (. AjSharpure.Operations (More x))))

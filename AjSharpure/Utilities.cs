@@ -109,6 +109,42 @@
             throw new ArgumentException("Don't know how to create ISequence from: " + obj.GetType().Name);
         }
 
+        public static bool Equals(object obj1, object obj2)
+        {
+            if (obj1 == obj2)
+                return true;
+
+            if (obj1 != null)
+            {
+                if (obj1.Equals(obj2))
+                    return true;
+
+                if (obj1 is IEnumerable && obj2 is IEnumerable)
+                {
+                    IEnumerator enum1 = ((IEnumerable)obj1).GetEnumerator();
+                    IEnumerator enum2 = ((IEnumerable)obj2).GetEnumerator();
+
+                    while (enum1.MoveNext())
+                    {
+                        if (!enum2.MoveNext())
+                            return false;
+                        if (!Equals(enum1.Current, enum2.Current))
+                            return false;
+                    }
+
+                    return !enum2.MoveNext();
+                }
+
+                // TODO implements obj1 is Number
+                if (obj1 is IPersistentCollection)
+                    return ((IPersistentCollection)obj1).Equiv(obj2);
+
+                return obj1.Equals(obj2);
+            }
+
+            return false;
+        }
+
         public static bool Equiv(object obj1, object obj2)
         {
             if (obj1 == obj2)

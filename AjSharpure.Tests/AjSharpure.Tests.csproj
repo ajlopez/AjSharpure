@@ -75,6 +75,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Examples\ListOpsTests.ajshp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\DefListOps.ajshp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\DefRest.ajshp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Examples\DefNext.ajshp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
