@@ -18,7 +18,17 @@
 
         public object Evaluate(Machine machine, ValueEnvironment environment)
         {
-            return environment.GetValue(symbol.FullName);
+            object result = environment.GetValue(symbol.FullName);
+
+            if (result == null && symbol.Namespace == null)
+            {
+                result = environment.GetValue(Utilities.GetFullName((string)environment.GetValue(Machine.CurrentNamespaceKey), symbol.Name));
+
+                if (result == null)
+                    result = environment.GetValue(Utilities.GetFullName(Machine.AjSharpureCoreKey, symbol.Name));
+            }
+
+            return result;
         }
 
         public object Value

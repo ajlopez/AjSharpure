@@ -4,4 +4,5 @@
 - list as PersistentList
 - vectors as PersistentVector
 - implements PersistentMap
-- Var implementation with multithreading support
+- Variable implementation with multithreading support, thread local storage for values
+- Namespaces management in ValueEnvironment

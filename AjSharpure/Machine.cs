@@ -12,12 +12,19 @@
 
     public class Machine
     {
+        public const string AjSharpureCoreKey = "AjSharpure.Core";
+        private const string AjSharpureCurrentNamespaceName = "*ns*";
+        private static string currentNamespaceKey = Utilities.GetFullName(AjSharpureCoreKey, AjSharpureCurrentNamespaceName);
+
+        public static string CurrentNamespaceKey { get { return currentNamespaceKey; } }
+
         private ValueEnvironment environment = new ValueEnvironment();
 
         public ValueEnvironment Environment { get { return this.environment; } }
 
         public Machine()
         {
+            this.environment.SetValue(CurrentNamespaceKey, AjSharpureCoreKey);
             this.environment.SetValue("true", true);
             this.environment.SetValue("false", false);
             this.environment.SetValue("nil", null);

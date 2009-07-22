@@ -24,10 +24,21 @@
         public void ShouldSetVariableValue()
         {
             ValueEnvironment environment = new ValueEnvironment();
-            Variable var = new Variable() { Value = "bar" };
+            Variable var = Variable.Intern("ns", "foo", null);
+            var.Value = "bar";
 
-            environment.SetValue("foo", var);
-            Assert.AreEqual("bar", environment.GetValue("foo"));
+            environment.SetValue(var.FullName, var);
+            Assert.AreEqual("bar", environment.GetValue(var.FullName));
+        }
+
+        [TestMethod]
+        public void ShouldSetVariableValueUsingRoot()
+        {
+            ValueEnvironment environment = new ValueEnvironment();
+            Variable var = Variable.Intern("ns","foo","bar");
+
+            environment.SetValue(var.FullName, var);
+            Assert.AreEqual("bar", environment.GetValue(var.FullName));
         }
 
         [TestMethod]

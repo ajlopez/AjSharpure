@@ -17,6 +17,15 @@
     public class MachineTests
     {
         [TestMethod]
+        public void ShouldBeCreatedWithEnvironmentAndCurrentNamespace()
+        {
+            Machine machine = new Machine();
+
+            Assert.IsNotNull(machine.Environment);
+            Assert.AreEqual(Machine.AjSharpureCoreKey, machine.Environment.GetValue(Machine.CurrentNamespaceKey));
+        }
+
+        [TestMethod]
         public void ShouldEvaluateSymbolExpression()
         {
             Parser parser = new Parser("foo");
@@ -259,7 +268,9 @@
 
             machine.Evaluate(parser.ParseForm());
 
-            object value = machine.Environment.GetValue("x");
+            string fullName = Utilities.GetFullName((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x");
+
+            object value = machine.Environment.GetValue(fullName);
 
             Assert.IsNotNull(value);
             Assert.AreEqual(1, value);
@@ -275,7 +286,9 @@
 
             machine.Evaluate(parser.ParseForm());
 
-            object value = machine.Environment.GetValue("x");
+            string fullName = Utilities.GetFullName((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x");
+
+            object value = machine.Environment.GetValue(fullName);
 
             Assert.IsNotNull(value);
             Assert.AreEqual(1, value);

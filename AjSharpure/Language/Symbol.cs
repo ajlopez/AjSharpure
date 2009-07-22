@@ -10,6 +10,7 @@
         private string ns;
         private string name;
         private int hash;
+        private string fullName;
 
         public static Symbol Create(string ns, string name)
         {
@@ -37,6 +38,7 @@
             this.ns = ns;
             this.name = name;
             this.hash = Utilities.CombineHash(name.GetHashCode(), Utilities.Hash(ns));
+            this.fullName = Utilities.GetFullName(this.ns, this.name);
         }
 
         public string Name
@@ -53,7 +55,7 @@
         {
             get
             {
-                return (this.ns == null ? this.name : string.Format("{0}/{1}", this.ns, this.name));
+                return this.fullName;
             }
         }
 

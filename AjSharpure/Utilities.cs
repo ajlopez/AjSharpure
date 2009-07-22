@@ -187,5 +187,10 @@
 
             throw new InvalidOperationException("It can't compare object of class: " + obj1.GetType().FullName);
         }
+
+        public static string GetFullName(string ns, string name)
+        {
+            return (ns == null ? name : string.Format("{0}/{1}", ns, name));
+        }
     }
 }

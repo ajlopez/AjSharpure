@@ -14,9 +14,19 @@
         {
             Symbol symbol = (Symbol)arguments[0];
 
+            if (symbol.Namespace != null)
+                throw new InvalidOperationException("Defined name should not have namespace");
+
+            string ns = (string) environment.GetValue(Machine.CurrentNamespaceKey);
+
+            if (symbol.Namespace != null)
+                ns = symbol.Namespace;
+
             object value = machine.Evaluate(arguments[1], environment);
 
-            environment.SetValue(symbol.FullName, value);
+            Variable variable = Variable.Intern(ns, symbol.Name, value, true);
+
+            environment.SetValue(variable.FullName, variable);
 
             return value;
         }
