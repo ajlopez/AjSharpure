@@ -5,6 +5,8 @@
     using System.Linq;
     using System.Text;
 
+    using AjSharpure.Language;
+
     public class ValueEnvironment
     {
         private ValueEnvironment parent;
@@ -34,7 +36,12 @@
                 return null;
             }
 
-            return this.values[key];
+            object value = this.values[key];
+
+            if (value is Variable)
+                return ((Variable)value).Value;
+
+            return value;
         }
 
         public void SetLocalValue(string key, object value)

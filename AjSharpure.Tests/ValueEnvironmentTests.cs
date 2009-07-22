@@ -4,6 +4,7 @@
     using System.Collections;
 
     using AjSharpure;
+    using AjSharpure.Language;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -16,6 +17,16 @@
             ValueEnvironment environment = new ValueEnvironment();
 
             environment.SetValue("foo", "bar");
+            Assert.AreEqual("bar", environment.GetValue("foo"));
+        }
+
+        [TestMethod]
+        public void ShouldSetVariableValue()
+        {
+            ValueEnvironment environment = new ValueEnvironment();
+            Variable var = new Variable() { Value = "bar" };
+
+            environment.SetValue("foo", var);
             Assert.AreEqual("bar", environment.GetValue("foo"));
         }
 
