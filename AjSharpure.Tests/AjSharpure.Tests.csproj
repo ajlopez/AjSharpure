@@ -64,6 +64,7 @@
     <Compile Include="SymbolTests.cs" />
     <Compile Include="UtilitiesTests.cs" />
     <Compile Include="ValueEnvironmentTests.cs" />
+    <Compile Include="VariableTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AjSharpure\AjSharpure.csproj">

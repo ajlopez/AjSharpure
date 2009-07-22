@@ -44,6 +44,24 @@
             return value;
         }
 
+        public Variable GetVariable(string key)
+        {
+            if (!this.values.ContainsKey(key))
+            {
+                if (this.parent != null)
+                    return this.parent.GetVariable(key);
+
+                return null;
+            }
+
+            object value = this.values[key];
+
+            if (value is Variable)
+                return (Variable)value;
+
+            return null;
+        }
+
         public void SetLocalValue(string key, object value)
         {
             this.values[key] = value;

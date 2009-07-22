@@ -192,5 +192,19 @@
         {
             return (ns == null ? name : string.Format("{0}/{1}", ns, name));
         }
+
+        public static Type GetType(object typename)
+        {
+            if (typename == null)
+                return null;
+
+            if (typename is Symbol)
+                return Type.GetType(((Symbol)typename).Name);
+
+            if (typename is String)
+                return Type.GetType((string) typename);
+
+            return Type.GetType(typename.ToString());
+        }
     }
 }

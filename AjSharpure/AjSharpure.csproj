@@ -94,6 +94,7 @@
     <Compile Include="Machine.cs" />
     <Compile Include="Operations.cs" />
     <Compile Include="Primitives\AddPrimitive.cs" />
+    <Compile Include="Primitives\NewPrimitive.cs" />
     <Compile Include="Primitives\LessEqualPrimitive.cs" />
     <Compile Include="Primitives\GreaterEqualPrimitive.cs" />
     <Compile Include="Primitives\GreaterPrimitive.cs" />

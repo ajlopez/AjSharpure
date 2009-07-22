@@ -21,6 +21,19 @@
             return Intern(ns, name, root, true);
         }
 
+        public static Variable GetVariable(string ns, string name)
+        {
+            string fullName = Utilities.GetFullName(ns, name);
+
+            lock (variables)
+            {
+                if (variables.ContainsKey(fullName))
+                    return variables[fullName];
+
+                return null;
+            }
+        }
+
         public static Variable Intern(string ns, string name, object root, bool replaceRoot)
         {
             string fullName = Utilities.GetFullName(ns, name);

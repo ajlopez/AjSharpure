@@ -204,5 +204,26 @@
             Assert.IsInstanceOfType(result, typeof(int));
             Assert.AreEqual(1, result);
         }
+
+        [TestMethod]
+        public void ShouldCreateAnObjectWithNew()
+        {
+            NewPrimitive newprim = new NewPrimitive();
+            Machine machine = new Machine();
+
+            object result = newprim.Apply(machine, machine.Environment, new object[] { Symbol.Create("System.IO.FileInfo"), "aFileName.txt"});
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(System.IO.FileInfo));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ShouldRaiseWhenUnknownType()
+        {
+            NewPrimitive newprim = new NewPrimitive();
+            Machine machine = new Machine();
+
+            newprim.Apply(machine, machine.Environment, new object[] { Symbol.Create("NonExistentType"), "aFileName.txt" });
+        }
     }
 }

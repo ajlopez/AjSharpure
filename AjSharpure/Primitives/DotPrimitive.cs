@@ -15,25 +15,42 @@
         {
             object name = arguments[0];
 
-            if (Utilities.IsEvaluable(name))
+            object result = machine.Evaluate(name, environment);
+
+            Type type = null;
+
+            if (!(result is Type))
+                type = Utilities.GetType(name);
+            else
+                type = (Type)result;
+
+            if (type != null)
+                return ApplyToType(type, machine, environment, arguments);
+
+            throw new NotImplementedException();
+        }
+
+        public object ApplyToType(Type type, Machine machine, ValueEnvironment environment, object[] arguments)
+        {
+            INamed named = null;
+            object[] pars = null;
+
+            if (arguments[1] is IList)
             {
-                IExpression expression = Utilities.ToExpression(name);
-
-                name = expression.Evaluate(machine, environment);
+                IList parameters = (IList)arguments[1];
+                named = (INamed)parameters[0];
+                pars = new object[parameters.Count - 1];
+                for (int k = 1; k < parameters.Count; k++)
+                    pars[k - 1] = machine.Evaluate(parameters[k], environment);
             }
+            else
+            {
+                named = (INamed) arguments[1];
+                pars = new object[arguments.Length - 2];
 
-            if (!(name is Type))
-                throw new ArgumentException("It's not a type");
-
-            Type type = (Type)name;
-
-            IList parameters = (IList) arguments[1];
-            INamed named = (INamed) parameters[0];
-
-            object[] pars = new object[parameters.Count-1];
-
-            for (int k=1; k<parameters.Count; k++)
-                pars[k-1] = machine.Evaluate(parameters[k]);
+                for (int k = 2; k < arguments.Length; k++)
+                    pars[k - 2] = machine.Evaluate(arguments[k], environment);
+            }
 
             return type.InvokeMember(named.Name, System.Reflection.BindingFlags.GetProperty | System.Reflection.BindingFlags.IgnoreCase | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.InvokeMethod | System.Reflection.BindingFlags.Static, null, null, pars);
         }

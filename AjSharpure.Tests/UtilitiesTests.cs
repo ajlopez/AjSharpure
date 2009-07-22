@@ -169,5 +169,29 @@
             Assert.AreEqual(1, Utilities.Compare(Symbol.Create("foo"), Symbol.Create("bar")));
             Assert.AreEqual(1, Utilities.Compare(Symbol.Create("ab"), Symbol.Create("aa")));
         }
+
+        [TestMethod]
+        public void ShouldReturnNullType()
+        {
+            Assert.IsNull(Utilities.GetType(null));
+        }
+
+        [TestMethod]
+        public void ShouldReturnSystemIOFileInfoTypeUsingString()
+        {
+            Type type = Utilities.GetType("System.IO.FileInfo");
+
+            Assert.IsNotNull(type);
+            Assert.AreEqual("System.IO.FileInfo", type.FullName);
+        }
+
+        [TestMethod]
+        public void ShouldReturnSystemIOFileInfoTypeUsingSymbol()
+        {
+            Type type = Utilities.GetType(Symbol.Create("System.IO.FileInfo"));
+
+            Assert.IsNotNull(type);
+            Assert.AreEqual("System.IO.FileInfo", type.FullName);
+        }
     }
 }

@@ -261,6 +261,55 @@
         }
 
         [TestMethod]
+        public void ShouldDefineAVariable()
+        {
+            Parser parser = new Parser("(def x 1)");
+            Machine machine = new Machine();
+
+            object result = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(int));
+            Assert.AreEqual(1, result);
+
+            string fullName = Utilities.GetFullName((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x");
+
+            Variable variable = machine.Environment.GetVariable(fullName);
+
+            Assert.IsNotNull(variable);
+            Assert.AreEqual(1, variable.Value);
+        }
+
+        [TestMethod]
+        public void ShouldRedefineAVariable()
+        {
+            Parser parser = new Parser("(def x 1)");
+            Machine machine = new Machine();
+
+            object result = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(int));
+            Assert.AreEqual(1, result);
+
+            string fullName = Utilities.GetFullName((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x");
+
+            Variable variable = machine.Environment.GetVariable(fullName);
+
+            Assert.IsNotNull(variable);
+            Assert.AreEqual(1, variable.Value);
+
+            parser = new Parser("(def x 2)");
+
+            result = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(int));
+            Assert.AreEqual(2, result);
+            Assert.AreEqual(2, variable.Value);
+        }
+
+        [TestMethod]
         public void ShouldEvaluateSimpleDef()
         {
             Parser parser = new Parser("(def x 1)");
@@ -308,9 +357,36 @@
         }
 
         [TestMethod]
+        public void ShouldEvaluateDotInvocationUsingDirectNameAndArguments()
+        {
+            Parser parser = new Parser("(. AjSharpure.Utilities IsEvaluable 1)");
+            Machine machine = new Machine();
+
+            object value = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(bool));
+            Assert.IsFalse((bool)value);
+        }
+
+        [TestMethod]
         public void ShouldEvaluateDotInvocationUsingSymbol()
         {
             Parser parser = new Parser("(. AjSharpure.Utilities (IsEvaluable one))");
+            Machine machine = new Machine();
+            machine.Environment.SetValue("one", 1);
+
+            object value = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(bool));
+            Assert.IsFalse((bool)value);
+        }
+
+        [TestMethod]
+        public void ShouldEvaluateDotInvocationUsingSymbolAndDirectNameAndArguments()
+        {
+            Parser parser = new Parser("(. AjSharpure.Utilities IsEvaluable one)");
             Machine machine = new Machine();
             machine.Environment.SetValue("one", 1);
 
@@ -332,6 +408,19 @@
             Assert.IsNotNull(value);
             Assert.IsInstanceOfType(value, typeof(int));
             Assert.AreNotEqual(0, (int) value);
+        }
+
+        [TestMethod]
+        public void ShouldEvaluateDotInvocationWithTwoParametersAndDirectNameAndArguments()
+        {
+            Parser parser = new Parser("(. AjSharpure.Utilities CombineHash 1 2)");
+            Machine machine = new Machine();
+
+            object value = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(int));
+            Assert.AreNotEqual(0, (int)value);
         }
 
         [TestMethod]
@@ -764,6 +853,19 @@
             Assert.AreEqual(6, result);
 
             Assert.IsNull(parser.ParseForm());
+        }
+        
+        [TestMethod]
+        public void ShouldEvaluateNewSystemIOFileInfo()
+        {
+            Parser parser = new Parser("(new System.IO.FileInfo \"anyfile.txt\")");
+            Machine machine = new Machine();
+
+            object result = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(System.IO.FileInfo));
+            Assert.AreEqual("anyfile.txt", ((System.IO.FileInfo)result).Name);
         }
     }
 }
