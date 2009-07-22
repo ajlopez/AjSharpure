@@ -1,0 +1,2 @@
+﻿(def
+ cons (fn* cons [x seq] (. AjSharpure.Operations Cons x seq)))

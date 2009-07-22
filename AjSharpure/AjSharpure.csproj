@@ -92,6 +92,7 @@
     <Compile Include="Language\Symbol.cs" />
     <Compile Include="Language\Variable.cs" />
     <Compile Include="Machine.cs" />
+    <Compile Include="MacroUtilities.cs" />
     <Compile Include="Operations.cs" />
     <Compile Include="Primitives\AddPrimitive.cs" />
     <Compile Include="Primitives\NewPrimitive.cs" />

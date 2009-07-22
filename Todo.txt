@@ -16,3 +16,4 @@ The symbol must resolve to a var, and the Var object itself (not its value) is r
 can be written
 (Classname. args*) ;note trailing dot"
 - Improve NewPrimitive, Utilities to locate type name
+- Macros

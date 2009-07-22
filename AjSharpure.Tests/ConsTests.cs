@@ -47,5 +47,27 @@
             Assert.IsInstanceOfType(iobj, typeof(Cons));
             Assert.IsTrue(iobj == cons);
         }
+
+        [TestMethod]
+        public void ShouldGetFirstElementByIndex()
+        {
+            Cons cons = new Cons(1, new Cons(2));
+            Assert.AreEqual(1, cons[0]);
+        }
+
+        [TestMethod]
+        public void ShouldGetSecondElementByIndex()
+        {
+            Cons cons = new Cons(1, new Cons(2));
+            Assert.AreEqual(2, cons[1]);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotSupportedException))]
+        public void ShouldRaiseWhenTryingToSetElementByIndex()
+        {
+            Cons cons = new Cons(1, new Cons(2));
+            cons[0] = 0;
+        }
     }
 }

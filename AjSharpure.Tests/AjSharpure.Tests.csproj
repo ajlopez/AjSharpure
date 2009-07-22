@@ -46,12 +46,14 @@
     <Compile Include="DefinedFunctionTests.cs" />
     <Compile Include="EmptyListTests.cs" />
     <Compile Include="EnumeratorSequenceTests.cs" />
+    <Compile Include="ExamplesTests.cs" />
     <Compile Include="ExpressionsSimpleTests.cs" />
     <Compile Include="FakePersistentMap.cs" />
     <Compile Include="KeywordTests.cs" />
     <Compile Include="LazySequenceTests.cs" />
     <Compile Include="LexerTests.cs" />
     <Compile Include="MachineTests.cs" />
+    <Compile Include="MacroUtilitiesTests.cs" />
     <Compile Include="NullSequenceFunction.cs" />
     <Compile Include="NumberSequenceFunction.cs" />
     <Compile Include="NumbersTests.cs" />
@@ -71,6 +73,17 @@
       <Project>{1103EF63-7BE8-4A8C-A186-E452319BA119}</Project>
       <Name>AjSharpure</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Examples\DefNext.ajshp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\DefCons.ajshp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\DefFirst.ajshp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

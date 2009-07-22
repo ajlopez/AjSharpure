@@ -113,7 +113,7 @@
         {
             get
             {
-                throw new NotImplementedException();
+                return Operations.NthElement(this, index);
             }
             set
             {

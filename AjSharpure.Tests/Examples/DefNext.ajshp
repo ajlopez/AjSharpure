@@ -1,0 +1,2 @@
+﻿(def
+ next (fn* next [x] (. AjSharpure.Operations (Next x))))
