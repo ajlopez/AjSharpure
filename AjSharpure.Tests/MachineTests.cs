@@ -724,6 +724,18 @@
         }
 
         [TestMethod]
+        public void ShouldEvaluateEqualsWithLists()
+        {
+            Parser parser = new Parser("(= (list 1 2 3) (list 1 2 3)) (= (list 1 2 3) (list 1 2 3 4))");
+            Machine machine = new Machine();
+
+            Assert.IsTrue((bool)machine.Evaluate(parser.ParseForm()));
+            Assert.IsFalse((bool)machine.Evaluate(parser.ParseForm()));
+
+            Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
         public void ShouldEvaluateLessWithNumbers()
         {
             Parser parser = new Parser("(< 1) (< 1 2) (< 1 2 3) (< 1 1) (< 1 0 1)");
