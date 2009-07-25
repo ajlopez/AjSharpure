@@ -9,6 +9,6 @@
     public interface IFunction
     {
         object Apply(Machine machine, ValueEnvironment environment, object[] arguments);
-        bool IsMacro { get; }
+        bool IsSpecialForm { get; }
     }
 }

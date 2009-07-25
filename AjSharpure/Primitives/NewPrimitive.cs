@@ -38,7 +38,7 @@
             return Activator.CreateInstance(type, parameters);
         }
 
-        public bool IsMacro
+        public bool IsSpecialForm
         {
             get { return true; }
         }

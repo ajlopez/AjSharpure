@@ -28,7 +28,7 @@
             if (elements.Count > 1)
                 arguments = new object[elements.Count - 1];
 
-            if (function.IsMacro)
+            if (function.IsSpecialForm)
                 for (int k = 1; k < elements.Count; k++)
                     arguments[k - 1] = elements[k];
             else

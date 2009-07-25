@@ -34,7 +34,7 @@
             return true;
         }
 
-        public bool IsMacro
+        public bool IsSpecialForm
         {
             get { return false; }
         }

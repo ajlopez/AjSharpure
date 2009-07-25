@@ -17,3 +17,24 @@ can be written
 (Classname. args*) ;note trailing dot"
 - Improve NewPrimitive, Utilities to locate type name
 - Macros
+
+- Var implementation
+	- Per machine and thread
+	- Root value
+	- Lookup of Symbols
+
+- Sets in lexer, parser, language
+A set is a collection containing no duplicate items. Clojure has two set types:
+
+    * a hash set is implemented as a hashmap and so has (near) constant lookup, insertion, and removal times.
+    * a sorted set is implemented as a linked list and so has linear lookup, insertion, and removal times.
+    
+- StructMaps
+
+- Dispatch macro #
+	- #{} sets
+	- #".." regexp
+	- #^ metadata
+	- #'x (var x)
+	
+- let with redefinition [x ... y ... x <again>... ]

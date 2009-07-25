@@ -14,7 +14,7 @@
             return arguments[0];
         }
 
-        public bool IsMacro
+        public bool IsSpecialForm
         {
             get { return true; }
         }

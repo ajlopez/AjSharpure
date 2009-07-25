@@ -34,7 +34,7 @@
             throw new NotImplementedException();
         }
 
-        public bool IsMacro
+        public bool IsSpecialForm
         {
             get { throw new NotImplementedException(); }
         }

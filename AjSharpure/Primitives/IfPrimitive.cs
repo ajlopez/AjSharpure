@@ -30,7 +30,7 @@
                 return machine.Evaluate(arguments[1], environment);
         }
 
-        public bool IsMacro
+        public bool IsSpecialForm
         {
             get { return true; }
         }

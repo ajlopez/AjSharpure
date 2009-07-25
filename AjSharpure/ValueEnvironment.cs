@@ -23,6 +23,9 @@
 
         public void SetValue(string key, object value)
         {
+            if (this.values.ContainsKey(key))
+                throw new InvalidOperationException("A named value cannot be redefined");
+
             this.values[key] = value;
         }
 
@@ -62,20 +65,20 @@
             return null;
         }
 
-        public void SetLocalValue(string key, object value)
-        {
-            this.values[key] = value;
-        }
+        //public void SetLocalValue(string key, object value)
+        //{
+        //    this.values[key] = value;
+        //}
 
-        public void SetGlobalValue(string key, object value)
-        {
-            if (this.parent != null)
-            {
-                this.parent.SetGlobalValue(key, value);
-                return;
-            }
+        //public void SetGlobalValue(string key, object value)
+        //{
+        //    if (this.parent != null)
+        //    {
+        //        this.parent.SetGlobalValue(key, value);
+        //        return;
+        //    }
 
-            this.values[key] = value;
-        }
+        //    this.values[key] = value;
+        //}
     }
 }

@@ -30,7 +30,7 @@
             return new DefinedFunction(null, argumentNames, body);
         }
 
-        public bool IsMacro
+        public bool IsSpecialForm
         {
             get { return true; }
         }

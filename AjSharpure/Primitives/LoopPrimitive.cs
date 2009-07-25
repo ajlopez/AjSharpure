@@ -46,7 +46,7 @@
                 result = null;
 
                 for (int k = 0; k < names.Length; k++)
-                    newenv.SetLocalValue(names[k], data.Arguments[k]);
+                    newenv.SetValue(names[k], data.Arguments[k]);
 
                 for (int k = 1; k < arguments.Length; k++)
                     result = machine.Evaluate(arguments[k], newenv);
@@ -55,7 +55,7 @@
             return result;
         }
 
-        public bool IsMacro
+        public bool IsSpecialForm
         {
             get { return true; }
         }

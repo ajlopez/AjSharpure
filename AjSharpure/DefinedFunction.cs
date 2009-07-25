@@ -28,12 +28,12 @@
             ValueEnvironment newenv = new ValueEnvironment(environment);
 
             if (this.name != null)
-                newenv.SetLocalValue(this.name, this);
+                newenv.SetValue(this.name, this);
 
             int k=0;
 
             foreach (Symbol argname in this.arguments)
-                newenv.SetLocalValue(argname.Name, argumentValues[k++]);
+                newenv.SetValue(argname.Name, argumentValues[k++]);
 
             object result = this.expression.Evaluate(machine, newenv);
 
@@ -49,7 +49,7 @@
                 k = 0;
 
                 foreach (Symbol argname in this.arguments)
-                    newenv.SetLocalValue(argname.Name, data.Arguments[k++]);
+                    newenv.SetValue(argname.Name, data.Arguments[k++]);
 
                 result = this.expression.Evaluate(machine, newenv);
             }
@@ -57,7 +57,7 @@
             return result;
         }
 
-        public bool  IsMacro
+        public bool  IsSpecialForm
         {
         	get { return false; }
         }   
