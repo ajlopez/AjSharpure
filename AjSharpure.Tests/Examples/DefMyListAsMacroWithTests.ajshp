@@ -1,0 +1,4 @@
+﻿(def
+ mylist (macro* mylist [x y] (list 'list (backquote x) (backquote y))))
+
+(= (list 1 2) (mylist 1 2))

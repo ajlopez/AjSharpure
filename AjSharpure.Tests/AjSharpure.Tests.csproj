@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="AddIntegersFunction.cs" />
     <Compile Include="ConsTests.cs" />
+    <Compile Include="DefinedMacroTests.cs" />
     <Compile Include="DeferredSequenceFunction.cs" />
     <Compile Include="DefinedFunctionTests.cs" />
     <Compile Include="EmptyListTests.cs" />
@@ -75,6 +76,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Examples\DefMyListAsMacroWithTests.ajshp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\DefListOpsWithTests.ajshp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Examples\ListOpsTests.ajshp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -1,6 +1,5 @@
 
-- Dot primitive as in Clojure (current implementation is a hack)
-- env.SetValue on Variable
+= Dot primitive as in Clojure (current implementation is a hack)
 - Nested let
 - set! acting on Variable
 - list as PersistentList
@@ -15,6 +14,7 @@ The symbol must resolve to a var, and the Var object itself (not its value) is r
 - "(new Classname args*)
 can be written
 (Classname. args*) ;note trailing dot"
+- Multiarity in fn*
 - Improve NewPrimitive, Utilities to locate type name
 - Macros
 

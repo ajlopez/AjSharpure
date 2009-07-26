@@ -272,5 +272,63 @@
                 result = parser.ParseForm();
             }
         }
+
+        [TestMethod]
+        [DeploymentItem("Examples/DefListOpsWithTests.ajshp")]
+        public void ShouldDefAndTestListOpsFromExample()
+        {
+            Parser parser = new Parser(File.OpenText("DefListOpsWithTests.ajshp"));
+            Machine machine = new Machine();
+
+            object result = parser.ParseForm();
+
+            int ntest = 0;
+
+            while (result != null)
+            {
+                object value = machine.Evaluate(result);
+
+                Assert.IsNotNull(value);
+
+                if (value is bool)
+                {
+                    ntest++;
+                    Assert.IsTrue((bool)value, string.Format("Test {0} failed", ntest));
+                }
+                else
+                    Assert.IsInstanceOfType(value, typeof(DefinedFunction));
+
+                result = parser.ParseForm();
+            }
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples/DefMyListAsMacroWithTests.ajshp")]
+        public void ShouldDefAndTestMyListAsMacroFromExample()
+        {
+            Parser parser = new Parser(File.OpenText("DefMyListAsMacroWithTests.ajshp"));
+            Machine machine = new Machine();
+
+            object result = parser.ParseForm();
+
+            int ntest = 0;
+
+            while (result != null)
+            {
+                object value = machine.Evaluate(result);
+
+                Assert.IsNotNull(value);
+
+                if (value is bool)
+                {
+                    ntest++;
+                    Assert.IsTrue((bool)value, string.Format("Test {0} failed", ntest));
+                }
+                else
+                    Assert.IsInstanceOfType(value, typeof(DefinedMacro));
+
+                result = parser.ParseForm();
+            }
+        }
     }
 }

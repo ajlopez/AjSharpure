@@ -53,6 +53,7 @@
     <Compile Include="Compiler\ParserException.cs" />
     <Compile Include="Compiler\Token.cs" />
     <Compile Include="Compiler\TokenType.cs" />
+    <Compile Include="DefinedMacro.cs" />
     <Compile Include="DefinedFunction.cs" />
     <Compile Include="Expressions\ConstantExpression.cs" />
     <Compile Include="Expressions\DictionaryExpression.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="MacroUtilities.cs" />
     <Compile Include="Operations.cs" />
     <Compile Include="Primitives\AddPrimitive.cs" />
+    <Compile Include="Primitives\MacroStarPrimitive.cs" />
     <Compile Include="Primitives\NewPrimitive.cs" />
     <Compile Include="Primitives\LessEqualPrimitive.cs" />
     <Compile Include="Primitives\GreaterEqualPrimitive.cs" />

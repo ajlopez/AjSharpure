@@ -1,6 +1,7 @@
 ﻿namespace AjSharpure.Primitives
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -9,7 +10,7 @@
     {
         public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
         {
-            return arguments;
+            return new ArrayList(arguments);
         }
 
         public bool IsSpecialForm

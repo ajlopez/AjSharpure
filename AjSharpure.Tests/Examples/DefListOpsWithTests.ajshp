@@ -1,0 +1,38 @@
+﻿(def
+ cons (fn* cons [x seq] (. AjSharpure.Operations Cons x seq)))
+
+(def
+ first (fn* first [coll] (. AjSharpure.Operations (First coll))))
+
+(def
+ next (fn* next [x] (. AjSharpure.Operations (Next x))))
+ 
+(def
+ rest (fn* rest [x] (. AjSharpure.Operations (More x))))
+ 
+(def
+ second (fn* second [x] (first (next x))))
+
+(def
+ ffirst (fn* ffirst [x] (first (first x))))
+
+(def
+ nfirst (fn* nfirst [x] (next (first x))))
+
+(def
+ fnext (fn* fnext [x] (first (next x))))
+
+(def
+ nnext (fn* nnext [x] (next (next x))))
+
+(= (list 1 2 3) (list 1 2 3))
+(= (list 1 2 3) (cons 1 (list 2 3)))
+(= 1 (first (list 1 2 3)))
+(= (list 2 3) (next (list 1 2 3)))
+(= (list 2 3) (rest (list 1 2 3)))
+(= 2 (second '(1 2 3)))
+(= 1 (ffirst '((1 2 3) 2 3)))
+(= '(2 3) (nfirst '((1 2 3) 2 3)))
+(= 2 (fnext '(1 2 3)))
+(= '(3) (nnext '(1 2 3)))
+
