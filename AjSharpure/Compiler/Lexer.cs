@@ -10,6 +10,7 @@
     {
         private const string NameCharacters = "?_-.";
         private const string MacroCharacters = ";^#\\'@`~";
+        private static string[] MacroBicharacters = { "#'", "#_", "#^", "#(", "#{" };
         private const string SeparatorCharacters = "()[]{},";
 
         private TextReader reader;
@@ -46,7 +47,7 @@
                 ch = this.NextChar();
 
                 if (MacroCharacters.IndexOf(ch) >= 0)
-                    return new Token() { TokenType = TokenType.Macro, Value = ch.ToString() };
+                    return this.NextMacro(ch);
 
                 if (SeparatorCharacters.IndexOf(ch) >= 0)
                     return new Token() { TokenType = TokenType.Separator, Value = ch.ToString() };
@@ -101,6 +102,38 @@
             catch (EndOfInputException)
             {
             }
+        }
+
+        private Token NextMacro(char firstChar)
+        {
+            string name = firstChar.ToString();
+
+            char ch;
+
+            try
+            {
+                ch = this.NextChar();
+
+                if (!char.IsWhiteSpace(ch))
+                {
+                    string newname = name + ch.ToString();
+                    if (MacroBicharacters.Contains(newname))
+                        name = newname;
+                    else
+                        this.PushChar(ch);
+                }
+                else
+                {
+                    this.PushChar(ch);
+                }
+            }
+            catch (EndOfInputException)
+            {
+            }
+
+            Token token = new Token() { TokenType = TokenType.Macro, Value = name };
+
+            return token;
         }
 
         private Token NextSymbol(char firstChar)

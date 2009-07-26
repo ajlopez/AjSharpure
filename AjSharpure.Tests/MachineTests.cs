@@ -467,6 +467,25 @@
         }
 
         [TestMethod]
+        public void ShouldEvaluateDefinedSpecialForm()
+        {
+            Parser parser = new Parser("(def myquote (sf* myquote [x] x)) (myquote x)");
+            Machine machine = new Machine();
+
+            object value = machine.Evaluate(parser.ParseForm());
+            object result = machine.Evaluate(parser.ParseForm());
+
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(Symbol));
+
+            Symbol symbol = (Symbol)result;
+
+            Assert.IsNull(symbol.Namespace);
+            Assert.AreEqual("x", symbol.Name);
+        }
+
+        [TestMethod]
         public void ShouldEvaluateSimpleDo()
         {
             Parser parser = new Parser("(do 1 2 3)");
@@ -932,6 +951,57 @@
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(System.IO.FileInfo));
             Assert.AreEqual("anyfile.txt", ((System.IO.FileInfo)result).Name);
+        }
+
+        [TestMethod]
+        public void ShouldEvaluateVarExpressionToVar()
+        {
+            Parser parser = new Parser("(var x)");
+            Machine machine = new Machine();
+
+            object result = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(Variable));
+
+            Variable variable = (Variable)result;
+
+            Assert.AreEqual(machine.Environment.GetValue(Machine.CurrentNamespaceKey), variable.Namespace);
+            Assert.AreEqual("x", variable.Name);
+        }
+
+        [TestMethod]
+        public void ShouldEvaluateVarExpressionWithQualifiedSymbolToVar()
+        {
+            Parser parser = new Parser("(var foo/x)");
+            Machine machine = new Machine();
+
+            object result = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(Variable));
+
+            Variable variable = (Variable)result;
+
+            Assert.AreEqual("foo", variable.Namespace);
+            Assert.AreEqual("x", variable.Name);
+        }
+
+        [TestMethod]
+        public void ShouldEvaluateVarMacroExpressionToVar()
+        {
+            Parser parser = new Parser("#'x");
+            Machine machine = new Machine();
+
+            object result = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(Variable));
+
+            Variable variable = (Variable)result;
+
+            Assert.AreEqual(machine.Environment.GetValue(Machine.CurrentNamespaceKey), variable.Namespace);
+            Assert.AreEqual("x", variable.Name);
         }
     }
 }

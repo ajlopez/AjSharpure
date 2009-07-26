@@ -225,5 +225,94 @@
 
             newprim.Apply(machine, machine.Environment, new object[] { Symbol.Create("NonExistentType"), "aFileName.txt" });
         }
+
+        [TestMethod]
+        public void ShouldGetVariableWithCurrentNamespace()
+        {
+            VarPrimitive varprim = new VarPrimitive();
+            Machine machine = new Machine();
+
+            object result= varprim.Apply(machine, machine.Environment, new object[] { Symbol.Create("x") });
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(Variable));
+
+            Variable variable = (Variable)result;
+
+            Assert.AreEqual(machine.Environment.GetValue(Machine.CurrentNamespaceKey), variable.Namespace);
+            Assert.AreEqual("x", variable.Name);
+        }
+
+        [TestMethod]
+        public void ShouldGetVariableFromQualifiedSymbol()
+        {
+            VarPrimitive varprim = new VarPrimitive();
+            Machine machine = new Machine();
+
+            object result = varprim.Apply(machine, machine.Environment, new object[] { Symbol.Create("foo/x") });
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(Variable));
+
+            Variable variable = (Variable)result;
+
+            Assert.AreEqual("foo", variable.Namespace);
+            Assert.AreEqual("x", variable.Name);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidCastException))]
+        public void ShouldRaiseIfVarPrimitiveDoesNotReceiveASymbol()
+        {
+            VarPrimitive varprim = new VarPrimitive();
+            Machine machine = new Machine();
+
+            varprim.Apply(machine, machine.Environment, new object[] { "foo" });
+        }
+
+        [TestMethod]
+        public void ShouldDefineASimpleSymbol()
+        {
+            DefPrimitive defprim = new DefPrimitive();
+            Machine machine = new Machine();
+
+            object result = defprim.Apply(machine, machine.Environment, new object[] { Symbol.Create("x"), 1 });
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(int));
+            Assert.AreEqual(1, result);
+
+            object value = machine.GetVariableValue(Utilities.GetFullName((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x"));
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(int));
+            Assert.AreEqual(1, value);
+        }
+
+        [TestMethod]
+        public void ShouldDefineAnSpecialForm()
+        {
+            DefPrimitive defprim = new DefPrimitive();
+            Machine machine = new Machine();
+            DefinedSpecialForm sf = new DefinedSpecialForm("x", null, null);
+
+            object result = defprim.Apply(machine, machine.Environment, new object[] { Symbol.Create("x"), sf });
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DefinedSpecialForm));
+            Assert.IsTrue(sf == result);
+
+            object value = machine.GetVariableValue(Utilities.GetFullName((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x"));
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(DefinedSpecialForm));
+            Assert.IsTrue(sf == value);
+
+            object defsf = machine.Environment.GetValue("x");
+
+            Assert.IsNotNull(defsf);
+            Assert.IsInstanceOfType(defsf, typeof(DefinedSpecialForm));
+            Assert.IsTrue(defsf == value);
+        }
     }
 }

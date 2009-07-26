@@ -57,7 +57,7 @@
             return result;
         }
 
-        public bool  IsSpecialForm
+        public virtual bool IsSpecialForm
         {
         	get { return false; }
         }   

@@ -237,6 +237,25 @@
         }
 
         [TestMethod]
+        public void ShouldParseDispatchMacros()
+        {
+            string macros = "#' #( #{ #^ #_";
+            Lexer lexer = new Lexer(macros);
+
+            Token token;
+
+            foreach (string macro in macros.Split(' '))
+            {
+                token = lexer.NextToken();
+                Assert.IsNotNull(token);
+                Assert.AreEqual(TokenType.Macro, token.TokenType);
+                Assert.AreEqual(macro, token.Value);
+            }
+
+            Assert.IsNull(lexer.NextToken());
+        }
+
+        [TestMethod]
         public void ShouldParseSeparatorCharacters()
         {
             string chars = ",";

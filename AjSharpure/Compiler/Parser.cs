@@ -15,6 +15,7 @@
         private static Symbol quoteSymbol = Symbol.Create("quote");
         private static Symbol metaSymbol = Symbol.Create("meta");
         private static Symbol derefSymbol = Symbol.Create("deref");
+        private static Symbol varSymbol = Symbol.Create("var");
 
         private Lexer lexer;
 
@@ -112,6 +113,16 @@
                     IList list = new ArrayList();
 
                     list.Add(derefSymbol);
+                    list.Add(this.ParseForm());
+
+                    return list;
+                }
+
+                if (token.TokenType == TokenType.Macro && token.Value == "#'")
+                {
+                    IList list = new ArrayList();
+
+                    list.Add(varSymbol);
                     list.Add(this.ParseForm());
 
                     return list;
