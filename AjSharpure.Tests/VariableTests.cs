@@ -13,34 +13,19 @@
     public class VariableTests
     {
         [TestMethod]
-        public void ShouldInternAVariable()
+        public void ShouldCreateAVariable()
         {
-            Variable var = Variable.Intern("foo", "bar", 1);
+            Variable var = Variable.Create("foo", "bar");
 
             Assert.IsNotNull(var);
-            Assert.AreEqual(1, var.Value);
-            Assert.AreEqual(1, var.Root);
             Assert.AreEqual("foo", var.Namespace);
             Assert.AreEqual("bar", var.Name);
             Assert.AreEqual(Utilities.GetFullName("foo", "bar"), var.FullName);
 
-            Variable var2 = Variable.GetVariable("foo", "bar");
+            Variable var2 = Variable.Create("foo", "bar");
 
             Assert.IsNotNull(var2);
-            Assert.IsTrue(var == var2);
-        }
-
-        [TestMethod]
-        public void ShouldInternTwiceAVariableWithoutChangingRoot()
-        {
-            Variable var = Variable.Intern("foo", "bar", 1);
-            Variable var2 = Variable.Intern("foo", "bar", 2);
-
-            Assert.IsNotNull(var);
-            Assert.IsNotNull(var2);
-            Assert.IsTrue(var == var2);
-            Assert.AreEqual(1, var.Root);
-            Assert.AreEqual(1, var2.Value);
+            Assert.IsTrue(var.Equals(var2));
         }
     }
 }

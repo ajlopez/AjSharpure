@@ -21,27 +21,6 @@
         }
 
         [TestMethod]
-        public void ShouldSetVariableValue()
-        {
-            ValueEnvironment environment = new ValueEnvironment();
-            Variable var = Variable.Intern("ns", "foo", null);
-            var.Value = "bar";
-
-            environment.SetValue(var.FullName, var);
-            Assert.AreEqual("bar", environment.GetValue(var.FullName));
-        }
-
-        [TestMethod]
-        public void ShouldSetVariableValueUsingRoot()
-        {
-            ValueEnvironment environment = new ValueEnvironment();
-            Variable var = Variable.Intern("ns","foo","bar");
-
-            environment.SetValue(var.FullName, var);
-            Assert.AreEqual("bar", environment.GetValue(var.FullName));
-        }
-
-        [TestMethod]
         public void ShouldGetNullIfNoValue()
         {
             ValueEnvironment environment = new ValueEnvironment();

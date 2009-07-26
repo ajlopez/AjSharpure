@@ -18,17 +18,19 @@
 
         public object Evaluate(Machine machine, ValueEnvironment environment)
         {
-            object result = environment.GetValue(symbol.FullName);
+            string fullName = null;
 
-            if (result == null && symbol.Namespace == null)
+            if (string.IsNullOrEmpty(symbol.Namespace))
             {
-                result = environment.GetValue(Utilities.GetFullName((string)environment.GetValue(Machine.CurrentNamespaceKey), symbol.Name));
+                if (environment.IsDefined(symbol.Name))
+                    return environment.GetValue(symbol.Name);
 
-                if (result == null)
-                    result = environment.GetValue(Utilities.GetFullName(Machine.AjSharpureCoreKey, symbol.Name));
+                fullName = Utilities.GetFullName((string) environment.GetValue(Machine.CurrentNamespaceKey), symbol.Name);
             }
+            else
+                fullName = symbol.FullName;
 
-            return result;
+            return machine.GetVariableValue(fullName);
         }
 
         public object Value

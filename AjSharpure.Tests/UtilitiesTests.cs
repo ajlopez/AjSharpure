@@ -206,7 +206,7 @@
             Assert.IsTrue(Utilities.Equals(null, null));
             Assert.IsTrue(Utilities.Equals("foo", "foo"));
             Assert.IsTrue(Utilities.Equals(Symbol.Create("bar"), Symbol.Create("bar")));
-            Assert.IsTrue(Utilities.Equals(Variable.Intern("foo","bar",null),Variable.Intern("foo","bar",null)));
+            Assert.IsTrue(Utilities.Equals(Variable.Create("foo","bar"),Variable.Create("foo","bar")));
         }
 
         [TestMethod]

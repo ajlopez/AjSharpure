@@ -19,6 +19,9 @@
 
         public static Symbol Create(string name)
         {
+            if (name.Length == 1 && name.Equals("/"))
+                return Create(null, name);
+
             int position = name.LastIndexOf('/');
 
             if (position == -1)
@@ -27,12 +30,12 @@
             return Create(name.Substring(0, position), name.Substring(position + 1));
         }
 
-        private Symbol(string ns, string name)
+        protected Symbol(string ns, string name)
             : this(ns, name, null)
         {
         }
 
-        private Symbol(string ns, string name, IPersistentMap metadata)
+        protected Symbol(string ns, string name, IPersistentMap metadata)
             : base(metadata)
         {
             this.ns = ns;

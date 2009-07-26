@@ -274,10 +274,10 @@
 
             string fullName = Utilities.GetFullName((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x");
 
-            Variable variable = machine.Environment.GetVariable(fullName);
+            object value = machine.GetVariableValue(Variable.Create(fullName));
 
-            Assert.IsNotNull(variable);
-            Assert.AreEqual(1, variable.Value);
+            Assert.IsNotNull(value);
+            Assert.AreEqual(1, value);
         }
 
         [TestMethod]
@@ -294,10 +294,10 @@
 
             string fullName = Utilities.GetFullName((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x");
 
-            Variable variable = machine.Environment.GetVariable(fullName);
+            object value = machine.GetVariableValue(Variable.Create(fullName));
 
-            Assert.IsNotNull(variable);
-            Assert.AreEqual(1, variable.Value);
+            Assert.IsNotNull(value);
+            Assert.AreEqual(1, value);
 
             parser = new Parser("(def x 2)");
 
@@ -306,7 +306,7 @@
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(int));
             Assert.AreEqual(2, result);
-            Assert.AreEqual(2, variable.Value);
+            Assert.AreEqual(2, machine.GetVariableValue(Variable.Create(fullName)));
         }
 
         [TestMethod]
@@ -319,7 +319,7 @@
 
             string fullName = Utilities.GetFullName((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x");
 
-            object value = machine.Environment.GetValue(fullName);
+            object value = machine.GetVariableValue(fullName);
 
             Assert.IsNotNull(value);
             Assert.AreEqual(1, value);
@@ -337,7 +337,7 @@
 
             string fullName = Utilities.GetFullName((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x");
 
-            object value = machine.Environment.GetValue(fullName);
+            object value = machine.GetVariableValue(fullName);
 
             Assert.IsNotNull(value);
             Assert.AreEqual(1, value);

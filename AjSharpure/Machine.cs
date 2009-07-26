@@ -20,6 +20,8 @@
 
         private ValueEnvironment environment = new ValueEnvironment();
 
+        private ValueEnvironment variableEnvironment = new ValueEnvironment();
+
         public ValueEnvironment Environment { get { return this.environment; } }
 
         public Machine()
@@ -67,6 +69,21 @@
                 return (Utilities.ToExpression(obj)).Evaluate(this, environment);
 
             return obj;
+        }
+
+        public void SetVariableValue(Variable variable, object value)
+        {
+            variableEnvironment.SetValue(variable.FullName, value, true);
+        }
+
+        public object GetVariableValue(Variable variable)
+        {
+            return variableEnvironment.GetValue(variable.FullName);
+        }
+
+        public object GetVariableValue(string fullName)
+        {
+            return variableEnvironment.GetValue(fullName);
         }
     }
 }

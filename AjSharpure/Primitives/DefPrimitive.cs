@@ -24,21 +24,9 @@
 
             object value = machine.Evaluate(arguments[1], environment);
 
-            Variable variable = environment.GetVariable(Utilities.GetFullName(ns, symbol.Name));
+            Variable variable = Variable.Create(ns, symbol.Name);
 
-            if (variable == null)
-            {
-                variable = Variable.GetVariable(ns, symbol.Name);
-
-                if (variable == null)
-                    variable = Variable.Intern(ns, symbol.Name, value, true);
-                else
-                    variable.Value = value;
-
-                environment.SetValue(variable.FullName, variable);
-            }
-            else
-                variable.Value = value;
+            machine.SetVariableValue(variable, value);
 
             return value;
         }

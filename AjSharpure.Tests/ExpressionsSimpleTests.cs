@@ -44,10 +44,10 @@
         public void UndefinedSymbolShouldEvaluateToNull()
         {
             Symbol symbol = Symbol.Create("foo");
-            ValueEnvironment environment = new ValueEnvironment();
+            Machine machine = new Machine();
             IExpression expression = new SymbolExpression(symbol);
 
-            Assert.IsNull(expression.Evaluate(null, environment));
+            Assert.IsNull(expression.Evaluate(machine, machine.Environment));
             Assert.AreEqual(symbol, expression.Value);
         }
 
@@ -61,6 +61,21 @@
             IExpression expression = new SymbolExpression(symbol);
 
             Assert.AreEqual("bar", expression.Evaluate(null, environment));
+            Assert.AreEqual(symbol, expression.Value);
+        }
+
+        [TestMethod]
+        public void ShouldEvaluateUnqualifiedSymbolAsDefinedVariableInCurrentNamespace()
+        {
+            Symbol symbol = Symbol.Create("foo");
+            Machine machine = new Machine();
+            Variable variable = Variable.Create((string) machine.Environment.GetValue(Machine.CurrentNamespaceKey), "foo");
+
+            machine.SetVariableValue(variable, "bar");
+
+            IExpression expression = new SymbolExpression(symbol);
+
+            Assert.AreEqual("bar", expression.Evaluate(machine, machine.Environment));
             Assert.AreEqual(symbol, expression.Value);
         }
     }

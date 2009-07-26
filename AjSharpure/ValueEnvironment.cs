@@ -49,28 +49,18 @@
 
             object value = this.values[key];
 
-            if (value is Variable)
-                return ((Variable)value).Value;
-
             return value;
         }
 
-        public Variable GetVariable(string key)
+        public bool IsDefined(string key)
         {
-            if (!this.values.ContainsKey(key))
-            {
-                if (this.parent != null)
-                    return this.parent.GetVariable(key);
+            if (this.values.ContainsKey(key))
+                return true;
 
-                return null;
-            }
+            if (this.parent != null)
+                return this.parent.IsDefined(key);
 
-            object value = this.values[key];
-
-            if (value is Variable)
-                return (Variable)value;
-
-            return null;
+            return false;
         }
     }
 }

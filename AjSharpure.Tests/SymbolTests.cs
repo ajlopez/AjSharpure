@@ -47,6 +47,17 @@
         }
 
         [TestMethod]
+        public void ShouldCreateWithDivideAsName()
+        {
+            Symbol symbol = Symbol.Create("/");
+
+            Assert.IsNotNull(symbol);
+            Assert.IsNull(symbol.Namespace);
+            Assert.AreEqual("/", symbol.Name);
+            Assert.AreEqual("/", symbol.FullName);
+        }
+
+        [TestMethod]
         public void ShouldBeEqualToSymbolWithSameName()
         {
             Symbol symbol = Symbol.Create("foo");
