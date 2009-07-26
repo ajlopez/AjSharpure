@@ -29,6 +29,14 @@
             this.values[key] = value;
         }
 
+        public void SetValue(string key, object value, bool reset)
+        {
+            if (!reset && this.values.ContainsKey(key))
+                throw new InvalidOperationException("A named value cannot be redefined");
+
+            this.values[key] = value;
+        }
+
         public object GetValue(string key)
         {
             if (!this.values.ContainsKey(key))
@@ -64,21 +72,5 @@
 
             return null;
         }
-
-        //public void SetLocalValue(string key, object value)
-        //{
-        //    this.values[key] = value;
-        //}
-
-        //public void SetGlobalValue(string key, object value)
-        //{
-        //    if (this.parent != null)
-        //    {
-        //        this.parent.SetGlobalValue(key, value);
-        //        return;
-        //    }
-
-        //    this.values[key] = value;
-        //}
     }
 }

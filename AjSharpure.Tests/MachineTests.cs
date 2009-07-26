@@ -528,6 +528,32 @@
         }
 
         [TestMethod]
+        public void ShouldEvaluateSimpleLetWithTwoBindings()
+        {
+            Parser parser = new Parser("(let [x 1 y 2] x)");
+            Machine machine = new Machine();
+
+            object value = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(int));
+            Assert.AreEqual(1, value);
+        }
+
+        [TestMethod]
+        public void ShouldEvaluateSimpleLetWithRebindings()
+        {
+            Parser parser = new Parser("(let [x 1 x 2] x)");
+            Machine machine = new Machine();
+
+            object value = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(int));
+            Assert.AreEqual(2, value);
+        }
+
+        [TestMethod]
         public void ShouldEvaluateTrueFalseAndNil()
         {
             Parser parser = new Parser("true false nil");

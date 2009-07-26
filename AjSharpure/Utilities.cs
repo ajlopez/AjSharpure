@@ -197,7 +197,7 @@
                     names[k / 2] = name;
                 }
                 else
-                    newenv.SetValue(name, machine.Evaluate(obj, newenv));
+                    newenv.SetValue(name, machine.Evaluate(obj, newenv), true);
 
                 k++;
             }
