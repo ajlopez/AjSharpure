@@ -13,6 +13,7 @@
     public class Parser
     {
         private static Symbol quoteSymbol = Symbol.Create("quote");
+        private static Symbol backquoteSymbol = Symbol.Create("backquote");
         private static Symbol metaSymbol = Symbol.Create("meta");
         private static Symbol derefSymbol = Symbol.Create("deref");
         private static Symbol varSymbol = Symbol.Create("var");
@@ -47,35 +48,6 @@
 
             if (token == null)
                 return null;
-
-            if (token.TokenType == TokenType.Symbol)
-            {
-                if (token.Value == "true")
-                    return true;
-
-                if (token.Value == "false")
-                    return false;
-
-                return Symbol.Create(token.Value);
-            }
-
-            if (token.TokenType == TokenType.Keyword)
-                return Keyword.Create(token.Value);
-
-            if (token.TokenType == TokenType.String)
-                return token.Value;
-
-            if (token.TokenType == TokenType.Integer)
-                return Int32.Parse(token.Value);
-
-            if (token.TokenType == TokenType.Separator && token.Value == "(")
-                return this.ParseFormList();
-
-            if (token.TokenType == TokenType.Separator && token.Value == "[")
-                return this.ParseFormArray();
-
-            if (token.TokenType == TokenType.Separator && token.Value == "{")
-                return this.ParseFormMap();
 
             if (token.TokenType == TokenType.Macro)
             {
@@ -128,10 +100,49 @@
                     return list;
                 }
 
-                lexer.PushToken(token);
+                if (token.TokenType == TokenType.Macro && token.Value == "`")
+                {
+                    IList list = new ArrayList();
 
-                return this.ParseForm();
+                    list.Add(backquoteSymbol);
+                    list.Add(this.ParseForm());
+
+                    return list;
+                }
+
+                if (token.TokenType == TokenType.Macro)
+                    throw new ParserException(string.Format("Unknown macro {0}", token.Value));
             }
+
+            if (token.TokenType == TokenType.Symbol)
+            {
+                if (token.Value == "true")
+                    return true;
+
+                if (token.Value == "false")
+                    return false;
+
+                return Symbol.Create(token.Value);
+            }
+
+            if (token.TokenType == TokenType.Keyword)
+                return Keyword.Create(token.Value);
+
+            if (token.TokenType == TokenType.String)
+                return token.Value;
+
+            if (token.TokenType == TokenType.Integer)
+                return Int32.Parse(token.Value);
+
+            if (token.TokenType == TokenType.Separator && token.Value == "(")
+                return this.ParseFormList();
+
+            if (token.TokenType == TokenType.Separator && token.Value == "[")
+                return this.ParseFormArray();
+
+            if (token.TokenType == TokenType.Separator && token.Value == "{")
+                return this.ParseFormMap();
+
 
             throw new ParserException(string.Format("Unexpected token: {0}", token.Value));
         }
