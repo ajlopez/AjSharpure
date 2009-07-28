@@ -45,6 +45,7 @@
     <Compile Include="DefinedMacroTests.cs" />
     <Compile Include="DeferredSequenceFunction.cs" />
     <Compile Include="DefinedFunctionTests.cs" />
+    <Compile Include="DictionaryObjectTests.cs" />
     <Compile Include="EmptyListTests.cs" />
     <Compile Include="EnumeratorSequenceTests.cs" />
     <Compile Include="ExamplesTests.cs" />

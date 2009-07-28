@@ -106,6 +106,10 @@
             if (obj is System.Array)
                 return ((System.Array)obj).GetValue(index);
 
+            // Testing BaseSequence, LazySequence to avoid recursive call, they use NthElement to resolve [index]
+            if (obj is IList && !(obj is BaseSequence) && !(obj is LazySequence))
+                return ((IList)obj)[index];
+
             if (obj is ISequential)
             {
                 ISequence sequence = Utilities.ToSequence(obj);

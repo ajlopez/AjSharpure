@@ -69,6 +69,7 @@
     <Compile Include="Language\BasePersistentMap.cs" />
     <Compile Include="Language\BaseSequence.cs" />
     <Compile Include="Language\Cons.cs" />
+    <Compile Include="Language\DictionaryObject.cs" />
     <Compile Include="Language\EmptyList.cs" />
     <Compile Include="Language\EmptyListEnumerator.cs" />
     <Compile Include="Language\EnumeratorSequence.cs" />

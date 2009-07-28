@@ -958,6 +958,7 @@
         {
             Parser parser = new Parser("(var x)");
             Machine machine = new Machine();
+            machine.SetVariableValue(Variable.Create((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x"), 1);
 
             object result = machine.Evaluate(parser.ParseForm());
 
@@ -975,6 +976,7 @@
         {
             Parser parser = new Parser("(var foo/x)");
             Machine machine = new Machine();
+            machine.SetVariableValue(Variable.Create("foo", "x"), 1);
 
             object result = machine.Evaluate(parser.ParseForm());
 
@@ -992,6 +994,7 @@
         {
             Parser parser = new Parser("#'x");
             Machine machine = new Machine();
+            machine.SetVariableValue(Variable.Create((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x"), 1);
 
             object result = machine.Evaluate(parser.ParseForm());
 

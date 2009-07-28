@@ -19,7 +19,12 @@
             if (string.IsNullOrEmpty(ns))
                 ns = (string) environment.GetValue(Machine.CurrentNamespaceKey);
 
-            return Variable.Create(ns, symbol.Name);
+            Variable variable = machine.GetVariable(Utilities.GetFullName(ns, symbol.Name));
+
+            if (variable == null)
+                throw new InvalidOperationException(string.Format("Unable to resolve Variable from Symbol {0}", symbol.FullName));
+
+            return variable;
         }
 
         public bool IsSpecialForm

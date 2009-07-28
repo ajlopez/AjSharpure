@@ -231,6 +231,7 @@
         {
             VarPrimitive varprim = new VarPrimitive();
             Machine machine = new Machine();
+            machine.SetVariableValue(Variable.Create((string) machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x"), "bar");
 
             object result= varprim.Apply(machine, machine.Environment, new object[] { Symbol.Create("x") });
 
@@ -248,6 +249,8 @@
         {
             VarPrimitive varprim = new VarPrimitive();
             Machine machine = new Machine();
+
+            machine.SetVariableValue(Variable.Create("foo", "x"), "bar");
 
             object result = varprim.Apply(machine, machine.Environment, new object[] { Symbol.Create("foo/x") });
 
@@ -268,6 +271,16 @@
             Machine machine = new Machine();
 
             varprim.Apply(machine, machine.Environment, new object[] { "foo" });
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ShouldRaiseIfVarPrimitiveReceivesUndefinedSymbol()
+        {
+            VarPrimitive varprim = new VarPrimitive();
+            Machine machine = new Machine();
+
+            varprim.Apply(machine, machine.Environment, new object[] { Symbol.Create("x") });
         }
 
         [TestMethod]
