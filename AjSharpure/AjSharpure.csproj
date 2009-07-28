@@ -69,12 +69,15 @@
     <Compile Include="Language\BasePersistentMap.cs" />
     <Compile Include="Language\BaseSequence.cs" />
     <Compile Include="Language\Cons.cs" />
+    <Compile Include="Language\IListObject.cs" />
+    <Compile Include="Language\ListEnumerator.cs" />
     <Compile Include="Language\DictionaryObject.cs" />
     <Compile Include="Language\EmptyList.cs" />
     <Compile Include="Language\EmptyListEnumerator.cs" />
     <Compile Include="Language\EnumeratorSequence.cs" />
     <Compile Include="Language\IAssociative.cs" />
     <Compile Include="Language\ICounted.cs" />
+    <Compile Include="Language\IDictionaryObject.cs" />
     <Compile Include="Language\IFn.cs" />
     <Compile Include="Language\IMetadata.cs" />
     <Compile Include="Language\INamed.cs" />
@@ -89,6 +92,7 @@
     <Compile Include="Language\ISequential.cs" />
     <Compile Include="Language\Keyword.cs" />
     <Compile Include="Language\LazySequence.cs" />
+    <Compile Include="Language\ListObject.cs" />
     <Compile Include="Language\Numbers.cs" />
     <Compile Include="Language\PersistentList.cs" />
     <Compile Include="Language\SequenceEnumerator.cs" />

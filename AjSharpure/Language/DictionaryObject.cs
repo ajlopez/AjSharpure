@@ -6,7 +6,7 @@
     using System.Linq;
     using System.Text;
 
-    public class DictionaryObject : BaseObject, IDictionary, IAssociative
+    public class DictionaryObject : BaseObject, IDictionaryObject
     {
         private static DictionaryObject empty = new DictionaryObject(new Hashtable());
 

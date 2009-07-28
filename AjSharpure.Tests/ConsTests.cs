@@ -49,6 +49,22 @@
         }
 
         [TestMethod]
+        public void ShouldCreateWithMetadata()
+        {
+            Cons cons = new Cons(1, new Cons(2));
+            IObject iobj = cons.WithMetadata(FakePersistentMap.Instance);
+
+            Assert.IsNotNull(iobj);
+            Assert.IsInstanceOfType(iobj, typeof(Cons));
+            Assert.IsTrue(iobj != cons);
+            Assert.IsTrue(FakePersistentMap.Instance == iobj.Metadata);
+            Assert.AreEqual(2, cons.Count);
+            Assert.AreEqual(1, cons.First());
+            Assert.AreEqual(2, cons.Next().First());
+            Assert.IsNull(cons.Next().Next());
+        }
+
+        [TestMethod]
         public void ShouldGetFirstElementByIndex()
         {
             Cons cons = new Cons(1, new Cons(2));

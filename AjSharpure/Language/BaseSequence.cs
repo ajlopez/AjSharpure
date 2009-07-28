@@ -66,7 +66,7 @@
 
         public int Add(object value)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public void Clear()
@@ -74,12 +74,12 @@
             throw new NotSupportedException();
         }
 
-        public bool Contains(object value)
+        public virtual bool Contains(object value)
         {
             throw new NotImplementedException();
         }
 
-        public int IndexOf(object value)
+        public virtual int IndexOf(object value)
         {
             throw new NotImplementedException();
         }
@@ -109,7 +109,7 @@
             throw new NotSupportedException();
         }
 
-        public object this[int index]
+        public virtual object this[int index]
         {
             get
             {
@@ -125,12 +125,12 @@
 
         #region ICollection Members
 
-        public void CopyTo(Array array, int index)
+        public virtual void CopyTo(Array array, int index)
         {
             throw new NotImplementedException();
         }
 
-        public int Count
+        public virtual int Count
         {
             get {
                 int count = 1;
@@ -143,21 +143,15 @@
             }
         }
 
-        public bool IsSynchronized
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public virtual bool IsSynchronized { get { return true; } }
 
-        public object SyncRoot
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public virtual object SyncRoot { get { return this; } }
 
         #endregion
 
         #region IEnumerable Members
 
-        public IEnumerator GetEnumerator()
+        public virtual IEnumerator GetEnumerator()
         {
             return new SequenceEnumerator(this);
         }

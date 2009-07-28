@@ -54,6 +54,7 @@
     <Compile Include="KeywordTests.cs" />
     <Compile Include="LazySequenceTests.cs" />
     <Compile Include="LexerTests.cs" />
+    <Compile Include="ListObjectTests.cs" />
     <Compile Include="MachineTests.cs" />
     <Compile Include="MacroUtilitiesTests.cs" />
     <Compile Include="NullSequenceFunction.cs" />
