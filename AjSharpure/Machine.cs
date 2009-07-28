@@ -20,7 +20,7 @@
 
         private ValueEnvironment environment = new ValueEnvironment();
 
-        private ValueEnvironment variableEnvironment = new ValueEnvironment();
+        private Dictionary<Variable, object> variableEnvironment = new Dictionary<Variable, object>();
 
         public ValueEnvironment Environment { get { return this.environment; } }
 
@@ -76,17 +76,33 @@
 
         public void SetVariableValue(Variable variable, object value)
         {
-            variableEnvironment.SetValue(variable.FullName, value, true);
+            variableEnvironment[variable] = value;
         }
 
         public object GetVariableValue(Variable variable)
         {
-            return variableEnvironment.GetValue(variable.FullName);
+            if (this.variableEnvironment.ContainsKey(variable))
+                return this.variableEnvironment[variable];
+
+            return null;
         }
 
         public object GetVariableValue(string fullName)
         {
-            return variableEnvironment.GetValue(fullName);
+            return GetVariableValue(Variable.Create(fullName));
+        }
+
+        public Variable GetVariable(Variable variable)
+        {
+            if (this.variableEnvironment.ContainsKey(variable))
+                return this.variableEnvironment.Keys.Single(v => v.Equals(variable));
+
+            return null;
+        }
+
+        public Variable GetVariable(string fullName)
+        {
+            return this.GetVariable(Variable.Create(fullName));
         }
     }
 }

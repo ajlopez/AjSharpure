@@ -1003,5 +1003,103 @@
             Assert.AreEqual(machine.Environment.GetValue(Machine.CurrentNamespaceKey), variable.Namespace);
             Assert.AreEqual("x", variable.Name);
         }
+
+        [TestMethod]
+        public void ShouldSetAndGetVariableValue()
+        {
+            Machine machine = new Machine();
+            Variable variable = Variable.Create("foo", "bar");
+
+            machine.SetVariableValue(variable, 3);
+
+            object result = machine.GetVariableValue(variable);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(int));
+            Assert.AreEqual(3, (int)result);
+        }
+
+        [TestMethod]
+        public void ShouldSetAndGetVariableValueUsingAnotherVariable()
+        {
+            Machine machine = new Machine();
+            Variable variable = Variable.Create("foo", "bar");
+            Variable variable2 = Variable.Create("foo/bar");
+
+            machine.SetVariableValue(variable, 3);
+
+            object result = machine.GetVariableValue(variable2);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(int));
+            Assert.AreEqual(3, (int)result);
+        }
+
+        [TestMethod]
+        public void ShouldSetAndGetVariableValueUsingFullName()
+        {
+            Machine machine = new Machine();
+            Variable variable = Variable.Create("foo", "bar");
+
+            machine.SetVariableValue(variable, 3);
+
+            object result = machine.GetVariableValue("foo/bar");
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(int));
+            Assert.AreEqual(3, (int)result);
+        }
+
+        [TestMethod]
+        public void ShouldGetNullValueIfVariableIsUndefined()
+        {
+            Machine machine = new Machine();
+            Variable variable = Variable.Create("foo", "bar");
+
+            object result = machine.GetVariableValue(variable);
+
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void ShouldGetNullVariableIfVariableIsUndefined()
+        {
+            Machine machine = new Machine();
+            Variable variable = Variable.Create("foo", "bar");
+
+            Variable result = machine.GetVariable(variable);
+
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void ShouldGetTheSameDefinedVariable()
+        {
+            Machine machine = new Machine();
+            Variable variable = Variable.Create("foo", "bar");
+
+            machine.SetVariableValue(variable, 3);
+
+            Variable result = machine.GetVariable(variable);
+
+            Assert.IsNotNull(result);
+
+            Assert.IsTrue(result == variable);
+        }
+
+        [TestMethod]
+        public void ShouldGetTheSameDefinedVariableUsingFullName()
+        {
+            Machine machine = new Machine();
+            Variable variable = Variable.Create("foo", "bar");
+
+            machine.SetVariableValue(variable, 3);
+
+            Variable result = machine.GetVariable("foo/bar");
+
+            Assert.IsNotNull(result);
+
+            Assert.IsTrue(result == variable);
+        }
     }
 }
