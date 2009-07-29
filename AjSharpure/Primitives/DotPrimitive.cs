@@ -19,13 +19,17 @@
 
             Type type = null;
 
-            if (!(result is Type))
-            {
-                if (name is INamed || name is string)
-                    type = Utilities.GetType(name);
-            }
-            else
-                type = (Type)result;
+            // TODO Old code, to review, see MachineTest.ShouldDefineAndEvaluateInstancePredicate
+            //if (!(result is Type))
+            //{
+            //    if (name is INamed || name is string)
+            //        type = Utilities.GetType(name);
+            //}
+            //else
+            //    type = (Type)result;
+
+            if (name is INamed || name is string)
+                type = Utilities.GetType(name);
 
             if (type != null)
                 return ApplyToType(type, machine, environment, arguments);

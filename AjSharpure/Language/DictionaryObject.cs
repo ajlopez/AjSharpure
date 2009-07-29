@@ -6,7 +6,7 @@
     using System.Linq;
     using System.Text;
 
-    public class DictionaryObject : BaseObject, IDictionaryObject
+    public class DictionaryObject : BaseObject, IDictionaryObject, IPersistentMap
     {
         private static DictionaryObject empty = new DictionaryObject(new Hashtable());
 
@@ -237,6 +237,25 @@
         public ISequence ToSequence()
         {
             return EnumeratorSequence.Create(this.GetEnumerator());
+        }
+
+        #endregion
+
+        #region IPersistentMap Members
+
+        IPersistentMap IPersistentMap.Associate(object key, object value)
+        {
+            return (IPersistentMap) this.Associate(key, value);
+        }
+
+        public IPersistentMap AssociateWithException(object key, object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IPersistentMap Without(object key)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

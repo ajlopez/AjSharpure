@@ -22,6 +22,19 @@
 
             if (string.IsNullOrEmpty(symbol.Namespace))
             {
+                // TODO this lookup should be for special forms
+                if (machine.Environment.IsDefined(symbol.Name))
+                    return machine.Environment.GetValue(symbol.Name);
+
+                // Test if it is a Type
+                // TODO import treatment
+                if (symbol.Name.IndexOf('.')>0) {
+                    Type type = Utilities.GetType(symbol.Name);
+
+                    if (type!=null)
+                        return type;
+                }
+
                 if (environment.IsDefined(symbol.Name))
                     return environment.GetValue(symbol.Name);
 

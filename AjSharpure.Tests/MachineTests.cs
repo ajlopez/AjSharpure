@@ -424,6 +424,25 @@
         }
 
         [TestMethod]
+        public void ShouldEvaluateToSequenceUsingUtilitiesToSequence()
+        {
+            Parser parser = new Parser("(. AjSharpure.Utilities ToSequence [1 2])");
+            Machine machine = new Machine();
+
+            object value = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(ISequence));
+
+            ISequence sequence = (ISequence)value;
+
+            Assert.AreEqual(2, sequence.Count);
+            Assert.AreEqual(1, sequence.First());
+            Assert.AreEqual(2, sequence.Next().First());
+            Assert.IsNull(sequence.Next().Next());
+        }
+
+        [TestMethod]
         public void ShouldEvaluateDotInvocationOnInstance()
         {
             Parser parser = new Parser("(def x 1) (. x ToString)");
@@ -483,6 +502,77 @@
 
             Assert.IsNull(symbol.Namespace);
             Assert.AreEqual("x", symbol.Name);
+        }
+
+        [TestMethod]
+        public void ShouldDefineAndEvaluateSeq()
+        {
+            Parser parser = new Parser("(def seq (fn* [coll] (. AjSharpure.Utilities ToSequence coll))) (seq [1 2])");
+            Machine machine = new Machine();
+
+            object value = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(DefinedFunction));
+
+            object result = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(ISequence));
+
+            ISequence sequence = (ISequence)result;
+
+            Assert.AreEqual(2, sequence.Count);
+            Assert.AreEqual(1, sequence.First());
+            Assert.AreEqual(2, sequence.Next().First());
+            Assert.IsNull(sequence.Next().Next());
+
+            Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
+        public void ShouldDefineAndEvaluateInstancePredicate()
+        {
+            Parser parser = new Parser("(def instance? (fn* [type obj] (. type IsInstanceOfType obj))) (instance? System.String \"foo\")");
+            Machine machine = new Machine();
+
+            object value = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(DefinedFunction));
+
+            object result = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(bool));
+            Assert.IsTrue((bool)result);
+
+            Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
+        public void ShouldDefineAndEvaluateSeqPredicate()
+        {
+            Parser parser = new Parser("(def instance? (fn* [type obj] (. type IsInstanceOfType obj))) (def seq? (fn* [obj] (instance? AjSharpure.Language.ISequence obj))) (seq? (. AjSharpure.Utilities ToSequence \"foo\")");
+            Machine machine = new Machine();
+
+            object value = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(DefinedFunction));
+            
+            value = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(DefinedFunction));
+
+            object result = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(bool));
+            Assert.IsTrue((bool)result);
+
+            Assert.IsNull(parser.ParseForm());
         }
 
         [TestMethod]
@@ -1103,6 +1193,46 @@
             Assert.IsNotNull(result);
 
             Assert.IsTrue(result == variable);
+        }
+
+        [TestMethod]
+        public void ShouldDefineVariable()
+        {
+            Machine machine = new Machine();
+            Parser parser = new Parser("(def x 1)");
+
+            machine.Evaluate(parser.ParseForm());
+
+            Variable variable = machine.GetVariable(Utilities.ToVariable(machine, machine.Environment, Symbol.Create("x")));
+
+            Assert.IsNotNull(variable);
+
+            Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
+        public void ShouldDefineVariableWithMetadata()
+        {
+            Machine machine = new Machine();
+            Parser parser = new Parser("(def #^{:one 1 :two 2} x 1)");
+
+            machine.Evaluate(parser.ParseForm());
+
+            Variable variable = machine.GetVariable(Utilities.ToVariable(machine, machine.Environment, Symbol.Create("x")));
+
+            Assert.IsNotNull(variable);
+            Assert.IsNotNull(variable.Metadata);
+            Assert.IsInstanceOfType(variable.Metadata, typeof(IDictionary));
+
+            IDictionary dictionary = (IDictionary)variable.Metadata;
+
+            Assert.AreEqual(2, dictionary.Count);
+            Assert.IsTrue(dictionary.Contains(Keyword.Create("one")));
+            Assert.IsTrue(dictionary.Contains(Keyword.Create("two")));
+            Assert.AreEqual(1, dictionary[Keyword.Create("one")]);
+            Assert.AreEqual(2, dictionary[Keyword.Create("two")]);
+
+            Assert.IsNull(parser.ParseForm());
         }
     }
 }

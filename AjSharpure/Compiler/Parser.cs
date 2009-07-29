@@ -100,6 +100,14 @@
                     return list;
                 }
 
+                if (token.TokenType == TokenType.Macro && token.Value == "#^")
+                {
+                    IDictionary metadata = this.ParseFormMap();
+                    object form = this.ParseForm();
+
+                    return Utilities.ToObject(form).WithMetadata((IPersistentMap) metadata);
+                }
+
                 if (token.TokenType == TokenType.Macro && token.Value == "`")
                 {
                     IList list = new ArrayList();
@@ -141,8 +149,10 @@
                 return this.ParseFormArray();
 
             if (token.TokenType == TokenType.Separator && token.Value == "{")
+            {
+                this.lexer.PushToken(token);
                 return this.ParseFormMap();
-
+            }
 
             throw new ParserException(string.Format("Unexpected token: {0}", token.Value));
         }
@@ -172,6 +182,11 @@
 
             Token token = lexer.NextToken();
 
+            if (token == null || token.Value != "{")
+                throw new ParserException("Expected }");
+
+            token = lexer.NextToken();
+
             while (token != null && !(token.TokenType == TokenType.Separator && token.Value == "}"))
             {
                 lexer.PushToken(token);
@@ -184,7 +199,7 @@
             if (token != null && !(token.TokenType == TokenType.Separator && token.Value == "}"))
                 lexer.PushToken(token);
 
-            return dictionary;
+            return new DictionaryObject(dictionary);
         }
 
         private object[] ParseFormArray()

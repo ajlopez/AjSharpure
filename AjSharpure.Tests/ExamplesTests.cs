@@ -306,7 +306,19 @@
         [DeploymentItem("Examples/DefMyListAsMacroWithTests.ajshp")]
         public void ShouldDefAndTestMyListAsMacroFromExample()
         {
-            Parser parser = new Parser(File.OpenText("DefMyListAsMacroWithTests.ajshp"));
+            this.ShouldLoadAndEvaluateDefsWithTests("DefMyListAsMacroWithTests.ajshp");
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples/DefTypePredicatesWithTests.ajshp")]
+        public void ShouldDefAndTestTypePredicatesFromExample()
+        {
+            Assert.AreEqual(3, this.ShouldLoadAndEvaluateDefsWithTests("DefTypePredicatesWithTests.ajshp"));
+        }
+
+        private int ShouldLoadAndEvaluateDefsWithTests(string filename)
+        {
+            Parser parser = new Parser(File.OpenText(filename));
             Machine machine = new Machine();
 
             object result = parser.ParseForm();
@@ -325,10 +337,12 @@
                     Assert.IsTrue((bool)value, string.Format("Test {0} failed", ntest));
                 }
                 else
-                    Assert.IsInstanceOfType(value, typeof(DefinedMacro));
+                    Assert.IsInstanceOfType(value, typeof(IFunction));
 
                 result = parser.ParseForm();
             }
+
+            return ntest;
         }
     }
 }

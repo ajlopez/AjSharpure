@@ -55,12 +55,12 @@
         public void ShouldEvaluateDefinedSymbol()
         {
             Symbol symbol = Symbol.Create("foo");
-            ValueEnvironment environment = new ValueEnvironment();
-            environment.SetValue(symbol.FullName, "bar");
+            Machine machine = new Machine();
+            machine.Environment.SetValue(symbol.FullName, "bar");
 
             IExpression expression = new SymbolExpression(symbol);
 
-            Assert.AreEqual("bar", expression.Evaluate(null, environment));
+            Assert.AreEqual("bar", expression.Evaluate(machine, machine.Environment));
             Assert.AreEqual(symbol, expression.Value);
         }
 

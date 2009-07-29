@@ -1,7 +1,7 @@
 ﻿namespace AjSharpure.Primitives
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections;
     using System.Linq;
     using System.Text;
 
@@ -17,16 +17,27 @@
             if (!string.IsNullOrEmpty(symbol.Namespace))
                 throw new InvalidOperationException("Defined name should not have namespace");
 
-            string ns = (string) environment.GetValue(Machine.CurrentNamespaceKey);
-
-            if (!string.IsNullOrEmpty(symbol.Namespace))
-                ns = symbol.Namespace;
+            Variable variable = Utilities.ToVariable(machine, environment, symbol);
 
             object value = machine.Evaluate(arguments[1], environment);
 
-            Variable variable = Variable.Create(ns, symbol.Name);
-
             machine.SetVariableValue(variable, value);
+
+            if (symbol.Metadata != null)
+            {
+                IDictionary dictionary = (IDictionary)symbol.Metadata;
+                IDictionary evaluated = new Hashtable();
+
+                foreach (object key in dictionary.Keys)
+                {
+                    object val = machine.Evaluate(dictionary[key], environment);
+                    evaluated[key] = val;
+                }
+
+                variable.ResetMetadata(new DictionaryObject(evaluated));
+            }
+            else
+                variable.ResetMetadata(null);
 
             if (value is IFunction && ((IFunction) value).IsSpecialForm)
                 machine.Environment.SetValue(variable.Name, value, true);

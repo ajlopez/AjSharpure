@@ -86,6 +86,21 @@
             writer.Write(obj.ToString());
         }
 
+        public static IObject ToObject(object obj)
+        {
+            if (obj is IObject)
+                return (IObject)obj;
+
+            if (obj is IList)
+                return (IObject) ListObject.Create((IList)obj);
+
+            if (obj is IDictionary)
+                return new DictionaryObject((IDictionary)obj);
+
+            // TODO implements IWrapper
+            throw new NotImplementedException();
+        }
+
         public static ISequence ToSequence(object obj)
         {
             if (obj is BaseSequence)
@@ -241,6 +256,25 @@
                 return Type.GetType((string) typename);
 
             return Type.GetType(typename.ToString());
+        }
+
+        public static Variable ToVariable(Machine machine, ValueEnvironment environment, Symbol symbol)
+        {
+            string ns = symbol.Namespace;
+
+            if (String.IsNullOrEmpty(ns))
+                ns = (string) environment.GetValue(Machine.CurrentNamespaceKey);
+
+            string name = symbol.Name;
+
+            string fullName = GetFullName(ns, name);
+
+            Variable variable = machine.GetVariable(fullName);
+
+            if (variable == null)
+                variable = Variable.Create(ns, name);
+
+            return variable;
         }
     }
 }

@@ -1,0 +1,14 @@
+﻿(def instance? (fn* [type obj] (. type IsInstanceOfType obj)))
+
+(def seq? (fn* [obj] (instance? AjSharpure.Language.ISequence obj)))
+
+(def string? (fn* [obj] (instance? System.String obj)))
+
+(def map? (fn* [obj] (instance? AjSharpure.Language.IDictionaryObject obj)))
+
+(instance? System.String "foo")
+
+(seq? (. AjSharpure.Utilities ToSequence "foo"))
+
+(string? "foo")
+

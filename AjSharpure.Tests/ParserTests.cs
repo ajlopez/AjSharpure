@@ -297,5 +297,65 @@
 
             Assert.IsNull(parser.ParseForm());
         }
+
+        [TestMethod]
+        public void ShouldParseSymbolWithMetadata()
+        {
+            Parser parser = new Parser("#^{:one 1 :two 2} foo");
+
+            object form = parser.ParseForm();
+
+            Assert.IsNotNull(form);
+            Assert.IsInstanceOfType(form, typeof(Symbol));
+
+            Symbol symbol = (Symbol)form;
+
+            Assert.AreEqual("foo", symbol.Name);
+            Assert.AreEqual("foo", symbol.FullName);
+            Assert.IsNotNull(symbol.Metadata);
+            Assert.IsInstanceOfType(symbol.Metadata, typeof(IDictionary));
+
+            IDictionary dict = (IDictionary)symbol.Metadata;
+
+            Assert.IsTrue(dict.Contains(Keyword.Create("one")));
+            Assert.IsTrue(dict.Contains(Keyword.Create("two")));
+
+            Assert.AreEqual(1, dict[Keyword.Create("one")]);
+            Assert.AreEqual(2, dict[Keyword.Create("two")]);
+
+            Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
+        public void ShouldParseListWithMetadata()
+        {
+            Parser parser = new Parser("#^{:one 1 :two 2} (1 2)");
+
+            object form = parser.ParseForm();
+
+            Assert.IsNotNull(form);
+            Assert.IsInstanceOfType(form, typeof(IList));
+            Assert.IsInstanceOfType(form, typeof(IObject));
+
+            IList list = (IList)form;
+
+            Assert.AreEqual(2, list.Count);
+            Assert.AreEqual(1, list[0]);
+            Assert.AreEqual(2, list[1]);
+
+            IObject iobj = (IObject)form;
+
+            Assert.IsNotNull(iobj.Metadata);
+
+            IDictionary dict = (IDictionary)iobj.Metadata;
+
+            Assert.IsTrue(dict.Contains(Keyword.Create("one")));
+            Assert.IsTrue(dict.Contains(Keyword.Create("two")));
+
+            Assert.AreEqual(1, dict[Keyword.Create("one")]);
+            Assert.AreEqual(2, dict[Keyword.Create("two")]);
+
+            Assert.IsNull(parser.ParseForm());
+        }
     }
 }

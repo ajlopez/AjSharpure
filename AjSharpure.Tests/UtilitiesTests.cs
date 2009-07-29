@@ -255,5 +255,59 @@
             Assert.IsFalse(Utilities.Equals(new int[] { 1, 2, 3, 4 }, new int[] { 1, 2, 3 }));
             Assert.IsFalse(Utilities.Equals(new int[] { 1, 2, 3 }, new int[] { 1, 2, 3, 4 }));
         }
+
+        [TestMethod]
+        public void ShouldConvertSymbolToItselfAsIObject()
+        {
+            Symbol symbol = Symbol.Create("foo");
+
+            IObject result = Utilities.ToObject(symbol);
+
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result == symbol);
+        }
+
+        [TestMethod]
+        public void ShouldConvertListToIObject()
+        {
+            IList list = new ArrayList(new int[] { 1, 2, 3 });
+
+            IObject result = Utilities.ToObject(list);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IList));
+
+            IList newlist = (IList)result;
+
+            Assert.AreEqual(3, newlist.Count);
+            Assert.AreEqual(1, newlist[0]);
+            Assert.AreEqual(2, newlist[1]);
+            Assert.AreEqual(3, newlist[2]);
+        }
+
+        [TestMethod]
+        public void ShouldConvertDictionaryToIObject()
+        {
+            IDictionary dictionary = new Hashtable();
+
+            dictionary["one"] = 1;
+            dictionary["two"] = 2;
+            dictionary["three"] = 3;
+
+            IObject result = Utilities.ToObject(dictionary);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IDictionary));
+
+            IDictionary newdict = (IDictionary)result;
+
+            Assert.AreEqual(3, newdict.Count);
+            Assert.IsTrue(newdict.Contains("one"));
+            Assert.AreEqual(1, newdict["one"]);
+            Assert.IsTrue(newdict.Contains("two"));
+            Assert.AreEqual(2, newdict["two"]);
+            Assert.IsTrue(newdict.Contains("three"));
+            Assert.AreEqual(3, newdict["three"]);
+        }
     }
 }

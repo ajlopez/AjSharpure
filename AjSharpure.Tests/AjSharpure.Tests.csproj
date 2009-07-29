@@ -78,6 +78,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Examples\DefTypePredicatesWithTests.ajshp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Examples\DefMyListAsMacroWithTests.ajshp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
