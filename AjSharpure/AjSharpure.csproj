@@ -53,6 +53,7 @@
     <Compile Include="Compiler\ParserException.cs" />
     <Compile Include="Compiler\Token.cs" />
     <Compile Include="Compiler\TokenType.cs" />
+    <Compile Include="DefinedMultiFunction.cs" />
     <Compile Include="DefinedSpecialForm.cs" />
     <Compile Include="DefinedMacro.cs" />
     <Compile Include="DefinedFunction.cs" />

@@ -2,10 +2,12 @@
 {
     using System;
     using System.Text;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     using AjSharpure;
+    using AjSharpure.Compiler;
     using AjSharpure.Language;
     using AjSharpure.Primitives;
 
@@ -336,6 +338,189 @@
             Assert.IsNotNull(defsf);
             Assert.IsInstanceOfType(defsf, typeof(DefinedSpecialForm));
             Assert.IsTrue(defsf == value);
+        }
+
+        [TestMethod]
+        public void ShouldDefineAFunction()
+        {
+            FnStarPrimitive fnprim = new FnStarPrimitive();
+            Machine machine = new Machine();
+            Parser parser = new Parser("[x] (+ x 1)");
+
+            object arguments = parser.ParseForm();
+            object body = parser.ParseForm();
+
+            object result = fnprim.Apply(machine, machine.Environment, new object[] { arguments, body });
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DefinedFunction));
+
+            DefinedFunction func = (DefinedFunction)result;
+            Assert.AreEqual(1, func.Arity);
+            Assert.IsFalse(func.VariableArity);
+        }
+
+        [TestMethod]
+        public void ShouldDefineAMultiFunction()
+        {
+            FnStarPrimitive fnprim = new FnStarPrimitive();
+            Machine machine = new Machine();
+            Parser parser = new Parser("([x] (+ x 1)) ([x y] (+ x y 1))");
+
+            object[] parameters = new object[2];
+            parameters[0] = parser.ParseForm();
+            parameters[1] = parser.ParseForm();
+
+            object result = fnprim.Apply(machine, machine.Environment, parameters);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DefinedMultiFunction));
+        }
+
+        [TestMethod]
+        public void ShouldDefineAndInvokeAMultiFunction()
+        {
+            FnStarPrimitive fnprim = new FnStarPrimitive();
+            Machine machine = new Machine();
+            Parser parser = new Parser("([x] (+ x 1)) ([x y] (+ x y 1))");
+
+            object[] parameters = new object[2];
+            parameters[0] = parser.ParseForm();
+            parameters[1] = parser.ParseForm();
+
+            object result = fnprim.Apply(machine, machine.Environment, parameters);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DefinedMultiFunction));
+
+            DefinedMultiFunction func = (DefinedMultiFunction)result;
+
+            object result1 = func.Apply(machine, machine.Environment, new object[] { 1 });
+
+            Assert.IsNotNull(result1);
+            Assert.IsInstanceOfType(result1, typeof(int));
+            Assert.AreEqual(2, result1);
+
+            object result2 = func.Apply(machine, machine.Environment, new object[] { 1, 2 });
+
+            Assert.IsNotNull(result2);
+            Assert.IsInstanceOfType(result2, typeof(int));
+            Assert.AreEqual(4, result2);
+        }
+
+        [TestMethod]
+        public void ShouldDefineAFunctionWithVariableArguments()
+        {
+            FnStarPrimitive fnprim = new FnStarPrimitive();
+            Machine machine = new Machine();
+            Parser parser = new Parser("[x & xs] (+ x xs)");
+
+            object arguments = parser.ParseForm();
+            object body = parser.ParseForm();
+
+            object result = fnprim.Apply(machine, machine.Environment, new object[] { arguments, body });
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DefinedFunction));
+
+            DefinedFunction func = (DefinedFunction) result;
+            Assert.AreEqual(1, func.Arity);
+            Assert.IsTrue(func.VariableArity);
+        }
+
+        [TestMethod]
+        public void ShouldDefineAndInvokeAFunctionWithVariableArguments()
+        {
+            FnStarPrimitive fnprim = new FnStarPrimitive();
+            Machine machine = new Machine();
+            Parser parser = new Parser("[& coll] coll");
+
+            object arguments = parser.ParseForm();
+            object body = parser.ParseForm();
+
+            object result = fnprim.Apply(machine, machine.Environment, new object[] { arguments, body });
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DefinedFunction));
+
+            DefinedFunction func = (DefinedFunction)result;
+            Assert.AreEqual(0, func.Arity);
+            Assert.IsTrue(func.VariableArity);
+
+            object value = func.Apply(machine, machine.Environment, new object[] { 1, 2 });
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(IList));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ShouldRaiseIfInvalidArgumentNameInFunction()
+        {
+            FnStarPrimitive fnprim = new FnStarPrimitive();
+            Machine machine = new Machine();
+            Parser parser = new Parser("[1] (+ x xs)");
+
+            object arguments = parser.ParseForm();
+            object body = parser.ParseForm();
+
+            fnprim.Apply(machine, machine.Environment, new object[] { arguments, body });
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ShouldRaiseIfQualifiedArgumentNameInFunction()
+        {
+            FnStarPrimitive fnprim = new FnStarPrimitive();
+            Machine machine = new Machine();
+            Parser parser = new Parser("[foo/bar] (+ x xs)");
+
+            object arguments = parser.ParseForm();
+            object body = parser.ParseForm();
+
+            fnprim.Apply(machine, machine.Environment, new object[] { arguments, body });
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ShouldRaiseIfNoVarsArguments()
+        {
+            FnStarPrimitive fnprim = new FnStarPrimitive();
+            Machine machine = new Machine();
+            Parser parser = new Parser("[&] (+ x xs)");
+
+            object arguments = parser.ParseForm();
+            object body = parser.ParseForm();
+
+            fnprim.Apply(machine, machine.Environment, new object[] { arguments, body });
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ShouldRaiseIfTooManyVarsArguments()
+        {
+            FnStarPrimitive fnprim = new FnStarPrimitive();
+            Machine machine = new Machine();
+            Parser parser = new Parser("[& x y] (+ x xs)");
+
+            object arguments = parser.ParseForm();
+            object body = parser.ParseForm();
+
+            fnprim.Apply(machine, machine.Environment, new object[] { arguments, body });
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ShouldRaiseIfTooManyVarsMarkers()
+        {
+            FnStarPrimitive fnprim = new FnStarPrimitive();
+            Machine machine = new Machine();
+            Parser parser = new Parser("[& x & y] (+ x xs)");
+
+            object arguments = parser.ParseForm();
+            object body = parser.ParseForm();
+
+            fnprim.Apply(machine, machine.Environment, new object[] { arguments, body });
         }
     }
 }

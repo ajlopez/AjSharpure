@@ -13,19 +13,35 @@
         private string name;
         private object[] arguments;
         private IExpression expression;
+        private int arity = 0;
+        private bool variableArity = false;
 
         public DefinedFunction(string name, object[] arguments, IExpression expression)
         {
             this.name = name;
             this.arguments = arguments;
             this.expression = expression;
+
+            if (arguments != null)
+                foreach (Symbol argname in arguments)
+                    if (argname.Name == "&")
+                    {
+                        this.variableArity = true;
+                        break;
+                    }
+                    else
+                        this.arity++;
         }
 
         public string Name { get { return this.name; } }
 
+        public int Arity { get { return this.arity; } }
+
+        public bool VariableArity { get { return this.variableArity; } }
+
         public DefinedMacro ToMacro()
         {
-            return new DefinedMacro(name, arguments, (IList) expression.Value);
+            return new DefinedMacro(name, arguments, (IList)expression.Value);
         }
 
         public object Apply(Machine machine, ValueEnvironment environment, object[] argumentValues)
@@ -35,10 +51,31 @@
             if (this.name != null)
                 newenv.SetValue(this.name, this);
 
-            int k=0;
+            int k = 0;
+            bool islast = false;
 
             foreach (Symbol argname in this.arguments)
-                newenv.SetValue(argname.Name, argumentValues[k++]);
+            {
+                if (argname.Name == "&")
+                    islast = true;
+                else
+                {
+                    if (!islast)
+                        newenv.SetValue(argname.Name, argumentValues[k++]);
+                    else
+                    {
+                        IList rest = new ArrayList();
+
+                        while (k < argumentValues.Length)
+                            rest.Add(argumentValues[k++]);
+
+                        if (rest.Count > 0)
+                            newenv.SetValue(argname.Name, rest);
+                        else
+                            newenv.SetValue(argname.Name, null);
+                    }
+                }
+            }
 
             object result = this.expression.Evaluate(machine, newenv);
 
@@ -64,7 +101,7 @@
 
         public virtual bool IsSpecialForm
         {
-        	get { return false; }
-        }   
+            get { return false; }
+        }
     }
 }
