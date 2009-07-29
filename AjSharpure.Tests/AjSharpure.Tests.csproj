@@ -78,6 +78,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Examples\DefCoreWithTests.ajshp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\DefCore.ajshp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Examples\DefTypePredicatesWithTests.ajshp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

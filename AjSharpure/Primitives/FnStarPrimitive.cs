@@ -18,7 +18,7 @@
 
             if (arguments[0] is Symbol)
             {
-                if (!(arguments[1] is object[]))
+                if (arguments.Length>1 && arguments[1] != null && !(arguments[1] is object[]))
                     return ApplyMultiFunction(machine, environment, arguments);
 
                 Symbol symbol = (Symbol)arguments[0];
@@ -29,7 +29,7 @@
                 return new DefinedFunction(symbol.Name, argumentNames, body);
             }
 
-            if (!(arguments[0] is object[]))
+            if (arguments.Length>1 && arguments[0]!=null && !(arguments[0] is object[]))
                 return ApplyMultiFunction(machine, environment, arguments);
 
             argumentNames = (object[])arguments[0];

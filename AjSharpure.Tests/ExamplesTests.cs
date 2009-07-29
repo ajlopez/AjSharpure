@@ -316,6 +316,24 @@
             Assert.AreEqual(3, this.ShouldLoadAndEvaluateDefsWithTests("DefTypePredicatesWithTests.ajshp"));
         }
 
+        [TestMethod]
+        [DeploymentItem("Examples/DefCore.ajshp")]
+        public void ShouldParseDefCoreExample()
+        {
+            Parser parser = new Parser(File.OpenText("DefCore.ajshp"));
+
+            for (object result = parser.ParseForm(); result != null; result = parser.ParseForm())
+                Assert.IsInstanceOfType(result, typeof(IList));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples/DefCoreWithTests.ajshp")]
+        [Ignore]
+        public void ShouldDefAndTestCoreFromExample()
+        {
+            Assert.AreEqual(1, this.ShouldLoadAndEvaluateDefsWithTests("DefCoreWithTests.ajshp"));
+        }
+
         private int ShouldLoadAndEvaluateDefsWithTests(string filename)
         {
             Parser parser = new Parser(File.OpenText(filename));

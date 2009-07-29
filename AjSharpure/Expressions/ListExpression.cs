@@ -6,6 +6,8 @@
     using System.Linq;
     using System.Text;
 
+    using AjSharpure.Language;
+
     public class ListExpression : IExpression
     {
         private IList elements;
@@ -22,6 +24,14 @@
             IExpression formhead = (IExpression) Utilities.ToExpression(elements[0]);
 
             IFunction function = (IFunction) formhead.Evaluate(machine, environment);
+
+            if (function == null)
+            {
+                if (elements[0] is INamed)
+                    throw new InvalidOperationException(string.Format("Unknown form {0}", ((INamed) elements[0]).FullName));
+                else
+                    throw new InvalidOperationException(string.Format("Unknown form {0}", elements[0].ToString()));
+            }
 
             object[] arguments = null;
 

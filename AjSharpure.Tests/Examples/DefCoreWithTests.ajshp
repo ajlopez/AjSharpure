@@ -1,0 +1,37 @@
+﻿(def
+ cons (fn* cons [x seq] (. AjSharpure.Operations Cons x seq)))
+
+;during bootstrap we don't have destructuring let, loop or fn, will redefine later
+(def
+ #^{:macro true}
+  let (fn* let [& decl] (cons 'let* decl)))
+
+(def
+ #^{:macro true}
+ loop (fn* loop [& decl] (cons 'loop* decl)))
+
+(def
+ #^{:macro true}
+ fn (fn* fn [& decl] (cons 'fn* decl)))
+
+(def
+ #^{:arglists '([coll])
+    :doc "Returns the first item in the collection. Calls seq on its
+    argument. If coll is nil, returns nil."}
+ first (fn first [coll] (. AjSharpure.Operations (First coll))))
+
+(def
+ #^{:arglists '([coll])
+    :tag clojure.lang.ISeq
+    :doc "Returns a seq of the items after the first. Calls seq on its
+  argument.  If there are no more items, returns nil."}  
+ next (fn next [x] (. AjSharpure.Operations (Next x))))
+
+(def
+ #^{:arglists '([coll])
+    :tag clojure.lang.ISeq
+    :doc "Returns a possibly empty seq of the items after the first. Calls seq on its
+  argument."}  
+ rest (fn rest [x] (. AjSharpure.Operations (More x))))
+
+(= (list 1 2 3) (cons 1 (list 2 3)))

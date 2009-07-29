@@ -34,9 +34,11 @@
             this.environment.SetValue("set!", new SetBangPrimitive());
             this.environment.SetValue("list", new ListPrimitive());
             this.environment.SetValue("def", new DefPrimitive());
+            this.environment.SetValue("let*", new LetPrimitive());
             this.environment.SetValue("let", new LetPrimitive());
             this.environment.SetValue("if", new IfPrimitive());
             this.environment.SetValue("do", new DoPrimitive());
+            this.environment.SetValue("loop*", new LoopPrimitive());
             this.environment.SetValue("loop", new LoopPrimitive());
             this.environment.SetValue("recur", new RecurPrimitive());
             this.environment.SetValue("fn*", new FnStarPrimitive());
