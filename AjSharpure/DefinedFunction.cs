@@ -1,7 +1,7 @@
 ﻿namespace AjSharpure
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections;
     using System.Linq;
     using System.Text;
 
@@ -22,6 +22,11 @@
         }
 
         public string Name { get { return this.name; } }
+
+        public DefinedMacro ToMacro()
+        {
+            return new DefinedMacro(name, arguments, (IList) expression.Value);
+        }
 
         public object Apply(Machine machine, ValueEnvironment environment, object[] argumentValues)
         {

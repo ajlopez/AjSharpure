@@ -17,6 +17,7 @@
         private static Symbol metaSymbol = Symbol.Create("meta");
         private static Symbol derefSymbol = Symbol.Create("deref");
         private static Symbol varSymbol = Symbol.Create("var");
+        private static Keyword tagKeyword = Keyword.Create("tag");
 
         private Lexer lexer;
 
@@ -102,7 +103,21 @@
 
                 if (token.TokenType == TokenType.Macro && token.Value == "#^")
                 {
-                    IDictionary metadata = this.ParseFormMap();
+                    IDictionary metadata = null;
+                    
+                    token = this.lexer.NextToken();
+
+                    if (token != null && token.Value == "{")
+                        metadata = this.ParseFormMap();
+                    else
+                    {
+                        this.lexer.PushToken(token);
+                        object tag = this.ParseForm();
+                        IDictionary dict = new Hashtable();
+                        dict[tagKeyword] = tag;
+                        metadata = new DictionaryObject(dict);
+                    }
+
                     object form = this.ParseForm();
 
                     return Utilities.ToObject(form).WithMetadata((IPersistentMap) metadata);
@@ -149,10 +164,7 @@
                 return this.ParseFormArray();
 
             if (token.TokenType == TokenType.Separator && token.Value == "{")
-            {
-                this.lexer.PushToken(token);
                 return this.ParseFormMap();
-            }
 
             throw new ParserException(string.Format("Unexpected token: {0}", token.Value));
         }
@@ -181,11 +193,6 @@
             IDictionary dictionary = new Hashtable();
 
             Token token = lexer.NextToken();
-
-            if (token == null || token.Value != "{")
-                throw new ParserException("Expected }");
-
-            token = lexer.NextToken();
 
             while (token != null && !(token.TokenType == TokenType.Separator && token.Value == "}"))
             {

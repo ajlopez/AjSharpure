@@ -1234,5 +1234,40 @@
 
             Assert.IsNull(parser.ParseForm());
         }
+
+        [TestMethod]
+        public void ShouldDefineVariableWithMetadataTag()
+        {
+            Machine machine = new Machine();
+            Parser parser = new Parser("(def #^AjSharpure.Language.IObject x 1)");
+
+            machine.Evaluate(parser.ParseForm());
+
+            Variable variable = machine.GetVariable(Utilities.ToVariable(machine, machine.Environment, Symbol.Create("x")));
+
+            Assert.IsNotNull(variable);
+            Assert.IsNotNull(variable.Metadata);
+            Assert.IsInstanceOfType(variable.Metadata, typeof(IDictionary));
+
+            IDictionary dictionary = (IDictionary)variable.Metadata;
+
+            Assert.AreEqual(1, dictionary.Count);
+            Assert.IsTrue(dictionary.Contains(Keyword.Create("tag")));
+            Assert.IsInstanceOfType(dictionary[Keyword.Create("tag")], typeof(Type));
+
+            Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
+        public void ShouldDefineMacroUsingMetadata()
+        {
+            Machine machine = new Machine();
+            Parser parser = new Parser("(def #^{:macro true} let (fn* let [& decl] (cons 'let* decl)))");
+
+            object result = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DefinedMacro));
+        }
     }
 }

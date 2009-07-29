@@ -303,6 +303,16 @@
         }
 
         [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ShouldRaiseIfQualifiedSymbol()
+        {
+            DefPrimitive defprim = new DefPrimitive();
+            Machine machine = new Machine();
+
+            defprim.Apply(machine, machine.Environment, new object[] { Symbol.Create("foo/x"), 1 });
+        }
+
+        [TestMethod]
         public void ShouldDefineAnSpecialForm()
         {
             DefPrimitive defprim = new DefPrimitive();

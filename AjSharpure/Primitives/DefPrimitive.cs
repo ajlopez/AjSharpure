@@ -10,6 +10,8 @@
 
     public class DefPrimitive : IFunction
     {
+        private static Keyword macroKeyword = Keyword.Create("macro");
+
         public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
         {
             Symbol symbol = (Symbol)arguments[0];
@@ -20,8 +22,6 @@
             Variable variable = Utilities.ToVariable(machine, environment, symbol);
 
             object value = machine.Evaluate(arguments[1], environment);
-
-            machine.SetVariableValue(variable, value);
 
             if (symbol.Metadata != null)
             {
@@ -39,7 +39,15 @@
             else
                 variable.ResetMetadata(null);
 
-            if (value is IFunction && ((IFunction) value).IsSpecialForm)
+            IPersistentMap metadata = variable.Metadata;
+
+            if (metadata != null && metadata.ContainsKey(macroKeyword))
+                if ((bool)metadata.ValueAt(macroKeyword) && value is DefinedFunction)
+                    value = ((DefinedFunction)value).ToMacro();
+
+            machine.SetVariableValue(variable, value);
+
+            if (value is IFunction && ((IFunction)value).IsSpecialForm)
                 machine.Environment.SetValue(variable.Name, value, true);
 
             return value;
