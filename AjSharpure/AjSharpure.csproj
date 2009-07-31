@@ -94,6 +94,7 @@
     <Compile Include="Language\Keyword.cs" />
     <Compile Include="Language\LazySequence.cs" />
     <Compile Include="Language\ListObject.cs" />
+    <Compile Include="Language\Namespace.cs" />
     <Compile Include="Language\Numbers.cs" />
     <Compile Include="Language\PersistentList.cs" />
     <Compile Include="Language\SequenceEnumerator.cs" />

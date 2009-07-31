@@ -22,6 +22,8 @@
 
         private Dictionary<Variable, object> variableEnvironment = new Dictionary<Variable, object>();
 
+        private Dictionary<string, Namespace> namespaces = new Dictionary<string, Namespace>();
+
         public ValueEnvironment Environment { get { return this.environment; } }
 
         public Machine()
@@ -105,6 +107,26 @@
         public Variable GetVariable(string fullName)
         {
             return this.GetVariable(Variable.Create(fullName));
+        }
+
+        public Namespace CreateNamespace(string name)
+        {
+            if (namespaces.ContainsKey(name))
+                throw new InvalidOperationException(string.Format("Namespace '{0}' already exists", name));
+
+            Namespace ns = new Namespace(this, name);
+
+            this.namespaces[ns.Name] = ns;
+
+            return ns;
+        }
+
+        public Namespace GetNamespace(string name)
+        {
+            if (!namespaces.ContainsKey(name))
+                return null;
+
+            return namespaces[name];
         }
     }
 }

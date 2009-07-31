@@ -1269,5 +1269,41 @@
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(DefinedMacro));
         }
+
+        [TestMethod]
+        public void CreateNamespace()
+        {
+            Machine machine = new Machine();
+
+            Namespace ns = machine.CreateNamespace("foo");
+
+            Assert.IsNotNull(ns);
+            Assert.AreEqual("foo", ns.Name);
+            Assert.IsTrue(machine == ns.Machine);
+        }
+
+        [TestMethod]
+        public void GetNamespace()
+        {
+            Machine machine = new Machine();
+
+            machine.CreateNamespace("foo");
+
+            Namespace ns = machine.GetNamespace("foo");
+
+            Assert.IsNotNull(ns);
+            Assert.AreEqual("foo", ns.Name);
+            Assert.IsTrue(machine == ns.Machine);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void RaiseIfNamespaceAlreadyExists()
+        {
+            Machine machine = new Machine();
+
+            machine.CreateNamespace("foo");
+            machine.CreateNamespace("foo");
+        }
     }
 }

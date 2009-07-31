@@ -57,6 +57,7 @@
     <Compile Include="ListObjectTests.cs" />
     <Compile Include="MachineTests.cs" />
     <Compile Include="MacroUtilitiesTests.cs" />
+    <Compile Include="NamespaceTests.cs" />
     <Compile Include="NullSequenceFunction.cs" />
     <Compile Include="NumberSequenceFunction.cs" />
     <Compile Include="NumbersTests.cs" />
