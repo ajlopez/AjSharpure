@@ -34,17 +34,16 @@
         [TestMethod]
         public void SetResetAndGetValue()
         {
-            ns.SetValue("foo", "bar");
-            ns.SetValue("foo", "bar2");
+            this.ns.SetValue("foo", "bar");
+            this.ns.SetValue("foo", "bar2");
 
-            Assert.AreEqual("bar2", ns.GetValue("foo"));
+            Assert.AreEqual("bar2", this.ns.GetValue("foo"));
         }
 
         [TestMethod]
         public void SetAndGetNewVariable()
         {
-            Variable variable = Variable.Create(ns.Name, "bar");
-            ns.SetVariable(variable);
+            Variable variable = Variable.Intern(this.machine, ns.Name, "bar");
             Variable var = ns.GetVariable("bar");
 
             Assert.IsNotNull(var);
@@ -55,7 +54,7 @@
         [ExpectedException(typeof(InvalidOperationException))]
         public void RaiseIfVariableHasAnotherNamespace()
         {
-            Variable variable = Variable.Create("other", "bar");
+            Variable variable = Variable.Intern(this.machine, "other", "bar");
             ns.SetVariable(variable);
         }
 
@@ -63,7 +62,7 @@
         [ExpectedException(typeof(InvalidOperationException))]
         public void RaiseIfVariableAlredayDefinedInNamespace()
         {
-            Variable variable = Variable.Create(ns.Name, "bar");
+            Variable variable = Variable.Intern(this.machine, this.ns.Name, "bar");
             ns.SetVariable(variable);
             ns.SetVariable(variable);
         }

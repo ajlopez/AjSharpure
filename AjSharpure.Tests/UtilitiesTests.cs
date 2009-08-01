@@ -206,7 +206,11 @@
             Assert.IsTrue(Utilities.Equals(null, null));
             Assert.IsTrue(Utilities.Equals("foo", "foo"));
             Assert.IsTrue(Utilities.Equals(Symbol.Create("bar"), Symbol.Create("bar")));
-            Assert.IsTrue(Utilities.Equals(Variable.Create("foo","bar"),Variable.Create("foo","bar")));
+
+            Machine machine = new Machine();
+            machine.CreateNamespace("foo");
+
+            Assert.IsTrue(Utilities.Equals(Variable.Intern(machine, "foo","bar"), Variable.Intern(machine, "foo","bar")));
         }
 
         [TestMethod]

@@ -14,22 +14,34 @@
         private int hash;
         private string fullName;
 
-        public static Variable Create(string ns, string name)
+        public static Variable Intern(Machine machine, string ns, string name)
         {
-            return new Variable(ns, name);
+            if (string.IsNullOrEmpty(ns))
+                throw new InvalidOperationException("Variable has no namespace");
+
+            Variable variable = machine.GetVariable(ns, name);
+
+            if (variable != null)
+                return variable;
+
+            variable = new Variable(ns, name);
+
+            machine.SetVariable(variable);
+
+            return variable;
         }
 
-        public static Variable Create(string name)
+        public static Variable Intern(Machine machine, string name)
         {
             if (name.Length == 1 && name.Equals("/"))
-                return Create(null, name);
+                return Intern(machine, null, name);
 
             int position = name.LastIndexOf('/');
 
             if (position == -1)
-                return Create(null, name);
+                return Intern(machine, null, name);
 
-            return Create(name.Substring(0, position), name.Substring(position + 1));
+            return Intern(machine, name.Substring(0, position), name.Substring(position + 1));
         }
 
         protected Variable(string ns, string name)

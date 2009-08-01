@@ -272,9 +272,7 @@
             Assert.IsInstanceOfType(result, typeof(int));
             Assert.AreEqual(1, result);
 
-            string fullName = Utilities.GetFullName((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x");
-
-            object value = machine.GetVariableValue(Variable.Create(fullName));
+            object value = machine.GetVariableValue((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x");
 
             Assert.IsNotNull(value);
             Assert.AreEqual(1, value);
@@ -292,9 +290,7 @@
             Assert.IsInstanceOfType(result, typeof(int));
             Assert.AreEqual(1, result);
 
-            string fullName = Utilities.GetFullName((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x");
-
-            object value = machine.GetVariableValue(Variable.Create(fullName));
+            object value = machine.GetVariableValue((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x");
 
             Assert.IsNotNull(value);
             Assert.AreEqual(1, value);
@@ -306,7 +302,7 @@
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(int));
             Assert.AreEqual(2, result);
-            Assert.AreEqual(2, machine.GetVariableValue(Variable.Create(fullName)));
+            Assert.AreEqual(2, machine.GetVariableValue((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x"));
         }
 
         [TestMethod]
@@ -317,9 +313,7 @@
 
             machine.Evaluate(parser.ParseForm());
 
-            string fullName = Utilities.GetFullName((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x");
-
-            object value = machine.GetVariableValue(fullName);
+            object value = machine.GetVariableValue((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x");
 
             Assert.IsNotNull(value);
             Assert.AreEqual(1, value);
@@ -335,9 +329,7 @@
 
             machine.Evaluate(parser.ParseForm());
 
-            string fullName = Utilities.GetFullName((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x");
-
-            object value = machine.GetVariableValue(fullName);
+            object value = machine.GetVariableValue((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x");
 
             Assert.IsNotNull(value);
             Assert.AreEqual(1, value);
@@ -1048,7 +1040,7 @@
         {
             Parser parser = new Parser("(var x)");
             Machine machine = new Machine();
-            machine.SetVariableValue(Variable.Create((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x"), 1);
+            machine.SetVariableValue(Variable.Intern(machine, (string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x"), 1);
 
             object result = machine.Evaluate(parser.ParseForm());
 
@@ -1067,7 +1059,7 @@
             Parser parser = new Parser("(var foo/x)");
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
-            machine.SetVariableValue(Variable.Create("foo", "x"), 1);
+            machine.SetVariableValue(Variable.Intern(machine, "foo", "x"), 1);
 
             object result = machine.Evaluate(parser.ParseForm());
 
@@ -1085,7 +1077,7 @@
         {
             Parser parser = new Parser("#'x");
             Machine machine = new Machine();
-            machine.SetVariableValue(Variable.Create((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x"), 1);
+            machine.SetVariableValue(Variable.Intern(machine, (string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x"), 1);
 
             object result = machine.Evaluate(parser.ParseForm());
 
@@ -1103,7 +1095,7 @@
         {
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
-            Variable variable = Variable.Create("foo", "bar");
+            Variable variable = Variable.Intern(machine, "foo", "bar");
 
             machine.SetVariableValue(variable, 3);
 
@@ -1119,8 +1111,8 @@
         {
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
-            Variable variable = Variable.Create("foo", "bar");
-            Variable variable2 = Variable.Create("foo/bar");
+            Variable variable = Variable.Intern(machine, "foo", "bar");
+            Variable variable2 = Variable.Intern(machine, "foo/bar");
 
             machine.SetVariableValue(variable, 3);
 
@@ -1136,11 +1128,11 @@
         {
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
-            Variable variable = Variable.Create("foo", "bar");
+            Variable variable = Variable.Intern(machine, "foo", "bar");
 
             machine.SetVariableValue(variable, 3);
 
-            object result = machine.GetVariableValue("foo/bar");
+            object result = machine.GetVariableValue("foo", "bar");
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(int));
@@ -1152,8 +1144,7 @@
         {
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
-            Variable variable = Variable.Create("foo", "bar");
-            machine.GetNamespace("foo").SetVariable(variable);
+            Variable variable = Variable.Intern(machine, "foo", "bar");
 
             object result = machine.GetVariableValue(variable);
 
@@ -1165,9 +1156,8 @@
         {
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
-            Variable variable = Variable.Create("foo", "bar");
 
-            Variable result = machine.GetVariable(variable);
+            Variable result = machine.GetVariable("foo", "bar");
 
             Assert.IsNull(result);
         }
@@ -1177,7 +1167,7 @@
         {
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
-            Variable variable = Variable.Create("foo", "bar");
+            Variable variable = Variable.Intern(machine, "foo", "bar");
 
             machine.SetVariableValue(variable, 3);
 
@@ -1193,11 +1183,11 @@
         {
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
-            Variable variable = Variable.Create("foo", "bar");
+            Variable variable = Variable.Intern(machine, "foo", "bar");
 
             machine.SetVariableValue(variable, 3);
 
-            Variable result = machine.GetVariable("foo/bar");
+            Variable result = machine.GetVariable("foo","bar");
 
             Assert.IsNotNull(result);
 

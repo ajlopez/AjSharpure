@@ -230,15 +230,15 @@
                 result = parser.ParseForm();
             }
 
-            Assert.IsNotNull(machine.GetVariableValue(Utilities.GetFullName(Machine.AjSharpureCoreKey, "cons")));
-            Assert.IsNotNull(machine.GetVariableValue(Utilities.GetFullName(Machine.AjSharpureCoreKey, "first")));
-            Assert.IsNotNull(machine.GetVariableValue(Utilities.GetFullName(Machine.AjSharpureCoreKey, "next")));
-            Assert.IsNotNull(machine.GetVariableValue(Utilities.GetFullName(Machine.AjSharpureCoreKey, "rest")));
-            Assert.IsNotNull(machine.GetVariableValue(Utilities.GetFullName(Machine.AjSharpureCoreKey, "second")));
-            Assert.IsNotNull(machine.GetVariableValue(Utilities.GetFullName(Machine.AjSharpureCoreKey, "ffirst")));
-            Assert.IsNotNull(machine.GetVariableValue(Utilities.GetFullName(Machine.AjSharpureCoreKey, "nfirst")));
-            Assert.IsNotNull(machine.GetVariableValue(Utilities.GetFullName(Machine.AjSharpureCoreKey, "fnext")));
-            Assert.IsNotNull(machine.GetVariableValue(Utilities.GetFullName(Machine.AjSharpureCoreKey, "nnext")));
+            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreKey, "cons"));
+            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreKey, "first"));
+            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreKey, "next"));
+            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreKey, "rest"));
+            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreKey, "second"));
+            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreKey, "ffirst"));
+            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreKey, "nfirst"));
+            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreKey, "fnext"));
+            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreKey, "nnext"));
         }
 
         [TestMethod]

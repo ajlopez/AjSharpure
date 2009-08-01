@@ -69,7 +69,7 @@
         {
             Symbol symbol = Symbol.Create("foo");
             Machine machine = new Machine();
-            Variable variable = Variable.Create((string) machine.Environment.GetValue(Machine.CurrentNamespaceKey), "foo");
+            Variable variable = Variable.Intern(machine, (string) machine.Environment.GetValue(Machine.CurrentNamespaceKey), "foo");
 
             machine.SetVariableValue(variable, "bar");
 

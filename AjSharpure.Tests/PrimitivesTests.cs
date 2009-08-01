@@ -233,7 +233,7 @@
         {
             VarPrimitive varprim = new VarPrimitive();
             Machine machine = new Machine();
-            machine.SetVariableValue(Variable.Create((string) machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x"), "bar");
+            machine.SetVariableValue(Variable.Intern(machine, (string) machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x"), "bar");
 
             object result= varprim.Apply(machine, machine.Environment, new object[] { Symbol.Create("x") });
 
@@ -253,7 +253,7 @@
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
 
-            machine.SetVariableValue(Variable.Create("foo", "x"), "bar");
+            machine.SetVariableValue(Variable.Intern(machine, "foo", "x"), "bar");
 
             object result = varprim.Apply(machine, machine.Environment, new object[] { Symbol.Create("foo/x") });
 
@@ -298,7 +298,7 @@
             Assert.IsInstanceOfType(result, typeof(int));
             Assert.AreEqual(1, result);
 
-            object value = machine.GetVariableValue(Utilities.GetFullName((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x"));
+            object value = machine.GetVariableValue((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x");
 
             Assert.IsNotNull(value);
             Assert.IsInstanceOfType(value, typeof(int));
@@ -328,7 +328,7 @@
             Assert.IsInstanceOfType(result, typeof(DefinedSpecialForm));
             Assert.IsTrue(sf == result);
 
-            object value = machine.GetVariableValue(Utilities.GetFullName((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x"));
+            object value = machine.GetVariableValue((string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x");
 
             Assert.IsNotNull(value);
             Assert.IsInstanceOfType(value, typeof(DefinedSpecialForm));

@@ -267,12 +267,10 @@
 
             string name = symbol.Name;
 
-            string fullName = GetFullName(ns, name);
-
-            Variable variable = machine.GetVariable(fullName);
+            Variable variable = machine.GetVariable(ns, name);
 
             if (variable == null)
-                variable = Variable.Create(ns, name);
+                variable = Variable.Intern(machine, ns, name);
 
             return variable;
         }

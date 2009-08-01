@@ -18,7 +18,7 @@
 
         public object Evaluate(Machine machine, ValueEnvironment environment)
         {
-            string fullName = null;
+            string nsname = null;
 
             if (string.IsNullOrEmpty(symbol.Namespace))
             {
@@ -28,22 +28,23 @@
 
                 // Test if it is a Type
                 // TODO import treatment
-                if (symbol.Name.IndexOf('.')>0) {
+                if (symbol.Name.IndexOf('.') > 0)
+                {
                     Type type = Utilities.GetType(symbol.Name);
 
-                    if (type!=null)
+                    if (type != null)
                         return type;
                 }
 
                 if (environment.IsDefined(symbol.Name))
                     return environment.GetValue(symbol.Name);
 
-                fullName = Utilities.GetFullName((string) environment.GetValue(Machine.CurrentNamespaceKey), symbol.Name);
+                nsname = (string)environment.GetValue(Machine.CurrentNamespaceKey);
             }
             else
-                fullName = symbol.FullName;
+                nsname = this.symbol.Namespace;
 
-            return machine.GetVariableValue(fullName);
+            return machine.GetVariableValue(nsname, this.symbol.Name);
         }
 
         public object Value

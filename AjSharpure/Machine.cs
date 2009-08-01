@@ -92,29 +92,30 @@
 
         public object GetVariableValue(Variable variable)
         {
-            Namespace ns = this.GetNamespace(variable.Namespace);
-            return ns.GetValue(variable.Name);
-            //if (this.variableEnvironment.ContainsKey(variable))
-            //    return this.variableEnvironment[variable];
-
-            //return null;
+            return this.GetVariableValue(variable.Namespace, variable.Name);
         }
 
-        public object GetVariableValue(string fullName)
+        public object GetVariableValue(string nsname, string name)
         {
-            return GetVariableValue(Variable.Create(fullName));
+            Namespace ns = this.GetNamespace(nsname);
+            return ns.GetValue(name);
         }
 
         public Variable GetVariable(Variable variable)
         {
-            Namespace ns = this.GetNamespace(variable.Namespace);
-            return ns.GetVariable(variable.Name);
+            return this.GetVariable(variable.Namespace, variable.Name);
         }
 
-        public Variable GetVariable(string fullName)
+        public Variable GetVariable(string nsname, string name)
         {
-            // TODO improve, without creating a variable, using namespace and name from fullName
-            return this.GetVariable(Variable.Create(fullName));
+            Namespace ns = this.GetNamespace(nsname);
+            return ns.GetVariable(name);
+        }
+
+        public void SetVariable(Variable variable)
+        {
+            Namespace ns = this.GetNamespace(variable.Namespace);
+            ns.SetVariable(variable);
         }
 
         public Namespace CreateNamespace(string name)
