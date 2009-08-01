@@ -251,6 +251,7 @@
         {
             VarPrimitive varprim = new VarPrimitive();
             Machine machine = new Machine();
+            machine.CreateNamespace("foo");
 
             machine.SetVariableValue(Variable.Create("foo", "x"), "bar");
 

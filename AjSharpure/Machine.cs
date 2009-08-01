@@ -28,6 +28,7 @@
 
         public Machine()
         {
+            this.CreateNamespace(AjSharpureCoreKey);
             this.environment.SetValue(CurrentNamespaceKey, AjSharpureCoreKey);
             this.environment.SetValue("true", true);
             this.environment.SetValue("false", false);
@@ -80,15 +81,23 @@
 
         public void SetVariableValue(Variable variable, object value)
         {
-            variableEnvironment[variable] = value;
+            Namespace ns = this.GetNamespace(variable.Namespace);
+            Variable var = ns.GetVariable(variable.Name);
+
+            if (var == null)
+                ns.SetVariable(variable);
+
+            ns.SetValue(variable.Name, value);
         }
 
         public object GetVariableValue(Variable variable)
         {
-            if (this.variableEnvironment.ContainsKey(variable))
-                return this.variableEnvironment[variable];
+            Namespace ns = this.GetNamespace(variable.Namespace);
+            return ns.GetValue(variable.Name);
+            //if (this.variableEnvironment.ContainsKey(variable))
+            //    return this.variableEnvironment[variable];
 
-            return null;
+            //return null;
         }
 
         public object GetVariableValue(string fullName)
@@ -98,14 +107,13 @@
 
         public Variable GetVariable(Variable variable)
         {
-            if (this.variableEnvironment.ContainsKey(variable))
-                return this.variableEnvironment.Keys.Single(v => v.Equals(variable));
-
-            return null;
+            Namespace ns = this.GetNamespace(variable.Namespace);
+            return ns.GetVariable(variable.Name);
         }
 
         public Variable GetVariable(string fullName)
         {
+            // TODO improve, without creating a variable, using namespace and name from fullName
             return this.GetVariable(Variable.Create(fullName));
         }
 
@@ -124,7 +132,7 @@
         public Namespace GetNamespace(string name)
         {
             if (!namespaces.ContainsKey(name))
-                return null;
+                throw new InvalidOperationException(string.Format("Namespace '{0}' doesn't exists", name));
 
             return namespaces[name];
         }

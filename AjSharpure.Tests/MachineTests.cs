@@ -1066,6 +1066,7 @@
         {
             Parser parser = new Parser("(var foo/x)");
             Machine machine = new Machine();
+            machine.CreateNamespace("foo");
             machine.SetVariableValue(Variable.Create("foo", "x"), 1);
 
             object result = machine.Evaluate(parser.ParseForm());
@@ -1101,6 +1102,7 @@
         public void ShouldSetAndGetVariableValue()
         {
             Machine machine = new Machine();
+            machine.CreateNamespace("foo");
             Variable variable = Variable.Create("foo", "bar");
 
             machine.SetVariableValue(variable, 3);
@@ -1116,6 +1118,7 @@
         public void ShouldSetAndGetVariableValueUsingAnotherVariable()
         {
             Machine machine = new Machine();
+            machine.CreateNamespace("foo");
             Variable variable = Variable.Create("foo", "bar");
             Variable variable2 = Variable.Create("foo/bar");
 
@@ -1132,6 +1135,7 @@
         public void ShouldSetAndGetVariableValueUsingFullName()
         {
             Machine machine = new Machine();
+            machine.CreateNamespace("foo");
             Variable variable = Variable.Create("foo", "bar");
 
             machine.SetVariableValue(variable, 3);
@@ -1144,10 +1148,12 @@
         }
 
         [TestMethod]
-        public void ShouldGetNullValueIfVariableIsUndefined()
+        public void ShouldGetNullValueIfVariableHasNoValue()
         {
             Machine machine = new Machine();
+            machine.CreateNamespace("foo");
             Variable variable = Variable.Create("foo", "bar");
+            machine.GetNamespace("foo").SetVariable(variable);
 
             object result = machine.GetVariableValue(variable);
 
@@ -1158,6 +1164,7 @@
         public void ShouldGetNullVariableIfVariableIsUndefined()
         {
             Machine machine = new Machine();
+            machine.CreateNamespace("foo");
             Variable variable = Variable.Create("foo", "bar");
 
             Variable result = machine.GetVariable(variable);
@@ -1169,6 +1176,7 @@
         public void ShouldGetTheSameDefinedVariable()
         {
             Machine machine = new Machine();
+            machine.CreateNamespace("foo");
             Variable variable = Variable.Create("foo", "bar");
 
             machine.SetVariableValue(variable, 3);
@@ -1184,6 +1192,7 @@
         public void ShouldGetTheSameDefinedVariableUsingFullName()
         {
             Machine machine = new Machine();
+            machine.CreateNamespace("foo");
             Variable variable = Variable.Create("foo", "bar");
 
             machine.SetVariableValue(variable, 3);
@@ -1304,6 +1313,15 @@
 
             machine.CreateNamespace("foo");
             machine.CreateNamespace("foo");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void RaiseIfNamespaceDoesNotExist()
+        {
+            Machine machine = new Machine();
+
+            machine.GetNamespace("foo");
         }
     }
 }
