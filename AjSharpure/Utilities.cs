@@ -83,6 +83,64 @@
 
         public static void Print(object obj, TextWriter writer)
         {
+            if (obj == null)
+            {
+                writer.Write("nil");
+                return;
+            }
+
+            if (obj is String)
+            {
+                writer.Write('"');
+                writer.Write((string)obj);
+                writer.Write('"');
+                return;
+            }
+
+            if (obj is Symbol)
+            {
+                writer.Write(((Symbol)obj).FullName);
+                return;
+            }
+
+            if (obj is System.Array)
+            {
+                writer.Write("[");
+                System.Array array = (System.Array)obj;
+
+                for (int k = 0; k < array.Length; k++)
+                {
+                    if (k > 0)
+                        writer.Write(" ");
+
+                    Print(array.GetValue(k), writer);
+                }
+
+                writer.Write("]");
+
+                return;
+            }
+
+            if (obj is IEnumerable)
+            {
+                writer.Write("(");
+                int count = 0;
+
+                foreach (object element in (IEnumerable) obj)
+                {
+                    if (count > 0)
+                        writer.Write(" ");
+
+                    Print(element, writer);
+
+                    count++;
+                }
+
+                writer.Write(")");
+
+                return;
+            }
+
             writer.Write(obj.ToString());
         }
 

@@ -77,8 +77,8 @@
         [TestMethod]
         public void ShouldPrintString()
         {
-            Assert.AreEqual("foo", Utilities.PrintString("foo"));
-            Assert.AreEqual("bar", Utilities.PrintString("bar"));
+            Assert.AreEqual("\"foo\"", Utilities.PrintString("foo"));
+            Assert.AreEqual("\"bar\"", Utilities.PrintString("bar"));
         }
 
         [TestMethod]
@@ -312,6 +312,38 @@
             Assert.AreEqual(2, newdict["two"]);
             Assert.IsTrue(newdict.Contains("three"));
             Assert.AreEqual(3, newdict["three"]);
+        }
+
+        [TestMethod]
+        public void GetPrintStringForSimpleObjects()
+        {
+            Assert.AreEqual("1", Utilities.PrintString(1));
+            Assert.AreEqual("nil", Utilities.PrintString(null));
+            Assert.AreEqual("\"foo\"", Utilities.PrintString("foo"));
+        }
+
+        [TestMethod]
+        public void GetPrintStringForSymbols()
+        {
+            Assert.AreEqual("x", Utilities.PrintString(Symbol.Create("x")));
+            Assert.AreEqual("foo/bar", Utilities.PrintString(Symbol.Create("foo", "bar")));
+        }
+
+        [TestMethod]
+        public void GetPrintStringForSimpleArray()
+        {
+            Assert.AreEqual("[1 2 3]", Utilities.PrintString(new int[] { 1, 2, 3 }));
+        }
+
+        [TestMethod]
+        public void GetPrintStringForSimpleList()
+        {
+            IList list = new ArrayList();
+            list.Add(1);
+            list.Add(2);
+            list.Add(3);
+
+            Assert.AreEqual("(1 2 3)", Utilities.PrintString(list));
         }
     }
 }
