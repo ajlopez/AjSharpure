@@ -1,4 +1,6 @@
-﻿(def
+﻿; list already defined in Machine
+
+(def
  cons (fn* cons [x seq] (. AjSharpure.Operations Cons x seq)))
 
 ;during bootstrap we don't have destructuring let, loop or fn, will redefine later
@@ -34,4 +36,95 @@
   argument."}  
  rest (fn rest [x] (. AjSharpure.Operations (More x))))
 
+(def
+ #^{:doc "Same as (first (next x))"
+    :arglists '([x])}
+ second (fn second [x] (first (next x))))
+
 (= (list 1 2 3) (cons 1 (list 2 3)))
+(= (rest (list 1 2 3)) '(2 3))
+(= 1 (first (list 1 2 3)))
+(= 2 (second (list 1 2 3)))
+
+(def
+ #^{:doc "Same as (first (first x))"
+    :arglists '([x])}
+ ffirst (fn ffirst [x] (first (first x))))
+
+(= 1 (ffirst (list (list 1) 2 3)))
+
+(def
+ #^{:doc "Same as (next (first x))"
+    :arglists '([x])}
+ nfirst (fn nfirst [x] (next (first x))))
+
+(= (list 2) (nfirst (list (list 1 2) 2 3)))
+
+(def
+ #^{:doc "Same as (first (next x))"
+    :arglists '([x])}
+ fnext (fn fnext [x] (first (next x))))
+
+(= 2 (fnext (list 1 2 3)))
+
+(def
+ #^{:doc "Same as (next (next x))"
+    :arglists '([x])}
+ nnext (fn nnext [x] (next (next x))))
+
+(= (list 3) (nnext (list 1 2 3)))
+
+(def
+ #^{:arglists '([coll])
+    :doc "Returns a seq on the collection. If the collection is
+    empty, returns nil.  (seq nil) returns nil. seq also works on
+    Strings, native Java arrays (of reference types) and any objects
+    that implement Iterable."
+    :tag clojure.lang.ISeq}
+ seq (fn seq [coll] (. AjSharpure.Operations (ToSequence coll))))
+
+(= '(1 2 3) (seq (list 1 2 3)))
+
+(def
+ #^{:arglists '([#^Class c x])
+    :doc "Evaluates x and tests if it is an instance of the class
+    c. Returns true or false"}
+ instance? (fn instance? [#^Class c x] (. c (IsInstanceOfType x))))
+ 
+(instance? System.Int32 18)
+ 
+(def
+ #^{:arglists '([x])
+    :doc "Return true if x implements ISeq"}
+ seq? (fn seq? [x] (instance? AjSharpure.Language.ISequence x)))
+
+(seq? (seq (list 1 2 3)))
+
+(def
+ #^{:arglists '([x])
+    :doc "Return true if x is a String"}
+ string? (fn string? [x] (instance? System.String x)))
+
+(string? "foo")
+
+(def
+ #^{:arglists '([x])
+    :doc "Return true if x implements IPersistentMap"}
+ map? (fn map? [x] (instance? AjSharpure.Language.IPersistentMap x)))
+
+(def
+ #^{:arglists '([x])
+    :doc "Return true if x implements IPersistentVector "}
+ vector? (fn vector? [x] (instance? System.Array x)))
+
+(def
+ #^{:private true}
+ sigs
+ (fn [fdecl]
+   (if (seq? (first fdecl))
+     (loop [ret [] fdecl fdecl]
+       (if fdecl
+         (recur (conj ret (first (first fdecl))) (next fdecl))
+         (seq ret)))
+     (list (first fdecl)))))
+

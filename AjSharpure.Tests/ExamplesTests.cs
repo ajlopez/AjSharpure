@@ -327,11 +327,24 @@
         }
 
         [TestMethod]
+        [DeploymentItem("Examples/DefConsWithTests.ajshp")]
+        public void ShouldDefAndTestConsFromExample()
+        {
+            Assert.AreEqual(1, this.ShouldLoadAndEvaluateDefsWithTests("DefConsWithTests.ajshp"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples/DefFnWithTests.ajshp")]
+        public void ShouldDefAndTestFnFromExample()
+        {
+            Assert.AreEqual(1, this.ShouldLoadAndEvaluateDefsWithTests("DefFnWithTests.ajshp"));
+        }
+
+        [TestMethod]
         [DeploymentItem("Examples/DefCoreWithTests.ajshp")]
-        [Ignore]
         public void ShouldDefAndTestCoreFromExample()
         {
-            Assert.AreEqual(1, this.ShouldLoadAndEvaluateDefsWithTests("DefCoreWithTests.ajshp"));
+            Assert.AreEqual(12, this.ShouldLoadAndEvaluateDefsWithTests("DefCoreWithTests.ajshp"));
         }
 
         private int ShouldLoadAndEvaluateDefsWithTests(string filename)

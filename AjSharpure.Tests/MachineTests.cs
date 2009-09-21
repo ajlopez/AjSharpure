@@ -17,7 +17,7 @@
     public class MachineTests
     {
         [TestMethod]
-        public void ShouldBeCreatedWithEnvironmentAndCurrentNamespace()
+        public void BeCreatedWithEnvironmentAndCurrentNamespace()
         {
             Machine machine = new Machine();
 
@@ -26,7 +26,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateSymbolExpression()
+        public void EvaluateSymbolExpression()
         {
             Parser parser = new Parser("foo");
             Machine machine = new Machine();
@@ -39,7 +39,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateQuotedSymbol()
+        public void EvaluateQuotedSymbol()
         {
             Parser parser = new Parser("'foo");
             Machine machine = new Machine();
@@ -52,7 +52,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateQuotedList()
+        public void EvaluateQuotedList()
         {
             Parser parser = new Parser("'(1 2 3)");
             Machine machine = new Machine();
@@ -71,7 +71,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateQuotedArray()
+        public void EvaluateQuotedArray()
         {
             Parser parser = new Parser("'[1 2 3]");
             Machine machine = new Machine();
@@ -91,7 +91,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateArray()
+        public void EvaluateArray()
         {
             Parser parser = new Parser("[1 2 3]");
             Machine machine = new Machine();
@@ -111,7 +111,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateArrayWithSymbols()
+        public void EvaluateArrayWithSymbols()
         {
             Parser parser = new Parser("[one two three]");
             Machine machine = new Machine();
@@ -135,7 +135,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateArrayWithKeywords()
+        public void EvaluateArrayWithKeywords()
         {
             Parser parser = new Parser("[:one :two :three]");
             Machine machine = new Machine();
@@ -155,7 +155,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateMap()
+        public void EvaluateMap()
         {
             Parser parser = new Parser("{:one 1 :two 2 :three 3}");
 
@@ -177,7 +177,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateMapWithSymbols()
+        public void EvaluateMapWithSymbols()
         {
             Parser parser = new Parser("{:one one :two two :three three}");
 
@@ -203,7 +203,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateSetBangExpression()
+        public void EvaluateSetBangExpression()
         {
             Parser parser = new Parser("(set! foo \"bar\")");
             Machine machine = new Machine();
@@ -222,7 +222,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateSetBangExpressionWithSymbol()
+        public void EvaluateSetBangExpressionWithSymbol()
         {
             Parser parser = new Parser("(set! foo mybar)");
             Machine machine = new Machine();
@@ -242,7 +242,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateSimpleListExpression()
+        public void EvaluateSimpleListExpression()
         {
             Parser parser = new Parser("(list 1 2 3)");
             Machine machine = new Machine();
@@ -261,7 +261,7 @@
         }
 
         [TestMethod]
-        public void ShouldDefineAVariable()
+        public void DefineAVariable()
         {
             Parser parser = new Parser("(def x 1)");
             Machine machine = new Machine();
@@ -279,7 +279,7 @@
         }
 
         [TestMethod]
-        public void ShouldRedefineAVariable()
+        public void RedefineAVariable()
         {
             Parser parser = new Parser("(def x 1)");
             Machine machine = new Machine();
@@ -306,7 +306,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateSimpleDef()
+        public void EvaluateSimpleDef()
         {
             Parser parser = new Parser("(def x 1)");
             Machine machine = new Machine();
@@ -320,7 +320,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateSimpleDefWithSymbol()
+        public void EvaluateSimpleDefWithSymbol()
         {
             Parser parser = new Parser("(def x one)");
             Machine machine = new Machine();
@@ -336,7 +336,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateDotInvocation()
+        public void EvaluateDotInvocation()
         {
             Parser parser = new Parser("(. AjSharpure.Utilities (IsEvaluable 1))");
             Machine machine = new Machine();
@@ -349,7 +349,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateDotInvocationUsingDirectNameAndArguments()
+        public void EvaluateDotInvocationUsingDirectNameAndArguments()
         {
             Parser parser = new Parser("(. AjSharpure.Utilities IsEvaluable 1)");
             Machine machine = new Machine();
@@ -362,7 +362,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateDotInvocationUsingSymbol()
+        public void EvaluateDotInvocationUsingSymbol()
         {
             Parser parser = new Parser("(. AjSharpure.Utilities (IsEvaluable one))");
             Machine machine = new Machine();
@@ -376,7 +376,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateDotInvocationUsingSymbolAndDirectNameAndArguments()
+        public void EvaluateDotInvocationUsingSymbolAndDirectNameAndArguments()
         {
             Parser parser = new Parser("(. AjSharpure.Utilities IsEvaluable one)");
             Machine machine = new Machine();
@@ -390,7 +390,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateDotInvocationWithTwoParameters()
+        public void EvaluateDotInvocationWithTwoParameters()
         {
             Parser parser = new Parser("(. AjSharpure.Utilities (CombineHash 1 2))");
             Machine machine = new Machine();
@@ -403,7 +403,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateDotInvocationWithTwoParametersAndDirectNameAndArguments()
+        public void EvaluateDotInvocationWithTwoParametersAndDirectNameAndArguments()
         {
             Parser parser = new Parser("(. AjSharpure.Utilities CombineHash 1 2)");
             Machine machine = new Machine();
@@ -416,7 +416,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateToSequenceUsingUtilitiesToSequence()
+        public void EvaluateToSequenceUsingUtilitiesToSequence()
         {
             Parser parser = new Parser("(. AjSharpure.Utilities ToSequence [1 2])");
             Machine machine = new Machine();
@@ -435,7 +435,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateDotInvocationOnInstance()
+        public void EvaluateDotInvocationOnInstance()
         {
             Parser parser = new Parser("(def x 1) (. x ToString)");
             Machine machine = new Machine();
@@ -449,7 +449,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateDotInvocationOnInstanceUsingList()
+        public void EvaluateDotInvocationOnInstanceUsingList()
         {
             Parser parser = new Parser("(def x 123) (. (. x ToString) (Substring 1)");
             Machine machine = new Machine();
@@ -463,7 +463,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateDefinedFunction()
+        public void EvaluateDefinedFunction()
         {
             Parser parser = new Parser("(def simple-list (fn* simple-list [x y] (list x y))) (simple-list 1 2)");
             Machine machine = new Machine();
@@ -478,7 +478,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateDefinedSpecialForm()
+        public void EvaluateDefinedSpecialForm()
         {
             Parser parser = new Parser("(def myquote (sf* myquote [x] x)) (myquote x)");
             Machine machine = new Machine();
@@ -497,7 +497,7 @@
         }
 
         [TestMethod]
-        public void ShouldDefineAndEvaluateSeq()
+        public void DefineAndEvaluateSeq()
         {
             Parser parser = new Parser("(def seq (fn* [coll] (. AjSharpure.Utilities ToSequence coll))) (seq [1 2])");
             Machine machine = new Machine();
@@ -523,7 +523,32 @@
         }
 
         [TestMethod]
-        public void ShouldDefineAndEvaluateInstancePredicate()
+        public void DefineAndEvaluateAFunctionUsingAmpersand()
+        {
+            Parser parser = new Parser("(def mylist (fn* [& coll] coll)) (mylist 1 2)");
+            Machine machine = new Machine();
+
+            object value = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(value);
+            Assert.IsInstanceOfType(value, typeof(DefinedFunction));
+
+            object result = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IList));
+
+            IList list = (IList)result;
+
+            Assert.AreEqual(2, list.Count);
+            Assert.AreEqual(1, list[0]);
+            Assert.AreEqual(2, list[1]);
+
+            Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
+        public void DefineAndEvaluateInstancePredicate()
         {
             Parser parser = new Parser("(def instance? (fn* [type obj] (. type IsInstanceOfType obj))) (instance? System.String \"foo\")");
             Machine machine = new Machine();
@@ -543,7 +568,7 @@
         }
 
         [TestMethod]
-        public void ShouldDefineAndEvaluateSeqPredicate()
+        public void DefineAndEvaluateSeqPredicate()
         {
             Parser parser = new Parser("(def instance? (fn* [type obj] (. type IsInstanceOfType obj))) (def seq? (fn* [obj] (instance? AjSharpure.Language.ISequence obj))) (seq? (. AjSharpure.Utilities ToSequence \"foo\")");
             Machine machine = new Machine();
@@ -568,7 +593,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateSimpleDo()
+        public void EvaluateSimpleDo()
         {
             Parser parser = new Parser("(do 1 2 3)");
             Machine machine = new Machine();
@@ -581,7 +606,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateDoWithSymbols()
+        public void EvaluateDoWithSymbols()
         {
             Parser parser = new Parser("(def x 1) (def y 2) (def z 3) (do x y z)");
             Machine machine = new Machine();
@@ -597,7 +622,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateDoWithExpression()
+        public void EvaluateDoWithExpression()
         {
             Parser parser = new Parser("(do 1 2 (list 1 2 3))");
             Machine machine = new Machine();
@@ -616,7 +641,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateSimpleLet()
+        public void EvaluateSimpleLet()
         {
             Parser parser = new Parser("(let [x 1] x)");
             Machine machine = new Machine();
@@ -629,7 +654,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateSimpleLetWithTwoBindings()
+        public void EvaluateSimpleLetWithTwoBindings()
         {
             Parser parser = new Parser("(let [x 1 y 2] x)");
             Machine machine = new Machine();
@@ -642,7 +667,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateSimpleLetWithRebindings()
+        public void EvaluateSimpleLetWithRebindings()
         {
             Parser parser = new Parser("(let [x 1 x 2] x)");
             Machine machine = new Machine();
@@ -655,7 +680,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateTrueFalseAndNil()
+        public void EvaluateTrueFalseAndNil()
         {
             Parser parser = new Parser("true false nil");
             Machine machine = new Machine();
@@ -680,7 +705,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateSimpleIf()
+        public void EvaluateSimpleIf()
         {
             Parser parser = new Parser("(if true 1)");
             Machine machine = new Machine();
@@ -694,7 +719,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateSimpleIfElse()
+        public void EvaluateSimpleIfElse()
         {
             Parser parser = new Parser("(if false 1 2)");
             Machine machine = new Machine();
@@ -708,7 +733,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateIf()
+        public void EvaluateIf()
         {
             Parser parser = new Parser("(def x true) (if x (list 1 2 3))");
             Machine machine = new Machine();
@@ -730,7 +755,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateSimpleLoopWithRecur()
+        public void EvaluateSimpleLoopWithRecur()
         {
             Parser parser = new Parser("(loop [x true y (list 1 2)] (if x (recur false (list 1 2 3)) y)");
             Machine machine = new Machine();
@@ -751,7 +776,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateLoopWithRecur()
+        public void EvaluateLoopWithRecur()
         {
             Parser parser = new Parser("(loop [x true y (list 1 2) z1 1 z2 2 z3 3] (if x (recur false (list z1 z2 z3) 2 3 4) y)");
             Machine machine = new Machine();
@@ -773,7 +798,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ShouldRaiseIfRecurArityDoesNotMatchLoopArity()
+        public void RaiseIfRecurArityDoesNotMatchLoopArity()
         {
             Parser parser = new Parser("(loop [x true y (list 1 2)] (if x (recur (list 1 2 3)) y)");
             Machine machine = new Machine();
@@ -782,7 +807,7 @@
         }
 
         [TestMethod]
-        public void ShouldAddNumbers()
+        public void AddNumbers()
         {
             Parser parser = new Parser("(+) (+ 1) (+ 1 2) (+ 1 2 3)");
             Machine machine = new Machine();
@@ -796,7 +821,7 @@
         }
 
         [TestMethod]
-        public void ShouldSubtractNumbers()
+        public void SubtractNumbers()
         {
             Parser parser = new Parser("(- 1) (- 1 2) (- 1 2 3)");
             Machine machine = new Machine();
@@ -809,7 +834,7 @@
         }
 
         [TestMethod]
-        public void ShouldMultiplyNumbers()
+        public void MultiplyNumbers()
         {
             Parser parser = new Parser("(*) (* 1) (* 1 2) (* 1 2 3)");
             Machine machine = new Machine();
@@ -823,7 +848,7 @@
         }
 
         [TestMethod]
-        public void ShouldDivideNumbers()
+        public void DivideNumbers()
         {
             Parser parser = new Parser("(/ 2) (/ 1 2) (/ 1 2 3)");
             Machine machine = new Machine();
@@ -836,7 +861,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateEqualsWithNumbers()
+        public void EvaluateEqualsWithNumbers()
         {
             Parser parser = new Parser("(= 1) (= 1 1) (= 1 1 1) (= 1 2) (= 1 2 1)");
             Machine machine = new Machine();
@@ -851,7 +876,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateEqualsWithLists()
+        public void EvaluateEqualsWithLists()
         {
             Parser parser = new Parser("(= (list 1 2 3) (list 1 2 3)) (= (list 1 2 3) (list 1 2 3 4))");
             Machine machine = new Machine();
@@ -863,7 +888,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateLessWithNumbers()
+        public void EvaluateLessWithNumbers()
         {
             Parser parser = new Parser("(< 1) (< 1 2) (< 1 2 3) (< 1 1) (< 1 0 1)");
             Machine machine = new Machine();
@@ -878,7 +903,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateLessEqualWithNumbers()
+        public void EvaluateLessEqualWithNumbers()
         {
             Parser parser = new Parser("(<= 1) (<= 1 2) (<= 1 2 3) (<= 1 1) (<= 1 0 1)");
             Machine machine = new Machine();
@@ -893,7 +918,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateGreaterWithNumbers()
+        public void EvaluateGreaterWithNumbers()
         {
             Parser parser = new Parser("(> 1) (> 2 1 ) (> 2 1 0) (> 1 1) (> 1 0 1)");
             Machine machine = new Machine();
@@ -908,7 +933,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateGreaterEqualWithNumbers()
+        public void EvaluateGreaterEqualWithNumbers()
         {
             Parser parser = new Parser("(>= 1) (>= 2 1 ) (>= 2 1 0) (>= 1 1) (>= 1 0 1)");
             Machine machine = new Machine();
@@ -924,7 +949,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ShouldRaiseIfSubtractWithoutParameters()
+        public void RaiseIfSubtractWithoutParameters()
         {
             Parser parser = new Parser("(-)");
             Machine machine = new Machine();
@@ -934,7 +959,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ShouldRaiseIfDivideWithoutParameters()
+        public void RaiseIfDivideWithoutParameters()
         {
             Parser parser = new Parser("(/)");
             Machine machine = new Machine();
@@ -944,7 +969,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ShouldRaiseIfEqualsWithoutParameters()
+        public void RaiseIfEqualsWithoutParameters()
         {
             Parser parser = new Parser("(=)");
             Machine machine = new Machine();
@@ -954,7 +979,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ShouldRaiseIfLessWithoutParameters()
+        public void RaiseIfLessWithoutParameters()
         {
             Parser parser = new Parser("(<)");
             Machine machine = new Machine();
@@ -964,7 +989,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ShouldRaiseIfGreaterWithoutParameters()
+        public void RaiseIfGreaterWithoutParameters()
         {
             Parser parser = new Parser("(>)");
             Machine machine = new Machine();
@@ -974,7 +999,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ShouldRaiseIfLessEqualWithoutParameters()
+        public void RaiseIfLessEqualWithoutParameters()
         {
             Parser parser = new Parser("(<=)");
             Machine machine = new Machine();
@@ -984,7 +1009,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ShouldRaiseIfGreaterEqualWithoutParameters()
+        public void RaiseIfGreaterEqualWithoutParameters()
         {
             Parser parser = new Parser("(>=)");
             Machine machine = new Machine();
@@ -993,7 +1018,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateRecursiveAnonymousFactorialFunction()
+        public void EvaluateRecursiveAnonymousFactorialFunction()
         {
             Parser parser = new Parser("((fn* fact [x] (if (<= x 1) 1 (* x (fact (- x 1))))) 3)");
             Machine machine = new Machine();
@@ -1008,7 +1033,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateAnonymousFactorialFunctionWithTailRecursion()
+        public void EvaluateAnonymousFactorialFunctionWithTailRecursion()
         {
             Parser parser = new Parser("((fn* [x y] (if (<= x 1) y (recur (- x 1) (* x y)))) 3 1)");
             Machine machine = new Machine();
@@ -1023,7 +1048,7 @@
         }
         
         [TestMethod]
-        public void ShouldEvaluateNewSystemIOFileInfo()
+        public void EvaluateNewSystemIOFileInfo()
         {
             Parser parser = new Parser("(new System.IO.FileInfo \"anyfile.txt\")");
             Machine machine = new Machine();
@@ -1036,7 +1061,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateVarExpressionToVar()
+        public void EvaluateVarExpressionToVar()
         {
             Parser parser = new Parser("(var x)");
             Machine machine = new Machine();
@@ -1054,7 +1079,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateVarExpressionWithQualifiedSymbolToVar()
+        public void EvaluateVarExpressionWithQualifiedSymbolToVar()
         {
             Parser parser = new Parser("(var foo/x)");
             Machine machine = new Machine();
@@ -1073,7 +1098,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateVarMacroExpressionToVar()
+        public void EvaluateVarMacroExpressionToVar()
         {
             Parser parser = new Parser("#'x");
             Machine machine = new Machine();
@@ -1091,7 +1116,7 @@
         }
 
         [TestMethod]
-        public void ShouldSetAndGetVariableValue()
+        public void SetAndGetVariableValue()
         {
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
@@ -1107,7 +1132,7 @@
         }
 
         [TestMethod]
-        public void ShouldSetAndGetVariableValueUsingAnotherVariable()
+        public void SetAndGetVariableValueUsingAnotherVariable()
         {
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
@@ -1124,7 +1149,7 @@
         }
 
         [TestMethod]
-        public void ShouldSetAndGetVariableValueUsingFullName()
+        public void SetAndGetVariableValueUsingFullName()
         {
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
@@ -1140,7 +1165,7 @@
         }
 
         [TestMethod]
-        public void ShouldGetNullValueIfVariableHasNoValue()
+        public void GetNullValueIfVariableHasNoValue()
         {
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
@@ -1152,7 +1177,7 @@
         }
 
         [TestMethod]
-        public void ShouldGetNullVariableIfVariableIsUndefined()
+        public void GetNullVariableIfVariableIsUndefined()
         {
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
@@ -1163,7 +1188,7 @@
         }
 
         [TestMethod]
-        public void ShouldGetTheSameDefinedVariable()
+        public void GetTheSameDefinedVariable()
         {
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
@@ -1179,7 +1204,7 @@
         }
 
         [TestMethod]
-        public void ShouldGetTheSameDefinedVariableUsingFullName()
+        public void GetTheSameDefinedVariableUsingFullName()
         {
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
@@ -1195,7 +1220,7 @@
         }
 
         [TestMethod]
-        public void ShouldDefineVariable()
+        public void DefineVariable()
         {
             Machine machine = new Machine();
             Parser parser = new Parser("(def x 1)");
@@ -1210,7 +1235,7 @@
         }
 
         [TestMethod]
-        public void ShouldDefineVariableWithMetadata()
+        public void DefineVariableWithMetadata()
         {
             Machine machine = new Machine();
             Parser parser = new Parser("(def #^{:one 1 :two 2} x 1)");
@@ -1235,7 +1260,7 @@
         }
 
         [TestMethod]
-        public void ShouldDefineVariableWithMetadataTag()
+        public void DefineVariableWithMetadataTag()
         {
             Machine machine = new Machine();
             Parser parser = new Parser("(def #^AjSharpure.Language.IObject x 1)");
@@ -1258,7 +1283,7 @@
         }
 
         [TestMethod]
-        public void ShouldDefineMacroUsingMetadata()
+        public void DefineMacroUsingMetadata()
         {
             Machine machine = new Machine();
             Parser parser = new Parser("(def #^{:macro true} let (fn* let [& decl] (cons 'let* decl)))");

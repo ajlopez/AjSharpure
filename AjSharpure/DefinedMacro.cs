@@ -47,11 +47,33 @@
                 newenv.SetValue(this.name, this);
 
             int k = 0;
+            bool islast = false;
 
+            // TODO refactor see DefinedFunction
             foreach (Symbol argname in this.arguments)
-                newenv.SetValue(argname.Name, argumentValues[k++]);
+            {
+                if (argname.Name == "&")
+                    islast = true;
+                else
+                {
+                    if (!islast)
+                        newenv.SetValue(argname.Name, argumentValues[k++]);
+                    else
+                    {
+                        IList rest = new ArrayList();
 
-            object result = machine.Evaluate(MacroUtilities.Expand(this.body, machine, newenv), environment);
+                        while (k < argumentValues.Length)
+                            rest.Add(argumentValues[k++]);
+
+                        if (rest.Count > 0)
+                            newenv.SetValue(argname.Name, rest);
+                        else
+                            newenv.SetValue(argname.Name, null);
+                    }
+                }
+            }
+
+            object result = machine.Evaluate(MacroUtilities.Expand(this.body, machine, newenv), newenv);
 
             result = machine.Evaluate(result, environment);
 

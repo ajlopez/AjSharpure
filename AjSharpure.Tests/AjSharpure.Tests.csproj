@@ -79,6 +79,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Examples\DefFnWithTests.ajshp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\DefConsWithTests.ajshp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Examples\DefCoreWithTests.ajshp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

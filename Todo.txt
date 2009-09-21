@@ -1,5 +1,8 @@
 
 = Dot primitive as in Clojure
++ Test of instance? in CoreWithTests example
+- (seq? (list 1 2 3)) is true?
+- define map? vector? in CoreWithTest example
 - Nested let
 - set! acting on Variable
 - list as PersistentList

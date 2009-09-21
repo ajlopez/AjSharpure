@@ -1,0 +1,14 @@
+﻿(def
+ cons (fn* cons [x seq] (. AjSharpure.Operations Cons x seq)))
+
+(def
+ #^{:macro true}
+ fn (fn* fn [& decl] (cons 'fn* decl)))
+
+(def
+ #^{:arglists '([coll])
+    :doc "Returns the first item in the collection. Calls seq on its
+    argument. If coll is nil, returns nil."}
+ first (fn first [coll] (. AjSharpure.Operations (First coll))))
+
+(= 1 (first '(1 2 3)))

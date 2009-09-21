@@ -1,4 +1,6 @@
-﻿(def
+﻿; list already defined in Machine
+
+(def
  cons (fn* cons [x seq] (. AjSharpure.Operations Cons x seq)))
 
 ;during bootstrap we don't have destructuring let, loop or fn, will redefine later
