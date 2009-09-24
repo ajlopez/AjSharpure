@@ -127,7 +127,8 @@
 
         public virtual void CopyTo(Array array, int index)
         {
-            throw new NotImplementedException();
+            foreach (object element in this)
+                array.SetValue(element, index++);
         }
 
         public virtual int Count

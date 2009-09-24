@@ -313,7 +313,7 @@
         [DeploymentItem("Examples/DefTypePredicatesWithTests.ajshp")]
         public void ShouldDefAndTestTypePredicatesFromExample()
         {
-            Assert.AreEqual(3, this.ShouldLoadAndEvaluateDefsWithTests("DefTypePredicatesWithTests.ajshp"));
+            Assert.AreEqual(4, this.ShouldLoadAndEvaluateDefsWithTests("DefTypePredicatesWithTests.ajshp"));
         }
 
         [TestMethod]
