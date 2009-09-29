@@ -101,6 +101,7 @@
     <Compile Include="Language\Numbers.cs" />
     <Compile Include="Language\PersistentList.cs" />
     <Compile Include="Language\BasePersistentVector.cs" />
+    <Compile Include="Language\PersistentVector.cs" />
     <Compile Include="Language\SequenceEnumerator.cs" />
     <Compile Include="Language\Symbol.cs" />
     <Compile Include="Language\Variable.cs" />

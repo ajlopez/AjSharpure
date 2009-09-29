@@ -9,8 +9,10 @@
     {
         int Length { get; }
 
+        object this[int index] { get; }
+
         IPersistentVector AssociateN(int index, object value);
 
-        IPersistentVector Cons(object obj);
+        new IPersistentVector Cons(object obj);
     }
 }

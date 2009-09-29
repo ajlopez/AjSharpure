@@ -7,7 +7,7 @@
     using System.Text;
 
     // TODO implement RandomAccess, Comparable, Streamable (Java names)
-    public class BasePersistentVector : BaseFunction, IPersistentVector, IList
+    public abstract class BasePersistentVector : BaseFunction, IPersistentVector, IList
     {
         public BasePersistentVector(IPersistentMap metadata)
             : base(metadata)
@@ -101,10 +101,7 @@
 
         #region ICounted Members
 
-        public int Count
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public abstract int Count { get; }
 
         #endregion
 
@@ -178,17 +175,7 @@
             throw new NotSupportedException();
         }
 
-        public object this[int index]
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public abstract object this[int index] { get; set; }
 
         #endregion
 
