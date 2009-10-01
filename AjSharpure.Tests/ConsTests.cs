@@ -13,7 +13,7 @@
     public class ConsTests
     {
         [TestMethod]
-        public void ShouldCreateWithOneObject()
+        public void CreateWithOneObject()
         {
             Cons cons = new Cons(1);
 
@@ -22,7 +22,7 @@
         }
 
         [TestMethod]
-        public void ShouldCreateWithOneObjectAndRest()
+        public void CreateWithOneObjectAndRest()
         {
             Cons cons = new Cons(1, new Cons(2));
 
@@ -38,7 +38,7 @@
         }
 
         [TestMethod]
-        public void ShouldCreateWithNullMetadata()
+        public void CreateWithNullMetadata()
         {
             Cons cons = new Cons(1, new Cons(2));
             IObject iobj = cons.WithMetadata(null);
@@ -49,7 +49,7 @@
         }
 
         [TestMethod]
-        public void ShouldCreateWithMetadata()
+        public void CreateWithMetadata()
         {
             Cons cons = new Cons(1, new Cons(2));
             IObject iobj = cons.WithMetadata(FakePersistentMap.Instance);
@@ -65,14 +65,14 @@
         }
 
         [TestMethod]
-        public void ShouldGetFirstElementByIndex()
+        public void GetFirstElementByIndex()
         {
             Cons cons = new Cons(1, new Cons(2));
             Assert.AreEqual(1, cons[0]);
         }
 
         [TestMethod]
-        public void ShouldGetSecondElementByIndex()
+        public void GetSecondElementByIndex()
         {
             Cons cons = new Cons(1, new Cons(2));
             Assert.AreEqual(2, cons[1]);
@@ -80,10 +80,49 @@
 
         [TestMethod]
         [ExpectedException(typeof(NotSupportedException))]
-        public void ShouldRaiseWhenTryingToSetElementByIndex()
+        public void RaiseWhenTryingToSetElementByIndex()
         {
             Cons cons = new Cons(1, new Cons(2));
             cons[0] = 0;
+        }
+
+        [TestMethod]
+        public void TwoConsWithSameElementsAreEqual()
+        {
+            Cons cons1 = new Cons(1, new Cons(2, new Cons(3)));
+            Cons cons2 = new Cons(1, new Cons(2, new Cons(3)));
+
+            Assert.IsTrue(cons1.Equals(cons2));
+            Assert.IsTrue(cons2.Equals(cons1));
+        }
+
+        [TestMethod]
+        public void TwoConsWithSameElementsHaveSameHashCode()
+        {
+            Cons cons1 = new Cons(1, new Cons(2, new Cons(3)));
+            Cons cons2 = new Cons(1, new Cons(2, new Cons(3)));
+
+            Assert.AreEqual(cons1.GetHashCode(), cons2.GetHashCode());
+        }
+
+        [TestMethod]
+        public void TwoConsWithDifferentElementsAreNotEqual()
+        {
+            Cons cons1 = new Cons(1, new Cons(2, new Cons(3)));
+            Cons cons2 = new Cons(3, new Cons(2, new Cons(1)));
+
+            Assert.IsFalse(cons1.Equals(cons2));
+            Assert.IsFalse(cons2.Equals(cons1));
+        }
+
+        [TestMethod]
+        public void TwoConsWithDifferentCountAreNotEqual()
+        {
+            Cons cons1 = new Cons(1, new Cons(2, new Cons(3)));
+            Cons cons2 = new Cons(1, new Cons(2, new Cons(3, new Cons(4))));
+
+            Assert.IsFalse(cons1.Equals(cons2));
+            Assert.IsFalse(cons2.Equals(cons1));
         }
     }
 }

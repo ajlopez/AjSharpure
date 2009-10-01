@@ -115,8 +115,12 @@
 (def
  #^{:arglists '([x])
     :doc "Return true if x implements IPersistentVector "}
- vector? (fn vector? [x] (instance? System.Array x)))
+ vector? (fn vector? [x] (instance? AjSharpure.Language.IPersistentVector x)))
+ 
+(vector? [1 2 3])
 
+(vector? (vector 1 2 3))
+ 
 (def
  #^{:private true}
  sigs

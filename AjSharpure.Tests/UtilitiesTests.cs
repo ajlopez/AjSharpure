@@ -15,13 +15,13 @@
     public class UtilitiesTests
     {
         [TestMethod]
-        public void ShouldGetZeroHashToNull()
+        public void GetZeroHashToNull()
         {
             Assert.AreEqual(0, Utilities.Hash(null));
         }
 
         [TestMethod]
-        public void ShouldRecognizeSymbolAsEvaluable()
+        public void RecognizeSymbolAsEvaluable()
         {
             Symbol symbol = Symbol.Create("foo");
 
@@ -29,14 +29,14 @@
         }
 
         [TestMethod]
-        public void ShouldRecognizeConstantsAsEvaluable()
+        public void RecognizeConstantsAsEvaluable()
         {
             Assert.IsFalse(Utilities.IsEvaluable("foo"));
             Assert.IsFalse(Utilities.IsEvaluable(123));
         }
 
         [TestMethod]
-        public void ShouldRecognizeIListAsEvaluable()
+        public void RecognizeIListAsEvaluable()
         {
             IList list = new ArrayList();
 
@@ -48,73 +48,73 @@
         }
 
         [TestMethod]
-        public void ShouldRecognizeArrayAsNotEvaluable()
+        public void RecognizeArrayAsNotEvaluable()
         {
             Assert.IsFalse(Utilities.IsEvaluable(new int[] { 1, 2, 3 }));
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ShouldRaiseIfTryToConvertArrayToExpression()
+        public void RaiseIfTryToConvertArrayToExpression()
         {
             Utilities.ToExpression(new int[] { 1, 2, 3 });
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ShouldRaiseIfTryToConvertStringToExpression()
+        public void RaiseIfTryToConvertStringToExpression()
         {
             Utilities.ToExpression("foo");
         }
 
         [TestMethod]
-        public void ShouldPrintInteger()
+        public void PrintInteger()
         {
             Assert.AreEqual("1", Utilities.PrintString(1));
             Assert.AreEqual("123", Utilities.PrintString(123));
         }
 
         [TestMethod]
-        public void ShouldPrintString()
+        public void PrintString()
         {
             Assert.AreEqual("\"foo\"", Utilities.PrintString("foo"));
             Assert.AreEqual("\"bar\"", Utilities.PrintString("bar"));
         }
 
         [TestMethod]
-        public void NullShouldBeEquivalentToNull()
+        public void NullBeEquivalentToNull()
         {
             Assert.IsTrue(Utilities.Equiv(null, null));
         }
 
         [TestMethod]
-        public void NullShouldBeNotEquivalentToNotNull()
+        public void NullBeNotEquivalentToNotNull()
         {
             Assert.IsFalse(Utilities.Equiv(null, 1));
             Assert.IsFalse(Utilities.Equiv(1, null));
         }
 
         [TestMethod]
-        public void ShouldConvertNullSequenceToNull()
+        public void ConvertNullSequenceToNull()
         {
             Assert.IsNull(Utilities.ToSequence(null));
         }
 
         [TestMethod]
-        public void ShouldConvertEmptySequenceToNull()
+        public void ConvertEmptySequenceToNull()
         {
             Assert.IsNull(Utilities.ToSequence(EmptyList.Instance));
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void ShouldRaiseIfTryToConvertIntegerToSequence()
+        public void RaiseIfTryToConvertIntegerToSequence()
         {
             Utilities.ToSequence(2);
         }
 
         [TestMethod]
-        public void ShouldConvertEnumeratorSequenceToItself()
+        public void ConvertEnumeratorSequenceToItself()
         {
             ISequence sequence = EnumeratorSequence.Create((new int[] { 1, 2, 3 }).GetEnumerator());
 
@@ -122,7 +122,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateNilFalseAsFalseAndEverythingElseToNotFalse()
+        public void EvaluateNilFalseAsFalseAndEverythingElseToNotFalse()
         {
             Assert.IsTrue(Utilities.IsFalse(null));
             Assert.IsTrue(Utilities.IsFalse(false));
@@ -138,7 +138,7 @@
         }
 
         [TestMethod]
-        public void ShouldCompareNumbers()
+        public void CompareNumbers()
         {
             Assert.AreEqual(0, Utilities.Compare(0, 0));
             Assert.AreEqual(0, Utilities.Compare(1, 1));
@@ -149,7 +149,7 @@
         }
 
         [TestMethod]
-        public void ShouldCompareStrings()
+        public void CompareStrings()
         {
             Assert.AreEqual(0, Utilities.Compare(string.Empty, string.Empty));
             Assert.AreEqual(0, Utilities.Compare("foo", "foo"));
@@ -160,7 +160,7 @@
         }
 
         [TestMethod]
-        public void ShouldCompareSymbols()
+        public void CompareSymbols()
         {
             Assert.AreEqual(0, Utilities.Compare(Symbol.Create("a"), Symbol.Create("a")));
             Assert.AreEqual(0, Utilities.Compare(Symbol.Create("foo"), Symbol.Create("foo")));
@@ -171,19 +171,19 @@
         }
 
         [TestMethod]
-        public void ShouldReturnNullType()
+        public void ReturnNullType()
         {
             Assert.IsNull(Utilities.GetType(null));
         }
 
         [TestMethod]
-        public void ShouldReturnNullForUnknownType()
+        public void ReturnNullForUnknownType()
         {
             Assert.IsNull(Utilities.GetType("123"));
         }
 
         [TestMethod]
-        public void ShouldReturnSystemIOFileInfoTypeUsingString()
+        public void ReturnSystemIOFileInfoTypeUsingString()
         {
             Type type = Utilities.GetType("System.IO.FileInfo");
 
@@ -192,7 +192,7 @@
         }
 
         [TestMethod]
-        public void ShouldReturnSystemIOFileInfoTypeUsingSymbol()
+        public void ReturnSystemIOFileInfoTypeUsingSymbol()
         {
             Type type = Utilities.GetType(Symbol.Create("System.IO.FileInfo"));
 
@@ -201,7 +201,7 @@
         }
 
         [TestMethod]
-        public void ShouldGetSimpleEquals()
+        public void GetSimpleEquals()
         {
             Assert.IsTrue(Utilities.Equals(null, null));
             Assert.IsTrue(Utilities.Equals("foo", "foo"));
@@ -214,7 +214,7 @@
         }
 
         [TestMethod]
-        public void ShouldGetTwoListsAsEquals()
+        public void GetTwoListsAsEquals()
         {
             IList list1 = new ArrayList();
             IList list2 = new ArrayList();
@@ -230,7 +230,7 @@
         }
 
         [TestMethod]
-        public void ShouldGetTwoListsAsNotEquals()
+        public void GetTwoListsAsNotEquals()
         {
             IList list1 = new ArrayList();
             IList list2 = new ArrayList();
@@ -248,20 +248,20 @@
         }
 
         [TestMethod]
-        public void ShouldGetTwoArraysAsEquals()
+        public void GetTwoArraysAsEquals()
         {
             Assert.IsTrue(Utilities.Equals(new int[] {1,2,3}, new int[] {1,2,3}));
         }
 
         [TestMethod]
-        public void ShouldGetTwoArraysAsNotEquals()
+        public void GetTwoArraysAsNotEquals()
         {
             Assert.IsFalse(Utilities.Equals(new int[] { 1, 2, 3, 4 }, new int[] { 1, 2, 3 }));
             Assert.IsFalse(Utilities.Equals(new int[] { 1, 2, 3 }, new int[] { 1, 2, 3, 4 }));
         }
 
         [TestMethod]
-        public void ShouldConvertSymbolToItselfAsIObject()
+        public void ConvertSymbolToItselfAsIObject()
         {
             Symbol symbol = Symbol.Create("foo");
 
@@ -272,7 +272,7 @@
         }
 
         [TestMethod]
-        public void ShouldConvertListToIObject()
+        public void ConvertListToIObject()
         {
             IList list = new ArrayList(new int[] { 1, 2, 3 });
 
@@ -290,7 +290,7 @@
         }
 
         [TestMethod]
-        public void ShouldConvertDictionaryToIObject()
+        public void ConvertDictionaryToIObject()
         {
             IDictionary dictionary = new Hashtable();
 
@@ -344,6 +344,23 @@
             list.Add(3);
 
             Assert.AreEqual("(1 2 3)", Utilities.PrintString(list));
+        }
+
+        [TestMethod]
+        public void GetHashFromEnumerables()
+        {
+            IList list = new ArrayList();
+            list.Add(1);
+            list.Add(2);
+            list.Add(3);
+
+            int hash1 = Utilities.CombineHash(list);
+            int hash2 = Utilities.CombineHash(new int[] { 1, 2, 3 });
+
+            Assert.AreNotEqual(0, hash1);
+            Assert.AreEqual(hash1, hash2);
+
+            Assert.AreEqual(0, Utilities.CombineHash((IEnumerable) null));
         }
     }
 }

@@ -36,14 +36,14 @@
             object result = MacroUtilities.Expand(array, null, null);
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(object[]));
+            Assert.IsInstanceOfType(result, typeof(IPersistentVector));
 
-            object[] resultArray = (object[])result;
+            IPersistentVector resultVector = (IPersistentVector)result;
 
-            Assert.AreEqual(3, resultArray.Length);
-            Assert.AreEqual(1, resultArray[0]);
-            Assert.AreEqual(2, resultArray[1]);
-            Assert.AreEqual(3, resultArray[2]);
+            Assert.AreEqual(3, resultVector.Count);
+            Assert.AreEqual(1, resultVector[0]);
+            Assert.AreEqual(2, resultVector[1]);
+            Assert.AreEqual(3, resultVector[2]);
         }
 
         [TestMethod]

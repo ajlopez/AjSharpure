@@ -1,6 +1,7 @@
 ﻿namespace AjSharpure
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -10,7 +11,7 @@
 
     public class DefinedSpecialForm : DefinedFunction
     {
-        public DefinedSpecialForm(string name, object[] arguments, IExpression expression)
+        public DefinedSpecialForm(string name, ICollection arguments, IExpression expression)
             : base(name, arguments, expression)
         {
         }

@@ -78,14 +78,14 @@
 
             object value = machine.Evaluate(parser.ParseForm());
 
-            Assert.IsInstanceOfType(value, typeof(object[]));
+            Assert.IsInstanceOfType(value, typeof(IPersistentVector));
 
-            object[] array = (object[])value;
+            IPersistentVector vector = (IPersistentVector)value;
 
-            Assert.AreEqual(3, array.Length);
-            Assert.AreEqual(1, array[0]);
-            Assert.AreEqual(2, array[1]);
-            Assert.AreEqual(3, array[2]);
+            Assert.AreEqual(3, vector.Count);
+            Assert.AreEqual(1, vector[0]);
+            Assert.AreEqual(2, vector[1]);
+            Assert.AreEqual(3, vector[2]);
 
             Assert.IsNull(parser.ParseForm());
         }
@@ -98,14 +98,14 @@
 
             object value = machine.Evaluate(parser.ParseForm());
 
-            Assert.IsInstanceOfType(value, typeof(object[]));
+            Assert.IsInstanceOfType(value, typeof(IPersistentVector));
 
-            object[] array = (object[])value;
+            IPersistentVector vector = (IPersistentVector)value;
 
-            Assert.AreEqual(3, array.Length);
-            Assert.AreEqual(1, array[0]);
-            Assert.AreEqual(2, array[1]);
-            Assert.AreEqual(3, array[2]);
+            Assert.AreEqual(3, vector.Count);
+            Assert.AreEqual(1, vector[0]);
+            Assert.AreEqual(2, vector[1]);
+            Assert.AreEqual(3, vector[2]);
 
             Assert.IsNull(parser.ParseForm());
         }
@@ -122,11 +122,11 @@
 
             object value = machine.Evaluate(parser.ParseForm());
 
-            Assert.IsInstanceOfType(value, typeof(object[]));
+            Assert.IsInstanceOfType(value, typeof(IPersistentVector));
 
-            object[] array = (object[])value;
+            IPersistentVector array = (IPersistentVector)value;
 
-            Assert.AreEqual(3, array.Length);
+            Assert.AreEqual(3, array.Count);
             Assert.AreEqual(1, array[0]);
             Assert.AreEqual(2, array[1]);
             Assert.AreEqual(3, array[2]);
@@ -142,14 +142,14 @@
 
             object value = machine.Evaluate(parser.ParseForm());
 
-            Assert.IsInstanceOfType(value, typeof(object[]));
+            Assert.IsInstanceOfType(value, typeof(IPersistentVector));
 
-            object[] array = (object[])value;
+            IPersistentVector vector = (IPersistentVector)value;
 
-            Assert.AreEqual(3, array.Length);
-            Assert.AreEqual(Keyword.Create("one"), array[0]);
-            Assert.AreEqual(Keyword.Create("two"), array[1]);
-            Assert.AreEqual(Keyword.Create("three"), array[2]);
+            Assert.AreEqual(3, vector.Count);
+            Assert.AreEqual(Keyword.Create("one"), vector[0]);
+            Assert.AreEqual(Keyword.Create("two"), vector[1]);
+            Assert.AreEqual(Keyword.Create("three"), vector[2]);
 
             Assert.IsNull(parser.ParseForm());
         }

@@ -13,26 +13,26 @@
     {
         public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
         {
-            object[] argumentNames;
+            ICollection argumentNames;
             IExpression body;
 
             if (arguments[0] is Symbol)
             {
-                if (arguments.Length>1 && arguments[1] != null && !(arguments[1] is object[]))
+                if (arguments.Length>1 && arguments[1] != null && !(arguments[1] is IPersistentVector))
                     return ApplyMultiFunction(machine, environment, arguments);
 
                 Symbol symbol = (Symbol)arguments[0];
-                argumentNames = (object[])arguments[1];
+                argumentNames = (ICollection)arguments[1];
                 this.CheckArgumentNames(argumentNames);
                 body = Utilities.ToExpression(arguments[2]);
 
                 return new DefinedFunction(symbol.Name, argumentNames, body);
             }
 
-            if (arguments.Length>1 && arguments[0]!=null && !(arguments[0] is object[]))
+            if (arguments.Length>1 && arguments[0]!=null && !(arguments[0] is IPersistentVector))
                 return ApplyMultiFunction(machine, environment, arguments);
 
-            argumentNames = (object[])arguments[0];
+            argumentNames = (ICollection)arguments[0];
             this.CheckArgumentNames(argumentNames);
             body = Utilities.ToExpression(arguments[1]);
 
@@ -61,7 +61,7 @@
             get { return true; }
         }
 
-        private void CheckArgumentNames(object[] argumentNames)
+        private void CheckArgumentNames(ICollection argumentNames)
         {
             int nvars = -1;
 

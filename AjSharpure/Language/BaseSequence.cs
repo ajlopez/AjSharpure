@@ -42,6 +42,25 @@
             return objseq == null;
         }
 
+        public override bool Equals(object obj)
+        {
+            if (!(obj is ISequence) && !(obj is IEnumerable))
+                return false;
+
+            ISequence seq = Utilities.ToSequence(obj);
+
+            for (ISequence myseq = this.ToSequence(); myseq != null; myseq = myseq.Next(), seq = seq.Next())
+                if (seq == null || !Utilities.Equals(myseq.First(), seq.First()))
+                    return false;
+
+            return seq == null;
+        }
+
+        public override int GetHashCode()
+        {
+            return Utilities.CombineHash(this);
+        }
+
         public ISequence ToSequence()
         {
             return this;

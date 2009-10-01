@@ -36,6 +36,7 @@
             this.environment.SetValue("quote", new QuotePrimitive());
             this.environment.SetValue("set!", new SetBangPrimitive());
             this.environment.SetValue("list", new ListPrimitive());
+            this.environment.SetValue("vector", new VectorPrimitive());
             this.environment.SetValue("def", new DefPrimitive());
             this.environment.SetValue("let*", new LetPrimitive());
             this.environment.SetValue("let", new LetPrimitive());
@@ -72,6 +73,19 @@
         {
             if (obj == null)
                 return null;
+
+            // TODO Refactor
+            // IPersistentVector or PersistentVector?
+            if (obj is PersistentVector)
+            {
+                List<object> objects = new List<object>();
+                PersistentVector vector = (PersistentVector) obj;
+
+                foreach (object element in vector)
+                    objects.Add(this.Evaluate(element, environment));
+
+                return PersistentVector.Create(objects);
+            }
 
             if (Utilities.IsEvaluable(obj))
                 return (Utilities.ToExpression(obj)).Evaluate(this, environment);

@@ -1,8 +1,11 @@
 
 = Dot primitive as in Clojure
 + Test of instance? in CoreWithTests example
-- (seq? (list 1 2 3)) is true?
-- define map? vector? in CoreWithTest example
++ (seq? (list 1 2 3)) is true?
++ define vector? in CoreWithTest example
+- define map? in CoreWithTest example
+- BaseSequence equals to IEnumerable but with different hash code 
+	(in clojure ASeq vs List?)
 - Nested let
 - set! acting on Variable
 - list as PersistentList

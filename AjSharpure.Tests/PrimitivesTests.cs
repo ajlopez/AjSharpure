@@ -17,7 +17,7 @@
     public class PrimitivesTests
     {
         [TestMethod]
-        public void ShouldEvaluateDoWithOneSimpleArgument()
+        public void EvaluateDoWithOneSimpleArgument()
         {
             DoPrimitive doprim = new DoPrimitive();
             Machine machine = new Machine();
@@ -30,7 +30,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateDoWithoutArguments()
+        public void EvaluateDoWithoutArguments()
         {
             DoPrimitive doprim = new DoPrimitive();
             Machine machine = new Machine();
@@ -41,7 +41,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateDoWithManyArguments()
+        public void EvaluateDoWithManyArguments()
         {
             DoPrimitive doprim = new DoPrimitive();
             Machine machine = new Machine();
@@ -56,7 +56,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ShouldRaiseIfOddNumberOfLetBindingArguments()
+        public void RaiseIfOddNumberOfLetBindingArguments()
         {
             LetPrimitive letprim = new LetPrimitive();
             letprim.Apply(null, null, new object[] { new object[] { "x", 1, "y" } });
@@ -64,7 +64,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ShouldRaiseIfInvalidNameInLetArguments()
+        public void RaiseIfInvalidNameInLetArguments()
         {
             LetPrimitive letprim = new LetPrimitive();
             letprim.Apply(new Machine(), null, new object[] { new object[] { "x", 1, "y", 2, 3, 4 } });
@@ -72,14 +72,14 @@
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ShouldRaiseIfLetBindingArgumentIsNotACollection()
+        public void RaiseIfLetBindingArgumentIsNotACollection()
         {
             LetPrimitive letprim = new LetPrimitive();
             letprim.Apply(null, null, new object[] { 123 });
         }
 
         [TestMethod]
-        public void ShouldEvaluateLetWithSimpleBinding()
+        public void EvaluateLetWithSimpleBinding()
         {
             LetPrimitive letprim = new LetPrimitive();
             Machine machine = new Machine();
@@ -92,7 +92,47 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateLetWithTwoBindings()
+        public void EvaluateListWithElements()
+        {
+            ListPrimitive listprim = new ListPrimitive();
+            Machine machine = new Machine();
+
+            object result = listprim.Apply(machine, machine.Environment, new object[] { 1, 2, 3 });
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(PersistentList));
+
+            PersistentList list = (PersistentList)result;
+
+            Assert.AreEqual(3, list.Count);
+
+            int k = 0;
+
+            foreach (object obj in list)
+                Assert.AreEqual(++k, obj);
+        }
+
+        [TestMethod]
+        public void EvaluateVectorWithElements()
+        {
+            VectorPrimitive vectorprim = new VectorPrimitive();
+            Machine machine = new Machine();
+
+            object result = vectorprim.Apply(machine, machine.Environment, new object[] { 1, 2, 3 });
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IPersistentVector));
+
+            IPersistentVector vector = (IPersistentVector)result;
+
+            Assert.AreEqual(3, vector.Count);
+            Assert.AreEqual(1, vector[0]);
+            Assert.AreEqual(2, vector[1]);
+            Assert.AreEqual(3, vector[2]);
+        }
+
+        [TestMethod]
+        public void EvaluateLetWithTwoBindings()
         {
             LetPrimitive letprim = new LetPrimitive();
             Machine machine = new Machine();
@@ -106,7 +146,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ShouldRaiseIfIfReceivesNullAsArguments()
+        public void RaiseIfIfReceivesNullAsArguments()
         {
             IfPrimitive ifprim = new IfPrimitive();
             ifprim.Apply(null, null, null);
@@ -114,7 +154,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ShouldRaiseIfIfReceivesTooFewArguments()
+        public void RaiseIfIfReceivesTooFewArguments()
         {
             IfPrimitive ifprim = new IfPrimitive();
             ifprim.Apply(null, null, new object[] { false });
@@ -122,14 +162,14 @@
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ShouldRaiseIfIfReceivesTooManyArguments()
+        public void RaiseIfIfReceivesTooManyArguments()
         {
             IfPrimitive ifprim = new IfPrimitive();
             ifprim.Apply(null, null, new object[] { false, 1, 2, 3 });
         }
 
         [TestMethod]
-        public void ShouldEvaluateSimpleIf()
+        public void EvaluateSimpleIf()
         {
             IfPrimitive ifprim = new IfPrimitive();
 
@@ -141,7 +181,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateSimpleIfWithElse()
+        public void EvaluateSimpleIfWithElse()
         {
             IfPrimitive ifprim = new IfPrimitive();
 
@@ -153,7 +193,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateToNullIfSimpleIfHasNoElse()
+        public void EvaluateToNullIfSimpleIfHasNoElse()
         {
             IfPrimitive ifprim = new IfPrimitive();
 
@@ -163,7 +203,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateSimpleIfWithFalseSymbol()
+        public void EvaluateSimpleIfWithFalseSymbol()
         {
             IfPrimitive ifprim = new IfPrimitive();
             Machine machine = new Machine();
@@ -176,7 +216,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateSimpleRecur()
+        public void EvaluateSimpleRecur()
         {
             RecurPrimitive recurprim = new RecurPrimitive();
 
@@ -195,7 +235,7 @@
         }
 
         [TestMethod]
-        public void ShouldEvaluateLoopWithTwoBindingsAndWithoutRecur()
+        public void EvaluateLoopWithTwoBindingsAndWithoutRecur()
         {
             LoopPrimitive loopprim = new LoopPrimitive();
             Machine machine = new Machine();
@@ -208,7 +248,7 @@
         }
 
         [TestMethod]
-        public void ShouldCreateAnObjectWithNew()
+        public void CreateAnObjectWithNew()
         {
             NewPrimitive newprim = new NewPrimitive();
             Machine machine = new Machine();
@@ -220,7 +260,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void ShouldRaiseWhenUnknownType()
+        public void WhenUnknownType()
         {
             NewPrimitive newprim = new NewPrimitive();
             Machine machine = new Machine();
@@ -229,7 +269,7 @@
         }
 
         [TestMethod]
-        public void ShouldGetVariableWithCurrentNamespace()
+        public void GetVariableWithCurrentNamespace()
         {
             VarPrimitive varprim = new VarPrimitive();
             Machine machine = new Machine();
@@ -247,7 +287,7 @@
         }
 
         [TestMethod]
-        public void ShouldGetVariableFromQualifiedSymbol()
+        public void GetVariableFromQualifiedSymbol()
         {
             VarPrimitive varprim = new VarPrimitive();
             Machine machine = new Machine();
@@ -268,7 +308,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(InvalidCastException))]
-        public void ShouldRaiseIfVarPrimitiveDoesNotReceiveASymbol()
+        public void RaiseIfVarPrimitiveDoesNotReceiveASymbol()
         {
             VarPrimitive varprim = new VarPrimitive();
             Machine machine = new Machine();
@@ -278,7 +318,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ShouldRaiseIfVarPrimitiveReceivesUndefinedSymbol()
+        public void RaiseIfVarPrimitiveReceivesUndefinedSymbol()
         {
             VarPrimitive varprim = new VarPrimitive();
             Machine machine = new Machine();
@@ -287,7 +327,7 @@
         }
 
         [TestMethod]
-        public void ShouldDefineASimpleSymbol()
+        public void DefineASimpleSymbol()
         {
             DefPrimitive defprim = new DefPrimitive();
             Machine machine = new Machine();
@@ -307,7 +347,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ShouldRaiseIfQualifiedSymbol()
+        public void RaiseIfQualifiedSymbol()
         {
             DefPrimitive defprim = new DefPrimitive();
             Machine machine = new Machine();
@@ -316,7 +356,7 @@
         }
 
         [TestMethod]
-        public void ShouldDefineAnSpecialForm()
+        public void DefineAnSpecialForm()
         {
             DefPrimitive defprim = new DefPrimitive();
             Machine machine = new Machine();
@@ -342,7 +382,7 @@
         }
 
         [TestMethod]
-        public void ShouldDefineAFunction()
+        public void DefineAFunction()
         {
             FnStarPrimitive fnprim = new FnStarPrimitive();
             Machine machine = new Machine();
@@ -362,7 +402,7 @@
         }
 
         [TestMethod]
-        public void ShouldDefineAMultiFunction()
+        public void DefineAMultiFunction()
         {
             FnStarPrimitive fnprim = new FnStarPrimitive();
             Machine machine = new Machine();
@@ -379,7 +419,7 @@
         }
 
         [TestMethod]
-        public void ShouldDefineAndInvokeAMultiFunction()
+        public void DefineAndInvokeAMultiFunction()
         {
             FnStarPrimitive fnprim = new FnStarPrimitive();
             Machine machine = new Machine();
@@ -410,7 +450,7 @@
         }
 
         [TestMethod]
-        public void ShouldDefineAFunctionWithVariableArguments()
+        public void DefineAFunctionWithVariableArguments()
         {
             FnStarPrimitive fnprim = new FnStarPrimitive();
             Machine machine = new Machine();
@@ -430,7 +470,7 @@
         }
 
         [TestMethod]
-        public void ShouldDefineAndInvokeAFunctionWithVariableArguments()
+        public void DefineAndInvokeAFunctionWithVariableArguments()
         {
             FnStarPrimitive fnprim = new FnStarPrimitive();
             Machine machine = new Machine();
@@ -456,7 +496,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ShouldRaiseIfInvalidArgumentNameInFunction()
+        public void RaiseIfInvalidArgumentNameInFunction()
         {
             FnStarPrimitive fnprim = new FnStarPrimitive();
             Machine machine = new Machine();
@@ -470,7 +510,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ShouldRaiseIfQualifiedArgumentNameInFunction()
+        public void RaiseIfQualifiedArgumentNameInFunction()
         {
             FnStarPrimitive fnprim = new FnStarPrimitive();
             Machine machine = new Machine();
@@ -484,7 +524,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ShouldRaiseIfNoVarsArguments()
+        public void RaiseIfNoVarsArguments()
         {
             FnStarPrimitive fnprim = new FnStarPrimitive();
             Machine machine = new Machine();
@@ -498,7 +538,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ShouldRaiseIfTooManyVarsArguments()
+        public void RaiseIfTooManyVarsArguments()
         {
             FnStarPrimitive fnprim = new FnStarPrimitive();
             Machine machine = new Machine();
@@ -512,7 +552,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ShouldRaiseIfTooManyVarsMarkers()
+        public void RaiseIfTooManyVarsMarkers()
         {
             FnStarPrimitive fnprim = new FnStarPrimitive();
             Machine machine = new Machine();

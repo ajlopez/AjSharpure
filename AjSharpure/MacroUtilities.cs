@@ -46,6 +46,9 @@
             if (obj is System.Array)
                 return newlist.ToArray();
 
+            if (obj is IPersistentVector)
+                return PersistentVector.Create(newlist);
+
             return newlist;
         }
 

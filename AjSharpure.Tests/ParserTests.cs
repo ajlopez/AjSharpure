@@ -115,14 +115,14 @@
             object obj = parser.ParseForm();
 
             Assert.IsNotNull(obj);
-            Assert.IsInstanceOfType(obj, typeof(object[]));
+            Assert.IsInstanceOfType(obj, typeof(IPersistentVector));
 
-            object[] array = (object[])obj;
+            IPersistentVector vector = (IPersistentVector)obj;
 
-            Assert.AreEqual(3, array.Length);
-            Assert.AreEqual(1, array[0]);
-            Assert.AreEqual(2, array[1]);
-            Assert.AreEqual(3, array[2]);
+            Assert.AreEqual(3, vector.Count);
+            Assert.AreEqual(1, vector[0]);
+            Assert.AreEqual(2, vector[1]);
+            Assert.AreEqual(3, vector[2]);
 
             Assert.IsNull(parser.ParseForm());
         }

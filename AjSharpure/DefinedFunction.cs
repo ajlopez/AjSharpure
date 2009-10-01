@@ -11,12 +11,12 @@
     public class DefinedFunction : IFunction
     {
         private string name;
-        private object[] arguments;
+        private ICollection arguments;
         private IExpression expression;
         private int arity = 0;
         private bool variableArity = false;
 
-        public DefinedFunction(string name, object[] arguments, IExpression expression)
+        public DefinedFunction(string name, ICollection arguments, IExpression expression)
         {
             this.name = name;
             this.arguments = arguments;

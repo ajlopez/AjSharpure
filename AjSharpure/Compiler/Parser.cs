@@ -18,6 +18,7 @@
         private static Symbol derefSymbol = Symbol.Create("deref");
         private static Symbol varSymbol = Symbol.Create("var");
         private static Keyword tagKeyword = Keyword.Create("tag");
+        private static Symbol vectorSymbol = Symbol.Create("vector");
 
         private Lexer lexer;
 
@@ -209,9 +210,9 @@
             return new DictionaryObject(dictionary);
         }
 
-        private object[] ParseFormArray()
+        private object ParseFormArray()
         {
-            IList list = new ArrayList();
+            ArrayList list = new ArrayList();
 
             Token token = lexer.NextToken();
 
@@ -225,12 +226,7 @@
             if (token != null && !(token.TokenType == TokenType.Separator && token.Value == "]"))
                 lexer.PushToken(token);
 
-            object[] values = new object[list.Count];
-
-            for (int k = 0; k < list.Count; k++)
-                values[k] = list[k];
-
-            return values;
+            return PersistentVector.Create(list);
         }
     }
 }

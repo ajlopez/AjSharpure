@@ -70,6 +70,7 @@
     <Compile Include="Language\BasePersistentMap.cs" />
     <Compile Include="Language\BaseSequence.cs" />
     <Compile Include="Language\Cons.cs" />
+    <Compile Include="Language\VectorEnumerator.cs" />
     <Compile Include="Language\IIndexedSequence.cs" />
     <Compile Include="Language\IListObject.cs" />
     <Compile Include="Language\IPersistentVector.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="MacroUtilities.cs" />
     <Compile Include="Operations.cs" />
     <Compile Include="Primitives\AddPrimitive.cs" />
+    <Compile Include="Primitives\VectorPrimitive.cs" />
     <Compile Include="Primitives\SfStarPrimitive.cs" />
     <Compile Include="Primitives\VarPrimitive.cs" />
     <Compile Include="Primitives\MacroStarPrimitive.cs" />

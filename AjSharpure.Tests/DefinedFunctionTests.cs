@@ -22,7 +22,7 @@
             object argumentNames = parser.ParseForm();
             object body = parser.ParseForm();
 
-            DefinedFunction func = new DefinedFunction("simple-list", (object[])argumentNames, Utilities.ToExpression(body));
+            DefinedFunction func = new DefinedFunction("simple-list", (ICollection)argumentNames, Utilities.ToExpression(body));
 
             Assert.AreEqual("simple-list", func.Name);
 

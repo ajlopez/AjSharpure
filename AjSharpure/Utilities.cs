@@ -20,6 +20,17 @@
             return obj.GetHashCode();
         }
 
+        public static int CombineHash(IEnumerable elements)
+        {
+            int value = 0;
+
+            if (elements != null)
+                foreach (object element in elements)
+                    value = CombineHash(value, Hash(element));
+
+            return value;
+        }
+
         public static int CombineHash(int seed, int hash)
         {
             //a la boost
@@ -40,6 +51,9 @@
                 return true;
 
             if (obj is System.Array)
+                return false;
+
+            if (obj is IPersistentVector)
                 return false;
 
             if (obj is IDictionary)
@@ -126,7 +140,7 @@
                 writer.Write("(");
                 int count = 0;
 
-                foreach (object element in (IEnumerable) obj)
+                foreach (object element in (IEnumerable)obj)
                 {
                     if (count > 0)
                         writer.Write(" ");
@@ -150,7 +164,7 @@
                 return (IObject)obj;
 
             if (obj is IList)
-                return (IObject) ListObject.Create((IList)obj);
+                return (IObject)ListObject.Create((IList)obj);
 
             if (obj is IDictionary)
                 return new DictionaryObject((IDictionary)obj);
@@ -162,7 +176,7 @@
         public static ISequence ToSequence(object obj)
         {
             if (obj is BaseSequence)
-                return (BaseSequence) obj;
+                return (BaseSequence)obj;
 
             if (obj is LazySequence)
                 return ((LazySequence)obj).ToSequence();
@@ -240,7 +254,7 @@
             if (obj == null)
                 return true;
 
-            if (obj is bool && ((bool)obj)==false)
+            if (obj is bool && ((bool)obj) == false)
                 return true;
 
             return false;
@@ -286,6 +300,14 @@
             return array.Length;
         }
 
+        public static int GetArity(ICollection array)
+        {
+            if (array == null)
+                return 0;
+
+            return array.Count;
+        }
+
         public static int Compare(object obj1, object obj2)
         {
             if (obj1 == null && obj2 == null)
@@ -311,7 +333,7 @@
                 return Type.GetType(((Symbol)typename).Name);
 
             if (typename is String)
-                return Type.GetType((string) typename);
+                return Type.GetType((string)typename);
 
             return Type.GetType(typename.ToString());
         }
@@ -321,7 +343,7 @@
             string ns = symbol.Namespace;
 
             if (String.IsNullOrEmpty(ns))
-                ns = (string) environment.GetValue(Machine.CurrentNamespaceKey);
+                ns = (string)environment.GetValue(Machine.CurrentNamespaceKey);
 
             string name = symbol.Name;
 

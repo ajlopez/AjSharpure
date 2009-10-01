@@ -11,12 +11,12 @@
     public class DefinedMacro : IFunction
     {
         private string name;
-        private object[] arguments;
+        private ICollection arguments;
         private IList body;
         private int arity = 0;
         private bool variableArity = false;
 
-        public DefinedMacro(string name, object[] arguments, IList body)
+        public DefinedMacro(string name, ICollection arguments, IList body)
         {
             this.name = name;
             this.arguments = arguments;

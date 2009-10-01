@@ -15,7 +15,7 @@
     public class PersistenListTests
     {
         [TestMethod]
-        public void ShouldCreateListWithOneObject()
+        public void CreateListWithOneObject()
         {
             PersistentList list = new PersistentList(1);
 
@@ -27,7 +27,7 @@
         }
 
         [TestMethod]
-        public void ShouldCreateFromArray()
+        public void CreateFromArray()
         {
             int[] numbers = new int[] { 1, 2, 3 };
             PersistentList list = (PersistentList) PersistentList.Create(numbers);
@@ -46,7 +46,7 @@
         }
 
         [TestMethod]
-        public void ShouldDoPop()
+        public void DoPop()
         {
             int[] numbers = new int[] { 0, 1, 2, 3 };
             PersistentList list = (PersistentList)PersistentList.Create(numbers);
@@ -71,7 +71,7 @@
         }
 
         [TestMethod]
-        public void ShouldDoPopAsEmptyList()
+        public void DoPopAsEmptyList()
         {
             IPersistentStack list = new PersistentList(1);
             list = list.Pop();
@@ -82,7 +82,7 @@
         }
 
         [TestMethod]
-        public void ShouldDoPeek()
+        public void DoPeek()
         {
             int[] numbers = new int[] { 0, 1, 2, 3 };
             IPersistentStack list = (PersistentList)PersistentList.Create(numbers);
@@ -94,7 +94,7 @@
         }
 
         [TestMethod]
-        public void ShouldGetEmpty()
+        public void GetEmpty()
         {
             int[] numbers = new int[] { 0, 1, 2, 3 };
             IPersistentStack list = (PersistentList)PersistentList.Create(numbers);
@@ -106,7 +106,7 @@
         }
 
         [TestMethod]
-        public void ShouldCreateFromList()
+        public void CreateFromList()
         {
             List<int> numbers = new List<int>();
             numbers.Add(1);
@@ -129,7 +129,7 @@
         }
 
         [TestMethod]
-        public void ShouldCreateWithMeta()
+        public void CreateWithMeta()
         {
             List<int> numbers = new List<int>();
             numbers.Add(1);
@@ -158,7 +158,7 @@
         }
 
         [TestMethod]
-        public void ShouldCreateFromPersistentList()
+        public void CreateFromPersistentList()
         {
             List<int> numbers = new List<int>();
             numbers.Add(1);
@@ -182,7 +182,7 @@
         }
 
         [TestMethod]
-        public void ShouldGetAndProcessEnumerator()
+        public void GetAndProcessEnumerator()
         {
             List<int> numbers = new List<int>();
             numbers.Add(1);
@@ -227,7 +227,7 @@
         }
 
         [TestMethod]
-        public void ShouldConvertToSequenceAsItself()
+        public void ConvertToSequenceAsItself()
         {
             int[] numbers = new int[] { 1, 2, 3 };
             PersistentList list = (PersistentList)PersistentList.Create(numbers);
@@ -237,7 +237,7 @@
         }
 
         [TestMethod]
-        public void ShouldConsToProduceAPersistentList()
+        public void ConsToProduceAPersistentList()
         {
             int[] numbers = new int[] { 1, 2, 3 };
             PersistentList original = (PersistentList)PersistentList.Create(numbers);
@@ -261,7 +261,7 @@
         }
 
         [TestMethod]
-        public void ShouldReduceAddingIntegers()
+        public void ReduceAddingIntegers()
         {
             int[] numbers = new int[] { 1, 2, 3 };
             PersistentList list = (PersistentList)PersistentList.Create(numbers);
@@ -273,7 +273,7 @@
         }
 
         [TestMethod]
-        public void ShouldReduceAddingIntegersUsingSeed()
+        public void ReduceAddingIntegersUsingSeed()
         {
             int[] numbers = new int[] { 1, 2, 3 };
             PersistentList list = (PersistentList)PersistentList.Create(numbers);
@@ -286,7 +286,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(NotSupportedException))]
-        public void ShouldRaiseWhenAdd()
+        public void RaiseWhenAdd()
         {
             LazySequence sequence = new LazySequence(new NumberSequenceFunction(0));
             sequence.Add(0);
@@ -294,7 +294,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(NotSupportedException))]
-        public void ShouldRaiseWhenRemove()
+        public void RaiseWhenRemove()
         {
             int[] numbers = new int[] { 1, 2, 3 };
             PersistentList list = (PersistentList)PersistentList.Create(numbers);
@@ -303,7 +303,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(NotSupportedException))]
-        public void ShouldRaiseWhenRemoveAt()
+        public void RaiseWhenRemoveAt()
         {
             int[] numbers = new int[] { 1, 2, 3 };
             PersistentList list = (PersistentList)PersistentList.Create(numbers);
@@ -312,7 +312,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(NotSupportedException))]
-        public void ShouldRaiseWhenClear()
+        public void RaiseWhenClear()
         {
             int[] numbers = new int[] { 1, 2, 3 };
             PersistentList list = (PersistentList)PersistentList.Create(numbers);
@@ -321,7 +321,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(NotSupportedException))]
-        public void ShouldRaiseWhenInsert()
+        public void RaiseWhenInsert()
         {
             int[] numbers = new int[] { 1, 2, 3 };
             PersistentList list = (PersistentList)PersistentList.Create(numbers);
@@ -330,7 +330,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(NotSupportedException))]
-        public void ShouldRaiseWhenSetValue()
+        public void RaiseWhenSetValue()
         {
             int[] numbers = new int[] { 1, 2, 3 };
             PersistentList list = (PersistentList)PersistentList.Create(numbers);
@@ -338,12 +338,49 @@
         }
 
         [TestMethod]
-        public void ShouldGetEmptyListIfNoElements()
+        public void GetEmptyListIfNoElements()
         {
             IPersistentList list = PersistentList.Create(new ArrayList());
 
             Assert.IsNotNull(list);
             Assert.IsInstanceOfType(list, typeof(EmptyList));
+        }
+
+        [TestMethod]
+        public void TwoPersistentListsWithSameElementsAreEqual()
+        {
+            IPersistentList list1 = PersistentList.Create(new int[] { 1, 2, 3 });
+            IPersistentList list2 = PersistentList.Create(new int[] { 1, 2, 3 });
+
+            Assert.IsTrue(list1.Equals(list2));
+        }
+
+        [TestMethod]
+        public void TwoPersistentListsWithSameElementsHaveSameHashCode()
+        {
+            IPersistentList list1 = PersistentList.Create(new int[] { 1, 2, 3 });
+            IPersistentList list2 = PersistentList.Create(new int[] { 1, 2, 3 });
+
+            Assert.AreEqual(list1.GetHashCode(), list2.GetHashCode());
+        }
+
+        [TestMethod]
+        public void TwoPersistentListsWithDifferentElementsAreNotEqual()
+        {
+            IPersistentList list1 = PersistentList.Create(new int[] { 1, 2, 3 });
+            IPersistentList list2 = PersistentList.Create(new int[] { 3, 2, 1 });
+
+            Assert.IsFalse(list1.Equals(list2));
+        }
+
+        [TestMethod]
+        public void TwoPersistentListsWithDifferentCountAreNotEqual()
+        {
+            IPersistentList list1 = PersistentList.Create(new int[] { 1, 2, 3 });
+            IPersistentList list2 = PersistentList.Create(new int[] { 1, 2, 3, 4 });
+
+            Assert.IsFalse(list1.Equals(list2));
+            Assert.IsFalse(list2.Equals(list1));
         }
     }
 }

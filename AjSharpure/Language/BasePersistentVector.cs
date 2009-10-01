@@ -7,6 +7,7 @@
     using System.Text;
 
     // TODO implement RandomAccess, Comparable, Streamable (Java names)
+    // TODO implements evaluation as a function, taking one parameter as index
     public abstract class BasePersistentVector : BaseFunction, IPersistentVector, IList
     {
         public BasePersistentVector(IPersistentMap metadata)
@@ -94,7 +95,7 @@
 
         public ISequence ToSequence()
         {
-            throw new NotImplementedException();
+            return EnumeratorSequence.Create(this.GetEnumerator());
         }
 
         #endregion
@@ -183,7 +184,8 @@
 
         public void CopyTo(Array array, int index)
         {
-            throw new NotImplementedException();
+            foreach (object element in this)
+                array.SetValue(element, index++);
         }
 
         public bool IsSynchronized
@@ -202,7 +204,7 @@
 
         public IEnumerator GetEnumerator()
         {
-            throw new NotImplementedException();
+            return new VectorEnumerator(this);
         }
 
         #endregion
