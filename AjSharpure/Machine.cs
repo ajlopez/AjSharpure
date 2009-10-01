@@ -74,19 +74,6 @@
             if (obj == null)
                 return null;
 
-            // TODO Refactor
-            // IPersistentVector or PersistentVector?
-            if (obj is PersistentVector)
-            {
-                List<object> objects = new List<object>();
-                PersistentVector vector = (PersistentVector) obj;
-
-                foreach (object element in vector)
-                    objects.Add(this.Evaluate(element, environment));
-
-                return PersistentVector.Create(objects);
-            }
-
             if (Utilities.IsEvaluable(obj))
                 return (Utilities.ToExpression(obj)).Evaluate(this, environment);
 

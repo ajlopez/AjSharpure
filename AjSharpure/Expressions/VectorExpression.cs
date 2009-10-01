@@ -6,11 +6,13 @@
     using System.Linq;
     using System.Text;
 
+    using AjSharpure.Language;
+
     public class VectorExpression : IExpression
     {
-        private object[] vector;
+        private IPersistentVector vector;
 
-        public VectorExpression(object[] vector)
+        public VectorExpression(IPersistentVector vector)
         {
             this.vector = vector;
         }
@@ -19,12 +21,12 @@
 
         public object Evaluate(Machine machine, ValueEnvironment environment)
         {
-            object[] result = new object[vector.Length];
+            object[] result = new object[this.vector.Count];
 
             for (int k = 0; k < vector.Length; k++)
                 result[k] = machine.Evaluate(vector[k], environment);
 
-            return result;
+            return PersistentVector.Create(result);
         }
     }
 }

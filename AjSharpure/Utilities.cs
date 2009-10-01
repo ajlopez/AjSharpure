@@ -47,7 +47,7 @@
             if (obj == null)
                 return false;
 
-            if (obj is object[])
+            if (obj is IPersistentVector)
                 return true;
 
             if (obj is System.Array)
@@ -73,8 +73,8 @@
             if (obj is IExpression)
                 return (IExpression)obj;
 
-            if (obj is object[])
-                return new VectorExpression((object[])obj);
+            if (obj is IPersistentVector)
+                return new VectorExpression((IPersistentVector)obj);
 
             if (obj is IDictionary)
                 return new DictionaryExpression((IDictionary)obj);

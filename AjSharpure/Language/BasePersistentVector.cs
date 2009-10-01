@@ -28,7 +28,7 @@
 
         public int Length
         {
-            get { throw new NotImplementedException(); }
+            get { return this.Count; }
         }
 
         public IPersistentVector AssociateN(int index, object value)
