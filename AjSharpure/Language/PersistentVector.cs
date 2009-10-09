@@ -88,7 +88,7 @@
             }
         }
 
-        public PersistentVector Cons(object obj)
+        public new PersistentVector Cons(object obj)
         {
             if (this.tail.Length < NodeSize)
             {
@@ -139,7 +139,39 @@
 
         public override int GetHashCode()
         {
+            // TODO cache result
             return Utilities.CombineHash(this);
+        }
+
+        public override bool Contains(object value)
+        {
+            if (this.root != null)
+                foreach (object[] values in this.root)
+                    if (values.Contains(value))
+                        return true;
+
+            return this.tail.Contains(value);
+        }
+
+        public override int IndexOf(object value)
+        {
+            int offset = 0;
+
+            if (this.root != null)
+                foreach (object[] values in this.root)
+                {
+                    for (int k = 0; k < values.Length; k++)
+                        if (Utilities.Equals(values[k], value))
+                            return k + offset;
+
+                    offset += values.Length;
+                }
+
+            for (int k = 0; k < this.tail.Length; k++)
+                if (Utilities.Equals(this.tail[k], value))
+                    return k + offset;
+
+            return -1;
         }
     }
 }

@@ -170,5 +170,57 @@
             Assert.IsFalse(vector.Equals(list));
             Assert.IsFalse(list.Equals(vector));
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotSupportedException))]
+        public void RaiseIfAddObject()
+        {
+            PersistentVector vector = PersistentVector.Create(new int[] { 1, 2, 3 });
+            vector.Add(1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotSupportedException))]
+        public void RaiseIfClear()
+        {
+            PersistentVector vector = PersistentVector.Create(new int[] { 1, 2, 3 });
+            vector.Clear();
+        }
+
+        [TestMethod]
+        public void IndexOf()
+        {
+            PersistentVector vector = PersistentVector.Create(new int[] { 1, 2, 3 });
+
+            Assert.AreEqual(0, vector.IndexOf(1));
+            Assert.AreEqual(1, vector.IndexOf(2));
+            Assert.AreEqual(2, vector.IndexOf(3));
+        }
+
+        [TestMethod]
+        public void ContainsObject()
+        {
+            PersistentVector vector = PersistentVector.Create(new int[] { 1, 2, 3 });
+
+            Assert.IsTrue(vector.Contains(1));
+            Assert.IsTrue(vector.Contains(2));
+            Assert.IsTrue(vector.Contains(3));
+            Assert.IsFalse(vector.Contains(4));
+        }
+
+        [TestMethod]
+        public void ConsNewObject()
+        {
+            PersistentVector vector = PersistentVector.Create(new int[] { 1, 2, 3 });
+            PersistentVector newvector = vector.Cons(4);
+
+            Assert.AreEqual(3, vector.Count);
+            Assert.AreEqual(4, newvector.Count);
+
+            Assert.IsTrue(newvector.Contains(1));
+            Assert.IsTrue(newvector.Contains(2));
+            Assert.IsTrue(newvector.Contains(3));
+            Assert.IsTrue(newvector.Contains(4));
+        }
     }
 }

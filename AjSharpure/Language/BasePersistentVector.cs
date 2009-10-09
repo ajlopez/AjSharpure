@@ -141,15 +141,9 @@
             throw new NotSupportedException();
         }
 
-        public bool Contains(object value)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract bool Contains(object value);
 
-        public int IndexOf(object value)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract int IndexOf(object value);
 
         public void Insert(int index, object value)
         {
