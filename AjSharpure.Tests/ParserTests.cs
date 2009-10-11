@@ -16,7 +16,7 @@
     public class ParserTests
     {
         [TestMethod]
-        public void ShouldParseBooleans()
+        public void ParseBooleans()
         {
             Parser parser = new Parser("true false");
 
@@ -36,7 +36,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseSymbol()
+        public void ParseSymbol()
         {
             Parser parser = new Parser("foo");
 
@@ -54,7 +54,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseEmptyString()
+        public void ParseEmptyString()
         {
             Parser parser = new Parser(string.Empty);
 
@@ -62,7 +62,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseString()
+        public void ParseString()
         {
             Parser parser = new Parser("\"foo\"");
 
@@ -75,7 +75,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseInteger()
+        public void ParseInteger()
         {
             Parser parser = new Parser("123");
 
@@ -88,7 +88,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseList()
+        public void ParseList()
         {
             Parser parser = new Parser("(1 2 3)");
 
@@ -108,7 +108,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseArray()
+        public void ParseArray()
         {
             Parser parser = new Parser("[1 2 3]");
 
@@ -128,7 +128,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseMap()
+        public void ParseMap()
         {
             Parser parser = new Parser("{:one 1 :two 2 :three 3}");
 
@@ -148,7 +148,27 @@
         }
 
         [TestMethod]
-        public void ShouldParseSymbolIgnoringComment()
+        public void ParseMapAsAssociative()
+        {
+            Parser parser = new Parser("{:one 1 :two 2 :three 3}");
+
+            object obj = parser.ParseForm();
+
+            Assert.IsNotNull(obj);
+            Assert.IsInstanceOfType(obj, typeof(IAssociative));
+
+            IAssociative associative = (IAssociative)obj;
+
+            Assert.AreEqual(3, associative.Count);
+            Assert.AreEqual(1, associative.ValueAt(Keyword.Create("one")));
+            Assert.AreEqual(2, associative.ValueAt(Keyword.Create("two")));
+            Assert.AreEqual(3, associative.ValueAt(Keyword.Create("three")));
+
+            Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
+        public void ParseSymbolIgnoringComment()
         {
             Parser parser = new Parser("foo ; this is a symbol");
 
@@ -166,7 +186,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseSymbolIgnoringPrecedingComment()
+        public void ParseSymbolIgnoringPrecedingComment()
         {
             Parser parser = new Parser("; this is a symbol\r\nfoo");
 
@@ -184,7 +204,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseQuotedSymbol()
+        public void ParseQuotedSymbol()
         {
             Parser parser = new Parser("'foo");
 
@@ -207,7 +227,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseBackQuotedSymbol()
+        public void ParseBackQuotedSymbol()
         {
             Parser parser = new Parser("`foo");
 
@@ -230,7 +250,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseMetaForm()
+        public void ParseMetaForm()
         {
             Parser parser = new Parser("^foo");
 
@@ -253,7 +273,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseDerefForm()
+        public void ParseDerefForm()
         {
             Parser parser = new Parser("@foo");
 
@@ -276,7 +296,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseVarForm()
+        public void ParseVarForm()
         {
             Parser parser = new Parser("#'foo");
 
@@ -299,7 +319,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseSymbolWithMetadata()
+        public void ParseSymbolWithMetadata()
         {
             Parser parser = new Parser("#^{:one 1 :two 2} foo");
 
@@ -327,7 +347,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseListWithMetadata()
+        public void ParseListWithMetadata()
         {
             Parser parser = new Parser("#^{:one 1 :two 2} (1 2)");
 

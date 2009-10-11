@@ -341,6 +341,14 @@
         }
 
         [TestMethod]
+        [DeploymentItem("Examples/DefAssocWithTests.ajshp")]
+        public void ShouldDefAndTestAssocFromExample()
+        {
+            // TODO Fix test
+            Assert.AreEqual(0, this.ShouldLoadAndEvaluateDefsWithTests("DefAssocWithTests.ajshp"));
+        }
+
+        [TestMethod]
         [DeploymentItem("Examples/DefCoreWithTests.ajshp")]
         public void ShouldDefAndTestCoreFromExample()
         {
