@@ -36,15 +36,34 @@
   argument."}  
  rest (fn rest [x] (. AjSharpure.Operations (More x))))
 
+(= (rest (list 1 2 3)) '(2 3))
+
+(def
+ #^{:arglists '([coll x] [coll x & xs])
+    :doc "conj[oin]. Returns a new collection with the xs
+    'added'. (conj nil item) returns (item).  The 'addition' may
+    happen at different 'places' depending on the concrete type."}
+ conj (fn conj 
+        ([coll x] (. AjSharpure.Operations (Conj coll x)))
+        ([coll x & xs]
+         (if xs
+           (recur (conj coll x) (first xs) (next xs))
+           (conj coll x)))))
+           
+(= (list 1 2 3 4) (conj (list 2 3 4) 1))
+(= [1 2 3 4] (conj [1 2 3] 4))
+
 (def
  #^{:doc "Same as (first (next x))"
     :arglists '([x])}
  second (fn second [x] (first (next x))))
 
 (= (list 1 2 3) (cons 1 (list 2 3)))
-(= (rest (list 1 2 3)) '(2 3))
 (= 1 (first (list 1 2 3)))
 (= 2 (second (list 1 2 3)))
+
+(= 1 (first [1 2 3]))
+(= 2 (second [1 2 3]))
 
 (def
  #^{:doc "Same as (first (first x))"
@@ -53,12 +72,16 @@
 
 (= 1 (ffirst (list (list 1) 2 3)))
 
+(= 1 (ffirst [[1] 2 3]))
+
 (def
  #^{:doc "Same as (next (first x))"
     :arglists '([x])}
  nfirst (fn nfirst [x] (next (first x))))
 
 (= (list 2) (nfirst (list (list 1 2) 2 3)))
+
+(= [2] (nfirst [[1 2] 2 3]))
 
 (def
  #^{:doc "Same as (first (next x))"
@@ -67,12 +90,16 @@
 
 (= 2 (fnext (list 1 2 3)))
 
+(= 2 (fnext [1 2 3]))
+
 (def
  #^{:doc "Same as (next (next x))"
     :arglists '([x])}
  nnext (fn nnext [x] (next (next x))))
 
 (= (list 3) (nnext (list 1 2 3)))
+
+(= [3] (nnext [1 2 3]))
 
 (def
  #^{:arglists '([coll])
@@ -84,6 +111,8 @@
  seq (fn seq [coll] (. AjSharpure.Operations (ToSequence coll))))
 
 (= '(1 2 3) (seq (list 1 2 3)))
+
+(= '(1 2 3) (seq [1 2 3]))
 
 (def
  #^{:arglists '([#^Class c x])
@@ -131,4 +160,24 @@
          (recur (conj ret (first (first fdecl))) (next fdecl))
          (seq ret)))
      (list (first fdecl)))))
+
+(def
+ #^{:arglists '([map key val] [map key val & kvs])
+    :doc "assoc[iate]. When applied to a map, returns a new map of the
+    same (hashed/sorted) type, that contains the mapping of key(s) to
+    val(s). When applied to a vector, returns a new vector that
+    contains val at index. Note - index must be <= (count vector)."}
+ assoc
+ (fn assoc
+   ([map key val] (. AjSharpure.Language.Operations (Associate map key val)))
+   ([map key val & kvs]
+    (let [ret (assoc map key val)]
+      (if kvs
+        (recur ret (first kvs) (second kvs) (nnext kvs))
+        ret)))))
+
+; TODO 
+; (assoc {:a 1 :b 2} :c 3)
+
+
 

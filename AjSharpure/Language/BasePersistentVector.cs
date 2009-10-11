@@ -36,10 +36,7 @@
             throw new NotImplementedException();
         }
 
-        public IPersistentVector Cons(object obj)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract IPersistentVector Cons(object obj);
 
         #endregion
 
@@ -76,7 +73,7 @@
 
         IPersistentCollection IPersistentCollection.Cons(object obj)
         {
-            throw new NotImplementedException();
+            return this.Cons(obj);
         }
 
         public IPersistentCollection Empty

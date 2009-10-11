@@ -25,7 +25,9 @@
             Assert.AreEqual(2, vector[1]);
             Assert.AreEqual(3, vector[2]);
 
-            Assert.IsNull(vector.Metadata);
+            Assert.IsInstanceOfType(vector, typeof(IObject));
+
+            Assert.IsNull(((IObject)vector).Metadata);
         }
 
         [TestMethod]
@@ -40,7 +42,9 @@
             Assert.AreEqual(2, vector[1]);
             Assert.AreEqual(3, vector[2]);
 
-            Assert.IsNull(vector.Metadata);
+            Assert.IsInstanceOfType(vector, typeof(IObject));
+
+            Assert.IsNull(((IObject)vector).Metadata);
         }
 
         [TestMethod]
@@ -66,9 +70,9 @@
         {
             PersistentVector vector = PersistentVector.Create((IList)null);
 
-            vector = vector.Cons(1);
-            vector = vector.Cons(2);
-            vector = vector.Cons(3);
+            vector = (PersistentVector) vector.Cons(1);
+            vector = (PersistentVector) vector.Cons(2);
+            vector = (PersistentVector) vector.Cons(3);
 
             Assert.AreEqual(3, vector.Count);
             Assert.AreEqual(1, vector[0]);
@@ -212,7 +216,7 @@
         public void ConsNewObject()
         {
             PersistentVector vector = PersistentVector.Create(new int[] { 1, 2, 3 });
-            PersistentVector newvector = vector.Cons(4);
+            PersistentVector newvector = (PersistentVector) vector.Cons(4);
 
             Assert.AreEqual(3, vector.Count);
             Assert.AreEqual(4, newvector.Count);
@@ -224,3 +228,4 @@
         }
     }
 }
+

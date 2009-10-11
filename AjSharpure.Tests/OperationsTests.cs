@@ -2,6 +2,7 @@
 {
     using System;
     using System.Text;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -14,13 +15,13 @@
     public class OperationsTests
     {
         [TestMethod]
-        public void ShouldConvertNullToNullSequence()
+        public void ConvertNullToNullSequence()
         {
             Assert.IsNull(Operations.ToSequence(null));
         }
 
         [TestMethod]
-        public void ShouldConsObjectToNull()
+        public void ConsObjectToNull()
         {
             ISequence sequence = Operations.Cons(1, null);
 
@@ -30,13 +31,13 @@
         }
 
         [TestMethod]
-        public void NthElementOfNullShouldBeNull()
+        public void NthElementOfNullBeNull()
         {
             Assert.IsNull(Operations.NthElement(null, 0));
         }
 
         [TestMethod]
-        public void NthElementOfStringShouldGetNthCharacter()
+        public void NthElementOfStringGetNthCharacter()
         {
             object value;
 
@@ -57,7 +58,7 @@
         }
 
         [TestMethod]
-        public void NthElementOfArrayShouldGetNthElement()
+        public void NthElementOfArrayGetNthElement()
         {
             char[] array = new char[] { 'f', 'o', 'o' };
             object value;
@@ -79,7 +80,7 @@
         }
 
         [TestMethod]
-        public void ShouldGetFirst()
+        public void GetFirst()
         {
             Assert.IsNull(Operations.First(null));
             Assert.IsNull(Operations.First(EmptyList.Instance));
@@ -88,7 +89,7 @@
         }
 
         [TestMethod]
-        public void ShouldGetSecond()
+        public void GetSecond()
         {
             Assert.IsNull(Operations.Second(null));
             Assert.IsNull(Operations.Second(EmptyList.Instance));
@@ -97,7 +98,7 @@
         }
 
         [TestMethod]
-        public void ShouldGetThird()
+        public void GetThird()
         {
             Assert.IsNull(Operations.Third(null));
             Assert.IsNull(Operations.Third(EmptyList.Instance));
@@ -106,7 +107,7 @@
         }
 
         [TestMethod]
-        public void ShouldGetNext()
+        public void GetNext()
         {
             Assert.IsNull(Operations.Next(null));
             Assert.IsNull(Operations.Next(EmptyList.Instance));
@@ -120,7 +121,7 @@
         }
 
         [TestMethod]
-        public void ShouldGetMore()
+        public void GetMore()
         {
             Assert.AreEqual(EmptyList.Instance, Operations.More(null));
             Assert.AreEqual(EmptyList.Instance, Operations.More(EmptyList.Instance));
@@ -131,6 +132,68 @@
             Assert.AreEqual(2, result.Count);
             Assert.AreEqual(2, result.First());
             Assert.AreEqual(3, result.Next().First());
+        }
+
+        [TestMethod]
+        public void ConjOnNullCollection()
+        {
+            IPersistentCollection result = Operations.Conj(null, 2);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(2, result.ToSequence().First());
+        }
+
+        [TestMethod]
+        public void ConjToPersistentList()
+        {
+            IPersistentCollection collection = PersistentList.Create(new object[] { 1, 2, 3 });
+            IPersistentCollection result = Operations.Conj(collection, 4);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(4, result.Count);
+            Assert.AreEqual(4, result.ToSequence().First());
+            Assert.AreEqual(3, Operations.NthElement(result, 3));
+        }
+
+        [TestMethod]
+        public void ConjToPersistentVector()
+        {
+            IPersistentCollection collection = PersistentVector.Create(new object[] { 1, 2, 3 });
+            IPersistentCollection result = Operations.Conj(collection, 4);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(4, result.Count);
+            Assert.AreEqual(1, result.ToSequence().First());
+            Assert.AreEqual(4, Operations.NthElement(result, 3));
+        }
+
+        [TestMethod]
+        public void AssociateToNullAssociative()
+        {
+            IAssociative result = Operations.Associate(null, "one", 1);
+
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.ContainsKey("one"));
+            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(1, result.ValueAt("one"));
+        }
+
+        [TestMethod]
+        public void AssociateToDictionaryObject()
+        {
+            IDictionary dict = new Hashtable();
+            dict["one"] = 0;
+            dict["two"] = 2;
+
+            DictionaryObject dictionary = new DictionaryObject(dict);
+            IAssociative result = Operations.Associate(dictionary, "one", 1);
+
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.ContainsKey("one"));
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(1, result.ValueAt("one"));
+            Assert.AreEqual(2, result.ValueAt("two"));
         }
     }
 }

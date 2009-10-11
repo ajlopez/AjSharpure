@@ -344,7 +344,7 @@
         [DeploymentItem("Examples/DefCoreWithTests.ajshp")]
         public void ShouldDefAndTestCoreFromExample()
         {
-            Assert.AreEqual(14, this.ShouldLoadAndEvaluateDefsWithTests("DefCoreWithTests.ajshp"));
+            Assert.AreEqual(23, this.ShouldLoadAndEvaluateDefsWithTests("DefCoreWithTests.ajshp"));
         }
 
         private int ShouldLoadAndEvaluateDefsWithTests(string filename)

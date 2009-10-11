@@ -35,3 +35,134 @@
     :doc "Returns a possibly empty seq of the items after the first. Calls seq on its
   argument."}  
  rest (fn rest [x] (. AjSharpure.Operations (More x))))
+
+(def
+ #^{:arglists '([coll x] [coll x & xs])
+    :doc "conj[oin]. Returns a new collection with the xs
+    'added'. (conj nil item) returns (item).  The 'addition' may
+    happen at different 'places' depending on the concrete type."}
+ conj (fn conj 
+        ([coll x] (. AjSharpure.Operations (Conj coll x)))
+        ([coll x & xs]
+         (if xs
+           (recur (conj coll x) (first xs) (next xs))
+           (conj coll x)))))
+
+(def
+ #^{:doc "Same as (first (next x))"
+    :arglists '([x])}
+ second (fn second [x] (first (next x))))
+
+(def
+ #^{:doc "Same as (first (first x))"
+    :arglists '([x])}
+ ffirst (fn ffirst [x] (first (first x))))
+
+(def
+ #^{:doc "Same as (next (first x))"
+    :arglists '([x])}
+ nfirst (fn nfirst [x] (next (first x))))
+
+(def
+ #^{:doc "Same as (first (next x))"
+    :arglists '([x])}
+ fnext (fn fnext [x] (first (next x))))
+
+(def
+ #^{:doc "Same as (next (next x))"
+    :arglists '([x])}
+ nnext (fn nnext [x] (next (next x))))
+
+(def
+ #^{:arglists '([coll])
+    :doc "Returns a seq on the collection. If the collection is
+    empty, returns nil.  (seq nil) returns nil. seq also works on
+    Strings, native Java arrays (of reference types) and any objects
+    that implement Iterable."
+    :tag clojure.lang.ISeq}
+ seq (fn seq [coll] (. AjSharpure.Operations (ToSequence coll))))
+
+(def
+ #^{:arglists '([#^Class c x])
+    :doc "Evaluates x and tests if it is an instance of the class
+    c. Returns true or false"}
+ instance? (fn instance? [#^Class c x] (. c (IsInstanceOfType x))))
+ 
+(def
+ #^{:arglists '([x])
+    :doc "Return true if x implements ISeq"}
+ seq? (fn seq? [x] (instance? AjSharpure.Language.ISequence x)))
+
+(def
+ #^{:arglists '([x])
+    :doc "Return true if x is a String"}
+ string? (fn string? [x] (instance? System.String x)))
+
+(def
+ #^{:arglists '([x])
+    :doc "Return true if x implements IPersistentMap"}
+ map? (fn map? [x] (instance? AjSharpure.Language.IPersistentMap x)))
+
+(def
+ #^{:arglists '([x])
+    :doc "Return true if x implements IPersistentVector "}
+ vector? (fn vector? [x] (instance? AjSharpure.Language.IPersistentVector x)))
+ 
+(def
+ #^{:private true}
+ sigs
+ (fn [fdecl]
+   (if (seq? (first fdecl))
+     (loop [ret [] fdecl fdecl]
+       (if fdecl
+         (recur (conj ret (first (first fdecl))) (next fdecl))
+         (seq ret)))
+     (list (first fdecl)))))
+
+(def
+ #^{:arglists '([map key val] [map key val & kvs])
+    :doc "assoc[iate]. When applied to a map, returns a new map of the
+    same (hashed/sorted) type, that contains the mapping of key(s) to
+    val(s). When applied to a vector, returns a new vector that
+    contains val at index. Note - index must be <= (count vector)."}
+ assoc
+ (fn assoc
+   ([map key val] (. AjSharpure.Language.Operations (Associate map key val)))
+   ([map key val & kvs]
+    (let [ret (assoc map key val)]
+      (if kvs
+        (recur ret (first kvs) (second kvs) (nnext kvs))
+        ret)))))
+
+
+;;;;;;;;;;;;;;;;; metadata ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(def
+ #^{:arglists '([obj])
+    :doc "Returns the metadata of obj, returns nil if there is no metadata."}
+ meta (fn meta [x]
+        (if (instance? AjSharpure.Language.IMetadata x)
+          (. #^AjSharpure.Language.IMetadata x (meta)))))
+
+(def
+ #^{:arglists '([#^AjSharpure.Language.IObject obj m])
+    :doc "Returns an object of the same type and value as obj, with
+    map m as its metadata."}
+ with-meta (fn with-meta [#^AjSharpure.Language.IObject x m]
+             (. x (withMeta m))))
+
+(def 
+ #^{:arglists '([coll])
+    :doc "Return the last item in coll, in linear time"}
+ last (fn last [s]
+        (if (next s)
+          (recur (next s))
+          (first s))))
+
+(def 
+ #^{:arglists '([coll])
+    :doc "Return a seq of all but the last item in coll, in linear time"}
+ butlast (fn butlast [s]
+           (loop [ret [] s s]
+             (if (next s)
+               (recur (conj ret (first s)) (next s))
+               (seq ret)))))

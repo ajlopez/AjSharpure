@@ -123,5 +123,25 @@
 
             throw new NotImplementedException();
         }
+
+        public static IPersistentCollection Conj(IPersistentCollection collection, object obj)
+        {
+            if (collection == null)
+                return new PersistentList(obj);
+
+            return collection.Cons(obj);
+        }
+
+        public static IAssociative Associate(object collection, object key, object value)
+        {
+            if (collection == null)
+            {
+                IDictionary dictionary = new Hashtable();
+                dictionary[key] = value;
+                return new DictionaryObject(dictionary);
+            }
+
+            return ((IAssociative)collection).Associate(key, value);
+        }
     }
 }

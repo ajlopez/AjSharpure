@@ -23,7 +23,7 @@
             PersistentVector vector = emptyVector;
 
             for (; sequence != null; sequence = sequence.Next())
-                vector = vector.Cons(sequence.First());
+                vector = (PersistentVector) vector.Cons(sequence.First());
 
             return vector;
         }
@@ -34,7 +34,7 @@
 
             if (elements != null)
                 foreach (object element in elements)
-                    vector = vector.Cons(element);
+                    vector = (PersistentVector) vector.Cons(element);
 
             return vector;
         }
@@ -88,7 +88,7 @@
             }
         }
 
-        public new PersistentVector Cons(object obj)
+        public override IPersistentVector Cons(object obj)
         {
             if (this.tail.Length < NodeSize)
             {
