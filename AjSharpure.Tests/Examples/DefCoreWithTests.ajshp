@@ -176,8 +176,7 @@
         (recur ret (first kvs) (second kvs) (nnext kvs))
         ret)))))
 
-; TODO 
-; (assoc {:a 1 :b 2} :c 3)
+(= {:a 1 :b 2 :c 3} (assoc {:a 1 :b 2} :c 3))
 
 
 

@@ -344,15 +344,14 @@
         [DeploymentItem("Examples/DefAssocWithTests.ajshp")]
         public void ShouldDefAndTestAssocFromExample()
         {
-            // TODO Fix test
-            Assert.AreEqual(0, this.ShouldLoadAndEvaluateDefsWithTests("DefAssocWithTests.ajshp"));
+            Assert.AreEqual(1, this.ShouldLoadAndEvaluateDefsWithTests("DefAssocWithTests.ajshp"));
         }
 
         [TestMethod]
         [DeploymentItem("Examples/DefCoreWithTests.ajshp")]
         public void ShouldDefAndTestCoreFromExample()
         {
-            Assert.AreEqual(23, this.ShouldLoadAndEvaluateDefsWithTests("DefCoreWithTests.ajshp"));
+            Assert.AreEqual(24, this.ShouldLoadAndEvaluateDefsWithTests("DefCoreWithTests.ajshp"));
         }
 
         private int ShouldLoadAndEvaluateDefsWithTests(string filename)

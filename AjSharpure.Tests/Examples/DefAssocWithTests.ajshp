@@ -37,6 +37,11 @@
  rest (fn rest [x] (. AjSharpure.Operations (More x))))
 
 (def
+ #^{:doc "Same as (next (next x))"
+    :arglists '([x])}
+ nnext (fn nnext [x] (next (next x))))
+
+(def
  #^{:arglists '([coll x] [coll x & xs])
     :doc "conj[oin]. Returns a new collection with the xs
     'added'. (conj nil item) returns (item).  The 'addition' may
@@ -54,26 +59,6 @@
  second (fn second [x] (first (next x))))
 
 (def
- #^{:doc "Same as (first (first x))"
-    :arglists '([x])}
- ffirst (fn ffirst [x] (first (first x))))
-
-(def
- #^{:doc "Same as (next (first x))"
-    :arglists '([x])}
- nfirst (fn nfirst [x] (next (first x))))
-
-(def
- #^{:doc "Same as (first (next x))"
-    :arglists '([x])}
- fnext (fn fnext [x] (first (next x))))
-
-(def
- #^{:doc "Same as (next (next x))"
-    :arglists '([x])}
- nnext (fn nnext [x] (next (next x))))
-
-(def
  #^{:arglists '([coll])
     :doc "Returns a seq on the collection. If the collection is
     empty, returns nil.  (seq nil) returns nil. seq also works on
@@ -81,43 +66,6 @@
     that implement Iterable."
     :tag clojure.lang.ISeq}
  seq (fn seq [coll] (. AjSharpure.Operations (ToSequence coll))))
-
-(def
- #^{:arglists '([#^Class c x])
-    :doc "Evaluates x and tests if it is an instance of the class
-    c. Returns true or false"}
- instance? (fn instance? [#^Class c x] (. c (IsInstanceOfType x))))
- 
-(def
- #^{:arglists '([x])
-    :doc "Return true if x implements ISeq"}
- seq? (fn seq? [x] (instance? AjSharpure.Language.ISequence x)))
-
-(def
- #^{:arglists '([x])
-    :doc "Return true if x is a String"}
- string? (fn string? [x] (instance? System.String x)))
-
-(def
- #^{:arglists '([x])
-    :doc "Return true if x implements IPersistentMap"}
- map? (fn map? [x] (instance? AjSharpure.Language.IPersistentMap x)))
-
-(def
- #^{:arglists '([x])
-    :doc "Return true if x implements IPersistentVector "}
- vector? (fn vector? [x] (instance? AjSharpure.Language.IPersistentVector x)))
- 
-(def
- #^{:private true}
- sigs
- (fn [fdecl]
-   (if (seq? (first fdecl))
-     (loop [ret [] fdecl fdecl]
-       (if fdecl
-         (recur (conj ret (first (first fdecl))) (next fdecl))
-         (seq ret)))
-     (list (first fdecl)))))
 
 (def
  #^{:arglists '([map key val] [map key val & kvs])
@@ -134,4 +82,4 @@
         (recur ret (first kvs) (second kvs) (nnext kvs))
         ret)))))
 
-; (assoc {:a 1 :b 2} :c 3)
+(= {:a 1 :b 2 :c 3} (assoc {:a 1 :b 2} :c 3))

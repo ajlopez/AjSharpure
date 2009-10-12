@@ -7,6 +7,7 @@
     using System.Text;
 
     using AjSharpure;
+    using AjSharpure.Expressions;
     using AjSharpure.Language;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -361,6 +362,43 @@
             Assert.AreEqual(hash1, hash2);
 
             Assert.AreEqual(0, Utilities.CombineHash((IEnumerable) null));
+        }
+
+        [TestMethod]
+        public void RecognizeMapAsEvaluable()
+        {
+            IDictionary dict = new Hashtable();
+            DictionaryObject dictionary = new DictionaryObject(dict);
+            Assert.IsTrue(Utilities.IsEvaluable(dictionary));
+        }
+
+        [TestMethod]
+        public void RecognizeVectorAsEvaluable()
+        {
+            Assert.IsTrue(Utilities.IsEvaluable(PersistentVector.Create(new int[] { 1, 2, 3})));
+        }
+
+        [TestMethod]
+        public void GetVectorExpressionEvaluatingVector()
+        {
+            IPersistentVector vector = PersistentVector.Create(new int[] { 1, 2, 3 });
+
+            object result = Utilities.ToExpression(vector);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(VectorExpression));
+        }
+
+        [TestMethod]
+        public void GetMapExpressionEvaluatingMap()
+        {
+            IDictionary dictionary = new Hashtable();
+            IPersistentMap map = new DictionaryObject(dictionary);
+
+            object result = Utilities.ToExpression(map);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(MapExpression));
         }
     }
 }

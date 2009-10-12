@@ -50,10 +50,13 @@
             if (obj is IPersistentVector)
                 return true;
 
-            if (obj is System.Array)
-                return false;
+            if (obj is IPersistentMap)
+                return true;
 
-            if (obj is IPersistentVector)
+            if (obj is Variable)
+                return true;
+
+            if (obj is System.Array)
                 return false;
 
             if (obj is IDictionary)
@@ -76,8 +79,14 @@
             if (obj is IPersistentVector)
                 return new VectorExpression((IPersistentVector)obj);
 
+            if (obj is IPersistentMap)
+                return new MapExpression((IPersistentMap)obj);
+
             if (obj is IDictionary)
                 return new DictionaryExpression((IDictionary)obj);
+
+            if (obj is Variable)
+                return new VariableExpression((Variable)obj);
 
             if (obj is IList && !(obj is System.Array) && !(obj is String) && !(obj is System.ValueType))
                 return new ListExpression((IList)obj);

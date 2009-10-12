@@ -1338,5 +1338,57 @@
 
             machine.GetNamespace("foo");
         }
+
+        [TestMethod]
+        public void EvaluateDictionaryObjectAsIAssociative()
+        {
+            IDictionary dict = new Hashtable();
+            dict["one"] = 1;
+            dict["two"] = 2;
+
+            DictionaryObject dictionary = new DictionaryObject(dict);
+
+            Machine machine = new Machine();
+
+            object result = machine.Evaluate(dictionary);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IAssociative));
+
+            IAssociative associative = (IAssociative)result;
+
+            Assert.AreEqual(2, associative.Count);
+            Assert.IsTrue(associative.ContainsKey("one"));
+            Assert.IsTrue(associative.ContainsKey("two"));
+            Assert.AreEqual(1, associative.ValueAt("one"));
+            Assert.AreEqual(2, associative.ValueAt("two"));
+        }
+
+        [TestMethod]
+        public void EvaluateDictionaryObjectWithVariables()
+        {
+            Machine machine = new Machine();
+            IDictionary dict = new Hashtable();
+            dict["one"] = Utilities.ToVariable(machine, machine.Environment, Symbol.Create("symone"));
+            dict["two"] = Utilities.ToVariable(machine, machine.Environment, Symbol.Create("symtwo"));
+
+            DictionaryObject dictionary = new DictionaryObject(dict);
+
+            machine.SetVariableValue(Utilities.ToVariable(machine, machine.Environment, Symbol.Create("symone")), 1);
+            machine.SetVariableValue(Utilities.ToVariable(machine, machine.Environment, Symbol.Create("symtwo")), 2);
+
+            object result = machine.Evaluate(dictionary);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IAssociative));
+
+            IAssociative associative = (IAssociative)result;
+
+            Assert.AreEqual(2, associative.Count);
+            Assert.IsTrue(associative.ContainsKey("one"));
+            Assert.IsTrue(associative.ContainsKey("two"));
+            Assert.AreEqual(1, associative.ValueAt("one"));
+            Assert.AreEqual(2, associative.ValueAt("two"));
+        }
     }
 }
