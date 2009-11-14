@@ -97,6 +97,12 @@
             if (obj is IFunction)
                 return new ConstantExpression(obj);
 
+            if (obj is String)
+                return new ConstantExpression(obj);
+
+            if (obj.GetType().IsValueType)
+                return new ConstantExpression(obj);
+
             throw new InvalidOperationException(string.Format("Type {0} can't be converted to Expression", obj.GetType().FullName));
         }
 
@@ -206,6 +212,17 @@
                 return EnumeratorSequence.Create(((IEnumerable)obj).GetEnumerator());
 
             throw new ArgumentException("Don't know how to create ISequence from: " + obj.GetType().Name);
+        }
+
+        public static bool Identical(object obj1, object obj2)
+        {
+            if (obj1 == obj2)
+                return true;
+
+            if (obj1 != null && obj1.GetType().IsValueType)
+                return obj1.Equals(obj2);
+
+            return false;
         }
 
         public static bool Equals(object obj1, object obj2)

@@ -204,3 +204,64 @@
   [#^Class c x] 
   (. c (cast x)))
 
+(def
+
+ #^{:macro true
+    :doc "Like defn, but the resulting function name is declared as a
+  macro and will be used as a macro by the compiler when it is
+  called."
+    :arglists '([name doc-string? attr-map? [params*] body]
+                [name doc-string? attr-map? ([params*] body)+ attr-map?])}
+ defmacro (fn [name & args]
+            (list 'do
+                  (cons `defn (cons name args))
+                  (list '. (list 'var name) '(setMacro))
+                  (list 'var name))))
+
+(defmacro when
+  "Evaluates test. If logical true, evaluates body in an implicit do."
+  [test & body]
+  (list 'if test (cons 'do body)))
+
+(defmacro when-not
+  "Evaluates test. If logical false, evaluates body in an implicit do."
+  [test & body]
+    (list 'if test nil (cons 'do body)))
+
+(defn
+ identical? [x y] (. AjSharpure.Utilities Identical x y))
+
+(defn nil?
+  "Returns true if x is nil, false otherwise."
+  {:tag Boolean}
+  [x] (identical? x nil))
+
+(defn false?
+  "Returns true if x is the value false, false otherwise."
+  {:tag Boolean}
+  [x] (identical? x false))
+
+(defn true?
+  "Returns true if x is the value true, false otherwise."
+  {:tag Boolean}
+  [x] (identical? x true))
+
+(defn not
+  "Returns true if x is logical false, false otherwise."
+  {:tag Boolean}
+  [x] (if x false true))
+
+(defn str
+  "With no args, returns the empty string. With one arg x, returns
+  x.toString().  (str nil) returns the empty string. With more than
+  one arg, returns the concatenation of the str values of the args."
+  {:tag System.String}
+  ([] "")
+  ([#^System.Object x]
+   (if (nil? x) "" (. x (ToString))))
+  ([x & ys]
+     ((fn [#^System.Text.StringBuilder sb more]
+          (if more
+            (recur (. sb  (Append (str (first more)))) (next more))
+            (str sb)))
+      (new System.Text.StringBuilder #^System.String (str x)) ys)))

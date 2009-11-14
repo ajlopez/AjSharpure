@@ -30,6 +30,7 @@
         {
             this.CreateNamespace(AjSharpureCoreKey);
             this.environment.SetValue(CurrentNamespaceKey, AjSharpureCoreKey);
+            this.environment.SetValue("machine", this);
             this.environment.SetValue("true", true);
             this.environment.SetValue("false", false);
             this.environment.SetValue("nil", null);

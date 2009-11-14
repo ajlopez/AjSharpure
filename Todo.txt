@@ -1,8 +1,11 @@
 
 = Dot primitive as in Clojure
-+ Test of instance? in CoreWithTests example
-+ (seq? (list 1 2 3)) is true?
-+ define vector? in CoreWithTest example
+- defn review commented code in definition DefCoreWithTests.ajshp
+- core.clj implement lines 246-275 (from cast to sorted-map-by)
+- review Variable.SetMacro implementation (now it receives Machine parameter)
+- related to above: Machine.SetValue("machine",this) is it needed????
+- internal test Variable.SetMacro
+- internal test Utilities.Identical
 - define map? in CoreWithTest example
 - duplicated keys in maps
 {:a 1 :b 2 :a 3} => {:a 1 :b 2 :a 3} 

@@ -1,6 +1,7 @@
 ﻿namespace AjSharpure.Language
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -133,6 +134,28 @@
         public void ResetMetadata(IPersistentMap metadata)
         {
             this.metadata = metadata;
+        }
+
+        public void SetMacro(Machine machine)
+        {
+            object obj = machine.GetVariableValue(this);
+
+            if (obj is DefinedFunction)
+            {
+                obj = ((DefinedFunction)obj).ToMacro();
+                machine.SetVariableValue(this, obj);
+            }
+            else if (!(obj is DefinedMacro))
+                throw new InvalidOperationException();
+            
+            if (this.metadata != null)
+                this.metadata = this.metadata.Associate(Keyword.Create("macro"), true);
+            else
+            {
+                IDictionary dict = new Hashtable();
+                dict[Keyword.Create("macro")] = true;
+                this.metadata = new DictionaryObject(dict);
+            }
         }
     }
 }

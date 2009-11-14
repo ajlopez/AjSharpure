@@ -31,7 +31,7 @@
         public object Apply(Machine machine, ValueEnvironment environment, object[] argumentValues)
         {
             foreach (DefinedFunction func in this.functions)
-                if (func.Arity == argumentValues.Length || (func.Arity <= argumentValues.Length && func.VariableArity))
+                if ((func.Arity == 0 && argumentValues == null) || func.Arity == argumentValues.Length || (func.Arity <= argumentValues.Length && func.VariableArity))
                     return func.Apply(machine, environment, argumentValues);
 
             throw new InvalidOperationException("Invalid number of parameters");

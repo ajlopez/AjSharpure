@@ -62,10 +62,23 @@
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void RaiseIfTryToConvertStringToExpression()
+        public void StringToExpression()
         {
-            Utilities.ToExpression("foo");
+            IExpression expression = Utilities.ToExpression("foo");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(ConstantExpression));
+            Assert.AreEqual("foo", ((ConstantExpression) expression).Value);
+        }
+
+        [TestMethod]
+        public void IntegerToExpression()
+        {
+            IExpression expression = Utilities.ToExpression(123);
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(ConstantExpression));
+            Assert.AreEqual(123, ((ConstantExpression)expression).Value);
         }
 
         [TestMethod]
@@ -408,6 +421,23 @@
             object result = Utilities.ToExpression(function);
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(ConstantExpression));
+        }
+
+        [TestMethod]
+        public void IdenticalObjects()
+        {
+            Assert.IsTrue(Utilities.Identical(null, null));
+            Assert.IsTrue(Utilities.Identical(1, 1));
+            Assert.IsTrue(Utilities.Identical(true, true));
+
+            object x = new System.IO.FileInfo("foo");
+            object y = new System.IO.FileInfo("foo");
+
+            Assert.IsTrue(Utilities.Identical(x, x));
+            Assert.IsFalse(Utilities.Identical(x, y));
+
+            Assert.IsFalse(Utilities.Identical(null, 1));
+            Assert.IsFalse(Utilities.Identical(1, null));
         }
     }
 }

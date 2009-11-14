@@ -317,16 +317,6 @@
         }
 
         [TestMethod]
-        [DeploymentItem("Examples/DefCore.ajshp")]
-        public void ShouldParseDefCoreExample()
-        {
-            Parser parser = new Parser(File.OpenText("DefCore.ajshp"));
-
-            for (object result = parser.ParseForm(); result != null; result = parser.ParseForm())
-                Assert.IsInstanceOfType(result, typeof(IList));
-        }
-
-        [TestMethod]
         [DeploymentItem("Examples/DefConsWithTests.ajshp")]
         public void ShouldDefAndTestConsFromExample()
         {
@@ -352,6 +342,16 @@
         public void ShouldDefAndTestDefnFromExample()
         {
             Assert.IsTrue(this.ShouldLoadAndEvaluateDefsWithTests("DefDefnWithTests.ajshp") > 0);
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples/DefCore.ajshp")]
+        public void ShouldParseDefCoreExample()
+        {
+            Parser parser = new Parser(File.OpenText("DefCore.ajshp"));
+
+            for (object result = parser.ParseForm(); result != null; result = parser.ParseForm())
+                Assert.IsInstanceOfType(result, typeof(IList));
         }
 
         [TestMethod]
@@ -381,8 +381,8 @@
                     ntest++;
                     Assert.IsTrue((bool)value, string.Format("Test {0} failed", ntest));
                 }
-                else
-                    Assert.IsInstanceOfType(value, typeof(IFunction));
+                //else
+                //    Assert.IsInstanceOfType(value, typeof(IFunction));
 
                 result = parser.ParseForm();
             }
