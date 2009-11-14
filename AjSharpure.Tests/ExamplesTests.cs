@@ -348,10 +348,17 @@
         }
 
         [TestMethod]
+        [DeploymentItem("Examples/DefDefnWithTests.ajshp")]
+        public void ShouldDefAndTestDefnFromExample()
+        {
+            Assert.IsTrue(this.ShouldLoadAndEvaluateDefsWithTests("DefDefnWithTests.ajshp") > 0);
+        }
+
+        [TestMethod]
         [DeploymentItem("Examples/DefCoreWithTests.ajshp")]
         public void ShouldDefAndTestCoreFromExample()
         {
-            Assert.AreEqual(24, this.ShouldLoadAndEvaluateDefsWithTests("DefCoreWithTests.ajshp"));
+            Assert.IsTrue(this.ShouldLoadAndEvaluateDefsWithTests("DefCoreWithTests.ajshp") > 20);
         }
 
         private int ShouldLoadAndEvaluateDefsWithTests(string filename)

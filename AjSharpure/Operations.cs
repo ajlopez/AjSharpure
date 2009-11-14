@@ -9,23 +9,6 @@
 
     public sealed class Operations
     {
-        public static ISequence ToSequence(object obj)
-        {
-            if (obj == null)
-                return null;
-
-            if (obj is ISequence)
-                return (ISequence)obj;
-
-            if (obj is ISequenceable)
-                return ((ISequenceable)obj).ToSequence();
-
-            if (obj is IEnumerable)
-                return EnumeratorSequence.Create(((IEnumerable)obj).GetEnumerator());
-
-            throw new ArgumentException("Don't know how to create ISequence from " + obj.GetType().FullName);
-        }
-
         public static ISequence Cons(object obj, object coll)
         {
             if (coll == null)
@@ -33,7 +16,7 @@
             if (coll is ISequence)
                 return new Cons(obj, (ISequence)coll);
             else
-                return new Cons(obj, ToSequence(coll));
+                return new Cons(obj, Utilities.ToSequence(coll));
         }
 
         public static object First(object obj)
@@ -51,7 +34,7 @@
                 return null;
             }
 
-            ISequence sequence = ToSequence(obj);
+            ISequence sequence = Utilities.ToSequence(obj);
 
             if (sequence == null)
                 return null;
@@ -64,7 +47,7 @@
             if (obj is ISequence)
                 return ((ISequence)obj).Next();
 
-            ISequence sequence = ToSequence(obj);
+            ISequence sequence = Utilities.ToSequence(obj);
 
             if (sequence == null)
                 return null;
@@ -77,7 +60,7 @@
             if (obj is ISequence)
                 return ((ISequence)obj).More();
 
-            ISequence sequence = ToSequence(obj);
+            ISequence sequence = Utilities.ToSequence(obj);
 
             if (sequence == null)
                 return EmptyList.Instance;

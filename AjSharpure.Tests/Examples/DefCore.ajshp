@@ -80,7 +80,7 @@
     Strings, native Java arrays (of reference types) and any objects
     that implement Iterable."
     :tag clojure.lang.ISeq}
- seq (fn seq [coll] (. AjSharpure.Operations (ToSequence coll))))
+ seq (fn seq [coll] (. AjSharpure.Utilities (ToSequence coll))))
 
 (def
  #^{:arglists '([#^Class c x])
@@ -133,4 +133,74 @@
       (if kvs
         (recur ret (first kvs) (second kvs) (nnext kvs))
         ret)))))
+
+;;;;;;;;;;;;;;;;; metadata ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(def
+ #^{:arglists '([obj])
+    :doc "Returns the metadata of obj, returns nil if there is no metadata."}
+ meta (fn meta [x]
+        (if (instance? AjSharpure.Language.IMetadata x)
+          (. #^AjSharpure.Language.IMetadata x (meta)))))
+
+(def
+ #^{:arglists '([#^AjSharpure.Language.IObject obj m])
+    :doc "Returns an object of the same type and value as obj, with
+    map m as its metadata."}
+ with-meta (fn with-meta [#^AjSharpure.Language.IObject x m]
+             (. x (WithMetadata m))))
+
+(def 
+ #^{:arglists '([coll])
+    :doc "Return the last item in coll, in linear time"}
+ last (fn last [s]
+        (if (next s)
+          (recur (next s))
+          (first s))))
+
+(def 
+ #^{:arglists '([coll])
+    :doc "Return a seq of all but the last item in coll, in linear time"}
+ butlast (fn butlast [s]
+           (loop [ret [] s s]
+             (if (next s)
+               (recur (conj ret (first s)) (next s))
+               (seq ret)))))
+(def 
+
+ #^{:macro true
+    :doc "Same as (def name (fn [params* ] exprs*)) or (def
+    name (fn ([params* ] exprs*)+)) with any doc-string or attrs added
+    to the var metadata"
+    :arglists '([name doc-string? attr-map? [params*] body]
+                [name doc-string? attr-map? ([params*] body)+ attr-map?])}
+ defn (fn defn [name & fdecl]
+        (let [m (if (string? (first fdecl))
+                  {:doc (first fdecl)}
+                  {})
+              fdecl (if (string? (first fdecl))
+                      (next fdecl)
+                      fdecl)
+              m (if (map? (first fdecl))
+                  (conj m (first fdecl))
+                  m)
+              fdecl (if (map? (first fdecl))
+                      (next fdecl)
+                      fdecl)
+;              fdecl (if (vector? (first fdecl))
+;                      (list fdecl)
+;                      fdecl)
+              m (if (map? (last fdecl))
+                  (conj m (last fdecl))
+                  m)
+              fdecl (if (map? (last fdecl))
+                      (butlast fdecl)
+                      fdecl)
+              m (conj {:arglists (list 'quote (sigs fdecl))} m)]
+          (list 'def (with-meta name (conj (if (meta name) (meta name) {}) m))
+                (cons `fn fdecl)))))
+ 
+(defn cast
+  "Throws a ClassCastException if x is not a c, else returns x."
+  [#^Class c x] 
+  (. c (cast x)))
 

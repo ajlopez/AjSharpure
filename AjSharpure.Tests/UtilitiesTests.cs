@@ -400,5 +400,14 @@
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(MapExpression));
         }
+
+        [TestMethod]
+        public void GetConstantExpressionEvaluatingDefineMacro()
+        {
+            IFunction function = new DefinedMacro("foo", null, null);
+            object result = Utilities.ToExpression(function);
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(ConstantExpression));
+        }
     }
 }

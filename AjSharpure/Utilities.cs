@@ -94,6 +94,9 @@
             if (obj is Symbol)
                 return new SymbolExpression((Symbol)obj);
 
+            if (obj is IFunction)
+                return new ConstantExpression(obj);
+
             throw new InvalidOperationException(string.Format("Type {0} can't be converted to Expression", obj.GetType().FullName));
         }
 

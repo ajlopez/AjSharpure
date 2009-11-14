@@ -1,0 +1,36 @@
+﻿; list already defined in Machine
+
+(def
+ cons (fn* cons [x seq] (. AjSharpure.Operations Cons x seq)))
+
+;during bootstrap we don't have destructuring let, loop or fn, will redefine later
+(def
+ #^{:macro true}
+  let (fn* let [& decl] (cons 'let* decl)))
+
+(def
+ #^{:macro true}
+ loop (fn* loop [& decl] (cons 'loop* decl)))
+
+(def
+ #^{:macro true}
+ fn (fn* fn [& decl] (cons 'fn* decl)))
+
+(def 
+
+ #^{:macro true
+    :doc "Same as (def name (fn [params* ] exprs*)) or (def
+    name (fn ([params* ] exprs*)+)) with any doc-string or attrs added
+    to the var metadata"
+    :arglists '([name doc-string? attr-map? [params*] body]
+                [name doc-string? attr-map? ([params*] body)+ attr-map?])}
+ defn (fn defn [name & fdecl]
+          (list 'def name
+                (cons `fn fdecl))))
+
+(defn
+ first [coll] (. AjSharpure.Operations (First coll)))
+
+(= 1 (first (list 1 2 3 4)))
+
+

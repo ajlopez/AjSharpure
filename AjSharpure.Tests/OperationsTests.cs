@@ -15,12 +15,6 @@
     public class OperationsTests
     {
         [TestMethod]
-        public void ConvertNullToNullSequence()
-        {
-            Assert.IsNull(Operations.ToSequence(null));
-        }
-
-        [TestMethod]
         public void ConsObjectToNull()
         {
             ISequence sequence = Operations.Cons(1, null);
