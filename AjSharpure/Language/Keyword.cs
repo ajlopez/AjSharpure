@@ -105,5 +105,10 @@
 
             return this.name.CompareTo(keyword.name);
         }
+
+        public override string ToString()
+        {
+            return ":" + this.FullName;
+        }
     }
 }

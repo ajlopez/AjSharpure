@@ -114,6 +114,7 @@
     <Compile Include="MacroUtilities.cs" />
     <Compile Include="Operations.cs" />
     <Compile Include="Primitives\AddPrimitive.cs" />
+    <Compile Include="Primitives\ThrowPrimitive.cs" />
     <Compile Include="Primitives\VectorPrimitive.cs" />
     <Compile Include="Primitives\SfStarPrimitive.cs" />
     <Compile Include="Primitives\VarPrimitive.cs" />

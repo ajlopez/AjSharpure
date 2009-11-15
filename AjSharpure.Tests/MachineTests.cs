@@ -1390,5 +1390,15 @@
             Assert.AreEqual(1, associative.ValueAt("one"));
             Assert.AreEqual(2, associative.ValueAt("two"));
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidCastException))]
+        public void EvaluateThrow()
+        {
+            Machine machine = new Machine();
+            Parser parser = new Parser("(throw (new System.InvalidCastException))");
+
+            machine.Evaluate(parser.ParseForm());
+        }
     }
 }

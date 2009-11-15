@@ -9,6 +9,8 @@
 
     public sealed class Operations
     {
+        private static long nextId = 0;
+
         public static ISequence Cons(object obj, object coll)
         {
             if (coll == null)
@@ -125,6 +127,11 @@
             }
 
             return ((IAssociative)collection).Associate(key, value);
+        }
+
+        public static long NextId()
+        {
+            return System.Threading.Interlocked.Increment(ref nextId);
         }
     }
 }

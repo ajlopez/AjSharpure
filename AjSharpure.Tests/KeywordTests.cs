@@ -14,7 +14,7 @@
     public class KeywordTests
     {
         [TestMethod]
-        public void ShouldCreateWithName()
+        public void CreateWithName()
         {
             Keyword keyword = Keyword.Create("foo");
 
@@ -25,7 +25,7 @@
         }
 
         [TestMethod]
-        public void ShouldCreateWithNameAndNamespace()
+        public void CreateWithNameAndNamespace()
         {
             Keyword keyword = Keyword.Create("foo", "bar");
 
@@ -36,7 +36,7 @@
         }
 
         [TestMethod]
-        public void ShouldCreateWithNameAndImplicitNamespace()
+        public void CreateWithNameAndImplicitNamespace()
         {
             Keyword keyword = Keyword.Create("foo/bar");
 
@@ -47,7 +47,7 @@
         }
 
         [TestMethod]
-        public void ShouldBeEqualToKeywordWithSameName()
+        public void BeEqualToKeywordWithSameName()
         {
             Keyword keyword = Keyword.Create("foo");
             Keyword keyword2 = Keyword.Create("foo");
@@ -57,7 +57,7 @@
         }
 
         [TestMethod]
-        public void ShouldBeNotEqualToKeywordWithOtherName()
+        public void BeNotEqualToKeywordWithOtherName()
         {
             Keyword keyword = Keyword.Create("foo");
             Keyword keyword2 = Keyword.Create("bar");
@@ -66,7 +66,7 @@
         }
 
         [TestMethod]
-        public void ShouldBeEqualToKeywordWithSameNameAndNamespace()
+        public void BeEqualToKeywordWithSameNameAndNamespace()
         {
             Keyword keyword = Keyword.Create("foo", "bar");
             Keyword keyword2 = Keyword.Create("foo", "bar");
@@ -76,7 +76,7 @@
         }
 
         [TestMethod]
-        public void ShouldCompareToOtherKeywords()
+        public void CompareToOtherKeywords()
         {
             Keyword keywordBar = Keyword.Create("bar");
             Keyword keywordFooBar = Keyword.Create("foo", "bar");
@@ -90,6 +90,18 @@
 
             Assert.AreEqual(1, keywordFooBar.CompareTo(keywordBarFoo));
             Assert.AreEqual(-1, keywordBarFoo.CompareTo(keywordFooBar));
+        }
+
+        [TestMethod]
+        public void KeywordToString()
+        {
+            Keyword keywordBar = Keyword.Create("bar");
+            Keyword keywordFooBar = Keyword.Create("foo", "bar");
+            Keyword keywordBarFoo = Keyword.Create("bar", "foo");
+
+            Assert.AreEqual(":bar", keywordBar.ToString());
+            Assert.AreEqual(":foo/bar", keywordFooBar.ToString());
+            Assert.AreEqual(":bar/foo", keywordBarFoo.ToString());
         }
     }
 }

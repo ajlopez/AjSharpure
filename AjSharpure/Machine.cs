@@ -61,6 +61,7 @@
             this.environment.SetValue(">", new GreaterPrimitive());
             this.environment.SetValue("<=", new LessEqualPrimitive());
             this.environment.SetValue(">=", new GreaterEqualPrimitive());
+            this.environment.SetValue("throw", new ThrowPrimitive());
 
             this.environment.SetValue("AjSharpure.Utilities", typeof(Utilities));
         }

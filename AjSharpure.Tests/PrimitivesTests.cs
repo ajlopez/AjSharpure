@@ -35,7 +35,7 @@
             DoPrimitive doprim = new DoPrimitive();
             Machine machine = new Machine();
 
-            object result = doprim.Apply(machine, machine.Environment, new object[] {});
+            object result = doprim.Apply(machine, machine.Environment, new object[] { });
 
             Assert.IsNull(result);
         }
@@ -181,11 +181,35 @@
         }
 
         [TestMethod]
+        public void EvaluateSimpleIfWithNotFalseAsCondition()
+        {
+            IfPrimitive ifprim = new IfPrimitive();
+
+            object result = ifprim.Apply(new Machine(), null, new object[] { 2, 1 });
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(int));
+            Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
         public void EvaluateSimpleIfWithElse()
         {
             IfPrimitive ifprim = new IfPrimitive();
 
             object result = ifprim.Apply(new Machine(), null, new object[] { false, 1, 2 });
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(int));
+            Assert.AreEqual(2, result);
+        }
+
+        [TestMethod]
+        public void EvaluateSimpleIfWithElseAndNilAsCondition()
+        {
+            IfPrimitive ifprim = new IfPrimitive();
+
+            object result = ifprim.Apply(new Machine(), null, new object[] { null, 1, 2 });
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(int));
@@ -253,7 +277,7 @@
             NewPrimitive newprim = new NewPrimitive();
             Machine machine = new Machine();
 
-            object result = newprim.Apply(machine, machine.Environment, new object[] { Symbol.Create("System.IO.FileInfo"), "aFileName.txt"});
+            object result = newprim.Apply(machine, machine.Environment, new object[] { Symbol.Create("System.IO.FileInfo"), "aFileName.txt" });
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(System.IO.FileInfo));
         }
@@ -273,9 +297,9 @@
         {
             VarPrimitive varprim = new VarPrimitive();
             Machine machine = new Machine();
-            machine.SetVariableValue(Variable.Intern(machine, (string) machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x"), "bar");
+            machine.SetVariableValue(Variable.Intern(machine, (string)machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x"), "bar");
 
-            object result= varprim.Apply(machine, machine.Environment, new object[] { Symbol.Create("x") });
+            object result = varprim.Apply(machine, machine.Environment, new object[] { Symbol.Create("x") });
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(Variable));
@@ -464,7 +488,7 @@
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(DefinedFunction));
 
-            DefinedFunction func = (DefinedFunction) result;
+            DefinedFunction func = (DefinedFunction)result;
             Assert.AreEqual(1, func.Arity);
             Assert.IsTrue(func.VariableArity);
         }
@@ -562,6 +586,14 @@
             object body = parser.ParseForm();
 
             fnprim.Apply(machine, machine.Environment, new object[] { arguments, body });
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void EvaluateThrow()
+        {
+            ThrowPrimitive prim = new ThrowPrimitive();
+            prim.Apply(null, null, new object[] { new InvalidOperationException() });
         }
     }
 }

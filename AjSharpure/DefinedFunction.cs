@@ -61,12 +61,19 @@
                 else
                 {
                     if (!islast)
-                        newenv.SetValue(argname.Name, argumentValues[k++]);
+                    {
+                        if (argumentValues == null || argumentValues.Length <= k)
+                            newenv.SetValue(argname.Name, null);
+                        else
+                            newenv.SetValue(argname.Name, argumentValues[k]);
+
+                        k++;
+                    }
                     else
                     {
                         IList rest = new ArrayList();
 
-                        while (k < argumentValues.Length)
+                        while (argumentValues!=null && k < argumentValues.Length)
                             rest.Add(argumentValues[k++]);
 
                         if (rest.Count > 0)

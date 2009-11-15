@@ -359,3 +359,78 @@
 (= "123" (str 123))
 (= "foobar" (str "foo" "bar"))
 (= "foobarandmore" (str "foo" "bar" "and" "more"))
+
+(defn symbol?
+  "Return true if x is a Symbol"
+  [x] (instance? AjSharpure.Language.Symbol x))
+  
+(symbol? (. AjSharpure.Language.Symbol (Create "foo"))
+(symbol? (. AjSharpure.Language.Symbol (Create "ns" "foo"))
+
+(defn keyword?
+  "Return true if x is a Keyword"
+  [x] (instance? AjSharpure.Language.Keyword x))
+
+(keyword? (. AjSharpure.Language.Keyword (Create "foo"))
+(keyword? (. AjSharpure.Language.Keyword (Create "ns" "foo"))
+(keyword? :foo)
+
+(defn symbol
+  "Returns a Symbol with the given namespace and name."
+  ([name] (if (symbol? name) name (. AjSharpure.Language.Symbol (Create name))))
+  ([ns name] (. AjSharpure.Language.Symbol (Create ns name))))
+
+(symbol? (symbol "foo"))
+(symbol? (symbol "ns" "foo"))
+(= "foo" (. (symbol "foo") Name))
+
+(defn keyword
+  "Returns a Keyword with the given namespace and name.  Do not use :
+  in the keyword strings, it will be added automatically."
+  ([name] (if (keyword? name) name (. AjSharpure.Language.Keyword (Create nil name))))
+  ([ns name] (. AjSharpure.Language.Keyword (Create ns name))))
+
+(keyword? (keyword "foo"))
+(keyword? (keyword "ns" "foo"))
+(= "foo" (. (keyword "foo") Name))
+(= ":foo" (str (keyword "foo")))
+
+(defn gensym
+  "Returns a new symbol with a unique name. If a prefix string is
+  supplied, the name is prefix# where # is some unique number. If
+  prefix is not supplied, the prefix is 'G__'."
+  ([] (gensym "G__"))
+  ([prefix-string] (. AjSharpure.Language.Symbol (Create (str prefix-string (str (. AjSharpure.Operations NextId)))))))
+
+(symbol? (gensym))
+(not (= (gensym) (gensym)))
+
+(defmacro cond
+  "Takes a set of test/expr pairs. It evaluates each test one at a
+  time.  If a test returns logical true, cond evaluates and returns
+  the value of the corresponding expr and doesn't evaluate any of the
+  other tests or exprs. (cond) returns nil."
+  [& clauses]
+    (when clauses
+      (list 'if (first clauses)
+            (if (next clauses)
+                (second clauses)
+                (throw (new System.IllegalArgumentException
+                         "cond requires an even number of forms")))
+            (cons 'AjSharpure.Core/cond (next (next clauses))))))
+
+(cond (string? "foo") true)
+(= 2 (cond (string? "foo") 1 (keyword? :foo) 2))
+(= 3 (cond (nil? 1) 1 (string? "foo") 2 (keyword? :foo) 3))
+
+(defn spread
+  {:private true}
+  [arglist]
+  (cond
+   (nil? arglist) nil
+   (nil? (next arglist)) (seq (first arglist))
+   true (cons (first arglist) (spread (next arglist)))))
+
+(nil? (spread))
+(= (seq (list 1)) (spread (list (list 1))))
+(= '(1) (spread '((1))))

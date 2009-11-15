@@ -7,6 +7,9 @@
 - internal test Variable.SetMacro
 - internal test Utilities.Identical
 - define map? in CoreWithTest example
++ throw
+- support for {:private true} as in spread at core.clj
+- catch
 - duplicated keys in maps
 {:a 1 :b 2 :a 3} => {:a 1 :b 2 :a 3} 
 - BaseSequence equals to IEnumerable but with different hash code 
