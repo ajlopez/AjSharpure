@@ -30,7 +30,6 @@
         {
             this.CreateNamespace(AjSharpureCoreKey);
             this.environment.SetValue(CurrentNamespaceKey, AjSharpureCoreKey);
-            this.environment.SetValue("machine", this);
             this.environment.SetValue("true", true);
             this.environment.SetValue("false", false);
             this.environment.SetValue("nil", null);
@@ -62,6 +61,8 @@
             this.environment.SetValue("<=", new LessEqualPrimitive());
             this.environment.SetValue(">=", new GreaterEqualPrimitive());
             this.environment.SetValue("throw", new ThrowPrimitive());
+            this.environment.SetValue("current-machine", new CurrentMachinePrimitive());
+            this.environment.SetValue("current-environment", new CurrentEnvironmentPrimitive());
 
             this.environment.SetValue("AjSharpure.Utilities", typeof(Utilities));
         }

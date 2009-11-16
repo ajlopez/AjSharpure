@@ -202,6 +202,14 @@
             return ToSequenceFrom(obj);
         }
 
+        public static object[] ToArray(ICollection collection)
+        {
+            if (collection == null)
+                return null;
+
+            return new ArrayList(collection).ToArray();
+        }
+
         public static ISequence ToSequenceFrom(object obj)
         {
             if (obj is ISequenceable)

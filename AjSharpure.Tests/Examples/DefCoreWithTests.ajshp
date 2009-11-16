@@ -261,6 +261,14 @@
   [#^Class c x] 
   (. c (cast x)))
 
+(defn to-array
+  "Returns an array of Objects containing the contents of coll, which
+  can be any Collection.  Maps to java.util.Collection.toArray()."
+  {:tag "[LSystem.Object;"}
+  [coll] (. AjSharpure.Utilities (ToArray coll)))
+  
+(instance? System.Array (to-array (list 1 2 3)))
+
 (defn
  newfirst [coll] (. AjSharpure.Operations (First coll)))
 
@@ -277,7 +285,7 @@
  defmacro (fn [name & args]
             (list 'do
                   (cons `defn (cons name args))
-                  (list '. (list 'var name) '(SetMacro machine))
+                  (list '. (list 'var name) '(SetMacro (current-machine)))
                   (list 'var name))))
 
 (defmacro when
@@ -434,3 +442,11 @@
 (nil? (spread))
 (= (seq (list 1)) (spread (list (list 1))))
 (= '(1) (spread '((1))))
+
+(defn apply
+  "Applies fn f to the argument list formed by prepending args to argseq."
+  {:arglists '([f args* argseq])}
+  [#^AjSharpure.Language.IFunction f & args]
+    (. f (Apply (current-machine) (current-environment) (to-array (spread args)))))
+
+(= (list 1 2 3) (apply list '(1 2 3)))

@@ -439,5 +439,25 @@
             Assert.IsFalse(Utilities.Identical(null, 1));
             Assert.IsFalse(Utilities.Identical(1, null));
         }
+
+        [TestMethod]
+        public void ConvertListToObjectArray()
+        {
+            List<object> list = new List<object>(new object[] { 1, 2, 3 });
+
+            object[] array = Utilities.ToArray(list);
+
+            Assert.IsNotNull(array);
+            Assert.AreEqual(3, array.Length);
+            Assert.AreEqual(1, array[0]);
+            Assert.AreEqual(2, array[1]);
+            Assert.AreEqual(3, array[2]);
+        }
+
+        [TestMethod]
+        public void ConvertNullListToNullArray()
+        {
+            Assert.IsNull(Utilities.ToArray(null));
+        }
     }
 }
