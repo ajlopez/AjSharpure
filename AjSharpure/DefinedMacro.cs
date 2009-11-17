@@ -43,6 +43,15 @@
         {
             ValueEnvironment newenv = new ValueEnvironment(environment);
 
+            if (argumentValues == null && this.Arity != 0 && !this.VariableArity)
+                throw new InvalidOperationException("Invalid number of parameters");
+
+            if (argumentValues != null && !this.VariableArity && argumentValues.Length != this.Arity)
+                throw new InvalidOperationException("Invalid number of parameters");
+
+            if (argumentValues != null && this.VariableArity && argumentValues.Length < this.Arity)
+                throw new InvalidOperationException("Invalid number of parameters");
+
             if (this.name != null)
                 newenv.SetValue(this.name, this);
 

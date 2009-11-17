@@ -372,15 +372,15 @@
   "Return true if x is a Symbol"
   [x] (instance? AjSharpure.Language.Symbol x))
   
-(symbol? (. AjSharpure.Language.Symbol (Create "foo"))
-(symbol? (. AjSharpure.Language.Symbol (Create "ns" "foo"))
+(symbol? (. AjSharpure.Language.Symbol (Create "foo")))
+(symbol? (. AjSharpure.Language.Symbol (Create "ns" "foo")))
 
 (defn keyword?
   "Return true if x is a Keyword"
   [x] (instance? AjSharpure.Language.Keyword x))
 
-(keyword? (. AjSharpure.Language.Keyword (Create "foo"))
-(keyword? (. AjSharpure.Language.Keyword (Create "ns" "foo"))
+(keyword? (. AjSharpure.Language.Keyword (Create "foo")))
+(keyword? (. AjSharpure.Language.Keyword (Create "ns" "foo")))
 (keyword? :foo)
 
 (defn symbol
@@ -428,8 +428,8 @@
             (cons 'AjSharpure.Core/cond (next (next clauses))))))
 
 (cond (string? "foo") true)
-(= 2 (cond (string? "foo") 1 (keyword? :foo) 2))
-(= 3 (cond (nil? 1) 1 (string? "foo") 2 (keyword? :foo) 3))
+(= 2 (cond (string? 1) 1 (keyword? :foo) 2))
+(= 3 (cond (nil? 1) 1 (string? 2) 2 (keyword? :foo) 3))
 
 (defn spread
   {:private true}
@@ -439,9 +439,12 @@
    (nil? (next arglist)) (seq (first arglist))
    true (cons (first arglist) (spread (next arglist)))))
 
-(nil? (spread))
+(nil? (spread nil))
 (= (seq (list 1)) (spread (list (list 1))))
 (= '(1) (spread '((1))))
+(= '((1) 2 3) (spread '((1) (2 3))))
+(= '((1) (2) 3 4) (spread '((1) (2) (3 4))))
+(= '(1 2 3 4) (spread '(1 2 (3 4))))
 
 (defn apply
   "Applies fn f to the argument list formed by prepending args to argseq."
@@ -450,3 +453,51 @@
     (. f (Apply (current-machine) (current-environment) (to-array (spread args)))))
 
 (= (list 1 2 3) (apply list '(1 2 3)))
+
+(defn vary-meta
+ "Returns an object of the same type and value as obj, with
+  (apply f (meta obj) args) as its metadata."
+ [obj f & args]
+  (with-meta obj (apply f (meta obj) args)))
+  
+;TODO vary-meta test
+
+(defn list*
+  "Creates a new list containing the item prepended to more."
+  [item & more]
+    (spread (cons item more)))
+
+(= '(1 2 3) (list* 1 '(2 3)))
+(= '(1 2 3 4) (list* 1 2 '(3 4)))
+
+(defmacro lazy-seq
+  "Takes a body of expressions that returns an ISeq or nil, and yields
+  a Seqable object that will invoke the body only the first time seq
+  is called, and will cache the result and return it on all subsequent
+  seq calls."  
+  [& body]
+  (list 'new 'AjSharpure.Language.LazySequence (list* '#^{:once true} fn* [] body)))
+
+;TODO lazy-seq test
+
+(defn concat
+  "Returns a lazy seq representing the concatenation of the elements in the supplied colls."
+  ([] (lazy-seq nil))
+  ([x] (lazy-seq x))
+  ([x y]
+     (lazy-seq
+      (let [s (seq x)]
+        (if s
+          (cons (first s) (concat (rest s) y))
+          y))))
+  ([x y & zs]
+     (let [cat (fn cat [xys zs]
+                 (lazy-seq
+                  (let [xys (seq xys)]
+                    (if xys
+                      (cons (first xys) (cat (rest xys) zs))
+                      (when zs
+                        (cat (first zs) (next zs)))))))]
+           (cat (concat x y) zs))))
+
+;TODO concat test
