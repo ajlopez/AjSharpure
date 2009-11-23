@@ -595,5 +595,27 @@
             ThrowPrimitive prim = new ThrowPrimitive();
             prim.Apply(null, null, new object[] { new InvalidOperationException() });
         }
+
+        [TestMethod]
+        public void EvaluateClosure()
+        {
+            Machine machine = new Machine();
+            ValueEnvironment environment = machine.Environment;
+            IFunction add = new AddPrimitive();
+
+            ClosurePrimitive closure = new ClosurePrimitive();
+
+            object result = closure.Apply(machine, environment, new object[] { add });
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IFn));
+
+            IFn fn = (IFn) result;
+
+            object addresult = fn.Invoke(new object[] { 1 , 2  });
+
+            Assert.IsNotNull(addresult);
+            Assert.AreEqual(3, addresult);
+        }
     }
 }

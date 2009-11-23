@@ -7,6 +7,7 @@
 - internal test Variable.SetMacro
 - internal test Utilities.Identical
 - define map? in CoreWithTest example
+- implement :once true semantic in lazy-seq definition
 + throw
 - support for {:private true} as in spread at core.clj
 - catch

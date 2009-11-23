@@ -73,6 +73,7 @@
     <Compile Include="Language\BasePersistentSet.cs" />
     <Compile Include="Language\BaseSequence.cs" />
     <Compile Include="Language\Cons.cs" />
+    <Compile Include="Language\FnFunction.cs" />
     <Compile Include="Language\IPersistentSet.cs" />
     <Compile Include="Language\VectorEnumerator.cs" />
     <Compile Include="Language\IIndexedSequence.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="MacroUtilities.cs" />
     <Compile Include="Operations.cs" />
     <Compile Include="Primitives\AddPrimitive.cs" />
+    <Compile Include="Primitives\ClosurePrimitive.cs" />
     <Compile Include="Primitives\CurrentEnvironmentPrimitive.cs" />
     <Compile Include="Primitives\CurrentMachinePrimitive.cs" />
     <Compile Include="Primitives\ThrowPrimitive.cs" />

@@ -1400,5 +1400,33 @@
 
             machine.Evaluate(parser.ParseForm());
         }
+
+        [TestMethod]
+        public void EvaluateClosure()
+        {
+            Machine machine = new Machine();
+            Parser parser = new Parser("(closure +)");
+
+            object result = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IFn));
+
+            Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
+        public void EvaluateAndApplyClosure()
+        {
+            Machine machine = new Machine();
+            Parser parser = new Parser("((closure +) 1 2)");
+
+            object result = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(3, result);
+
+            Assert.IsNull(parser.ParseForm());
+        }
     }
 }

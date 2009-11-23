@@ -63,6 +63,7 @@
             this.environment.SetValue("throw", new ThrowPrimitive());
             this.environment.SetValue("current-machine", new CurrentMachinePrimitive());
             this.environment.SetValue("current-environment", new CurrentEnvironmentPrimitive());
+            this.environment.SetValue("closure", new ClosurePrimitive());
 
             this.environment.SetValue("AjSharpure.Utilities", typeof(Utilities));
         }

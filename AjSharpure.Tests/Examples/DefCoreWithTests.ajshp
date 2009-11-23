@@ -470,15 +470,19 @@
 (= '(1 2 3) (list* 1 '(2 3)))
 (= '(1 2 3 4) (list* 1 2 '(3 4)))
 
+;TODO implement :once true semantic
 (defmacro lazy-seq
   "Takes a body of expressions that returns an ISeq or nil, and yields
   a Seqable object that will invoke the body only the first time seq
   is called, and will cache the result and return it on all subsequent
   seq calls."  
   [& body]
-  (list 'new 'AjSharpure.Language.LazySequence (list* '#^{:once true} fn* [] body)))
+  (list 'new 'AjSharpure.Language.LazySequence (list 'closure (list* '#^{:once true} fn* [] body))))
 
-;TODO lazy-seq test
+(instance? AjSharpure.Language.LazySequence (lazy-seq nil))
+(instance? AjSharpure.Language.LazySequence (lazy-seq (list 1 2)))
+(= 1 (first (lazy-seq (list 1 2))))
+(= 2 (second (lazy-seq (list 1 2))))
 
 (defn concat
   "Returns a lazy seq representing the concatenation of the elements in the supplied colls."
@@ -501,3 +505,5 @@
            (cat (concat x y) zs))))
 
 ;TODO concat test
+
+(= (list 1 2) (concat (list 1) (list 2)))
