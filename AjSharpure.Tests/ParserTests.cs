@@ -377,5 +377,19 @@
 
             Assert.IsNull(parser.ParseForm());
         }
+
+        [TestMethod]
+        public void ParseACharacter()
+        {
+            Parser parser = new Parser("\\a");
+
+            object result = parser.ParseForm();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(char));
+            Assert.AreEqual('a', result);
+
+            Assert.IsNull(parser.ParseForm());
+        }
     }
 }

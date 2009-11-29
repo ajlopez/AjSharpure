@@ -9,7 +9,7 @@
     public class Lexer
     {
         private const string NameCharacters = "?_-.";
-        private const string MacroCharacters = ";^#\\'@`~";
+        private const string MacroCharacters = ";^#'@`~";
         private static string[] MacroBicharacters = { "#'", "#_", "#^", "#(", "#{" };
         private const string SeparatorCharacters = "()[]{},";
 
@@ -58,6 +58,9 @@
                 if (ch == ':')
                     return this.NextKeyword();
 
+                if (ch == '\\')
+                    return this.NextCharacter();
+
                 if (char.IsDigit(ch))
                     return this.NextInteger(ch);
 
@@ -102,6 +105,26 @@
             catch (EndOfInputException)
             {
             }
+        }
+
+        private Token NextCharacter()
+        {
+            Token token = new Token() { TokenType = TokenType.Character, Value = this.NextChar().ToString() };
+
+            try
+            {
+                char ch = this.NextChar();
+
+                if (!char.IsWhiteSpace(ch) && SeparatorCharacters.IndexOf(ch)==-1)
+                    throw new LexerException("Invalid character");
+
+                this.PushChar(ch);
+            }
+            catch (EndOfInputException)
+            {
+            }
+
+            return token;
         }
 
         private Token NextMacro(char firstChar)

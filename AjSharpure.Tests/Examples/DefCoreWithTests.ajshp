@@ -114,6 +114,8 @@
 
 (= '(1 2 3) (seq [1 2 3]))
 
+(= '(\f \o \o) (seq "foo"))
+
 (def
  #^{:arglists '([#^Class c x])
     :doc "Evaluates x and tests if it is an instance of the class
@@ -507,3 +509,5 @@
 ;TODO concat test
 
 (= (list 1 2) (concat (list 1) (list 2)))
+
+(= '(\f \o \o \b \a \r) (concat "foo" "bar"))

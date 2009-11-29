@@ -13,7 +13,7 @@
     public class LexerTests
     {
         [TestMethod]
-        public void ShouldParseSymbol()
+        public void ParseSymbol()
         {
             Lexer lexer = new Lexer("foo");
 
@@ -27,7 +27,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseSymbolWithQuestionMark()
+        public void ParseSymbolWithQuestionMark()
         {
             Lexer lexer = new Lexer("foo?");
 
@@ -41,7 +41,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseSimbolWithHyphen()
+        public void ParseSimbolWithHyphen()
         {
             Lexer lexer = new Lexer("foo-bar");
 
@@ -55,7 +55,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseSymbolWithDots()
+        public void ParseSymbolWithDots()
         {
             Lexer lexer = new Lexer("System.foo.bar");
 
@@ -69,7 +69,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseSymbolWithSurroundingSpaces()
+        public void ParseSymbolWithSurroundingSpaces()
         {
             Lexer lexer = new Lexer("  foo  ");
 
@@ -83,7 +83,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseKeyword()
+        public void ParseKeyword()
         {
             Lexer lexer = new Lexer(":foo");
 
@@ -97,7 +97,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseParenthesis()
+        public void ParseParenthesis()
         {
             Lexer lexer = new Lexer("()");
 
@@ -117,7 +117,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseBrackets()
+        public void ParseBrackets()
         {
             Lexer lexer = new Lexer("[]");
 
@@ -137,7 +137,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseString()
+        public void ParseString()
         {
             Lexer lexer = new Lexer("\"foo bar\"");
 
@@ -151,7 +151,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseStringWithEmbeddedDoubleQuotes()
+        public void ParseStringWithEmbeddedDoubleQuotes()
         {
             Lexer lexer = new Lexer("\"foo \\\"bar\\\"\"");
 
@@ -165,7 +165,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseMultipleLineString()
+        public void ParseMultipleLineString()
         {
             Lexer lexer = new Lexer("\"foo\r\nbar\"");
 
@@ -180,7 +180,7 @@
 
         [TestMethod]
         [ExpectedException(typeof(LexerException), "Unclosed string")]
-        public void ShouldRaiseIfStringIsUnclosed()
+        public void RaiseIfStringIsUnclosed()
         {
             Lexer lexer = new Lexer("\"Unclosed");
 
@@ -188,7 +188,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseInteger()
+        public void ParseInteger()
         {
             Lexer lexer = new Lexer("123");
 
@@ -202,7 +202,7 @@
         }
 
         [TestMethod]
-        public void ShouldPushToken()
+        public void PushToken()
         {
             Lexer lexer = new Lexer(string.Empty);
 
@@ -218,9 +218,9 @@
         }
 
         [TestMethod]
-        public void ShouldParseMacroCharacters()
+        public void ParseMacroCharacters()
         {
-            string chars = ";^#\\'@`~";
+            string chars = ";^#@'`~";
             Lexer lexer = new Lexer(chars);
 
             Token token;
@@ -237,7 +237,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseDispatchMacros()
+        public void ParseDispatchMacros()
         {
             string macros = "#' #( #{ #^ #_";
             Lexer lexer = new Lexer(macros);
@@ -256,7 +256,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseSeparatorCharacters()
+        public void ParseSeparatorCharacters()
         {
             string chars = ",";
             Lexer lexer = new Lexer(chars);
@@ -275,7 +275,7 @@
         }
 
         [TestMethod]
-        public void ShouldParseSpecialNames()
+        public void ParseSpecialNames()
         {
             string names = "+ - * / > < = == >= <=";
             Lexer lexer = new Lexer(names);
@@ -291,6 +291,73 @@
             }
 
             Assert.IsNull(lexer.NextToken());
+        }
+
+        [TestMethod]
+        public void ParseACharacter()
+        {
+            Lexer lexer = new Lexer("\\a");
+            Token token;
+
+            token = lexer.NextToken();
+
+            Assert.IsNotNull(token);
+            Assert.AreEqual("a", token.Value);
+            Assert.AreEqual(TokenType.Character, token.TokenType);
+
+            Assert.IsNull(lexer.NextToken());
+        }
+
+        [TestMethod]
+        public void ParseTwoCharacters()
+        {
+            Lexer lexer = new Lexer("\\a \\b");
+            Token token;
+
+            token = lexer.NextToken();
+
+            Assert.IsNotNull(token);
+            Assert.AreEqual("a", token.Value);
+            Assert.AreEqual(TokenType.Character, token.TokenType);
+
+            token = lexer.NextToken();
+
+            Assert.IsNotNull(token);
+            Assert.AreEqual("b", token.Value);
+            Assert.AreEqual(TokenType.Character, token.TokenType);
+
+            Assert.IsNull(lexer.NextToken());
+        }
+
+        [TestMethod]
+        public void ParseACharacterAndSeparator()
+        {
+            Lexer lexer = new Lexer("\\a)");
+            Token token;
+
+            token = lexer.NextToken();
+
+            Assert.IsNotNull(token);
+            Assert.AreEqual("a", token.Value);
+            Assert.AreEqual(TokenType.Character, token.TokenType);
+
+            token = lexer.NextToken();
+
+            Assert.IsNotNull(token);
+            Assert.AreEqual(")", token.Value);
+            Assert.AreEqual(TokenType.Separator, token.TokenType);
+
+            Assert.IsNull(lexer.NextToken());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(LexerException),"Invalid character")]
+        public void RaiseIfInvalidCharacter()
+        {
+            Lexer lexer = new Lexer("\\foo");
+            Token token;
+
+            token = lexer.NextToken();
         }
     }
 }

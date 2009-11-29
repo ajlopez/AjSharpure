@@ -158,6 +158,9 @@
             if (token.TokenType == TokenType.Integer)
                 return Int32.Parse(token.Value);
 
+            if (token.TokenType == TokenType.Character)
+                return token.Value[0];
+
             if (token.TokenType == TokenType.Separator && token.Value == "(")
                 return this.ParseFormList();
 

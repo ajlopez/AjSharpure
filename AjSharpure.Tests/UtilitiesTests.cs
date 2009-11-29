@@ -82,6 +82,16 @@
         }
 
         [TestMethod]
+        public void CharacterToExpression()
+        {
+            IExpression expression = Utilities.ToExpression('a');
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(ConstantExpression));
+            Assert.AreEqual('a', ((ConstantExpression)expression).Value);
+        }
+
+        [TestMethod]
         public void PrintInteger()
         {
             Assert.AreEqual("1", Utilities.PrintString(1));
@@ -93,6 +103,12 @@
         {
             Assert.AreEqual("\"foo\"", Utilities.PrintString("foo"));
             Assert.AreEqual("\"bar\"", Utilities.PrintString("bar"));
+        }
+
+        [TestMethod]
+        public void PrintCharacter()
+        {
+            Assert.AreEqual("\\a", Utilities.PrintString('a'));
         }
 
         [TestMethod]
@@ -133,6 +149,14 @@
             ISequence sequence = EnumeratorSequence.Create((new int[] { 1, 2, 3 }).GetEnumerator());
 
             Assert.IsTrue(sequence == Utilities.ToSequence(sequence));
+        }
+
+        [TestMethod]
+        public void ConvertStringToCharSequence()
+        {
+            ISequence sequence = EnumeratorSequence.Create((new char[] { 'f', 'o', 'o' }).GetEnumerator());
+
+            Assert.IsTrue(sequence.Equals(Utilities.ToSequence("foo")));
         }
 
         [TestMethod]

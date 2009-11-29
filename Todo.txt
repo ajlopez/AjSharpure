@@ -1,5 +1,7 @@
 
 = Dot primitive as in Clojure
+- dotted form names as in Clojure (.doSomething ...)
++ char support in Lexer, Parser, Utilities.PrintString
 - defn review commented code in definition DefCoreWithTests.ajshp
 - core.clj implement lines 246-275 (from cast to sorted-map-by)
 - review Variable.SetMacro implementation (now it receives Machine parameter)

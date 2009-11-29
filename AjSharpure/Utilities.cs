@@ -129,6 +129,13 @@
                 return;
             }
 
+            if (obj is char)
+            {
+                writer.Write('\\');
+                writer.Write((char)obj);
+                return;
+            }
+
             if (obj is Symbol)
             {
                 writer.Write(((Symbol)obj).FullName);

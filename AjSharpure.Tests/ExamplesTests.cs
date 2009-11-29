@@ -16,7 +16,7 @@
     {
         [TestMethod]
         [DeploymentItem("Examples/DefCons.ajshp")]
-        public void ShouldParseDefConsExample()
+        public void ParseDefConsExample()
         {
             Parser parser = new Parser(File.OpenText("DefCons.ajshp"));
             object result = parser.ParseForm();
@@ -27,7 +27,7 @@
 
         [TestMethod]
         [DeploymentItem("Examples/DefCons.ajshp")]
-        public void ShouldEvaluateDefConsExample()
+        public void EvaluateDefConsExample()
         {
             Parser parser = new Parser(File.OpenText("DefCons.ajshp"));
             Machine machine = new Machine();
@@ -44,7 +44,7 @@
 
         [TestMethod]
         [DeploymentItem("Examples/DefCons.ajshp")]
-        public void ShouldEvaluateConsDefinedInDefConsExample()
+        public void EvaluateConsDefinedInDefConsExample()
         {
             Parser parser = new Parser(File.OpenText("DefCons.ajshp"));
             Machine machine = new Machine();
@@ -68,7 +68,7 @@
 
         [TestMethod]
         [DeploymentItem("Examples/DefFirst.ajshp")]
-        public void ShouldParseDefFirstExample()
+        public void ParseDefFirstExample()
         {
             Parser parser = new Parser(File.OpenText("DefFirst.ajshp"));
             object result = parser.ParseForm();
@@ -79,7 +79,7 @@
 
         [TestMethod]
         [DeploymentItem("Examples/DefFirst.ajshp")]
-        public void ShouldEvaluateDefFirstExample()
+        public void EvaluateDefFirstExample()
         {
             Parser parser = new Parser(File.OpenText("DefFirst.ajshp"));
             Machine machine = new Machine();
@@ -96,7 +96,7 @@
 
         [TestMethod]
         [DeploymentItem("Examples/DefFirst.ajshp")]
-        public void ShouldEvaluateFirstDefinedInDefFirstExample()
+        public void EvaluateFirstDefinedInDefFirstExample()
         {
             Parser parser = new Parser(File.OpenText("DefFirst.ajshp"));
             Machine machine = new Machine();
@@ -114,7 +114,7 @@
 
         [TestMethod]
         [DeploymentItem("Examples/DefNext.ajshp")]
-        public void ShouldParseDefNextExample()
+        public void ParseDefNextExample()
         {
             Parser parser = new Parser(File.OpenText("DefNext.ajshp"));
             object result = parser.ParseForm();
@@ -125,7 +125,7 @@
 
         [TestMethod]
         [DeploymentItem("Examples/DefNext.ajshp")]
-        public void ShouldEvaluateDefNextExample()
+        public void EvaluateDefNextExample()
         {
             Parser parser = new Parser(File.OpenText("DefNext.ajshp"));
             Machine machine = new Machine();
@@ -142,7 +142,7 @@
 
         [TestMethod]
         [DeploymentItem("Examples/DefNext.ajshp")]
-        public void ShouldEvaluateNextDefinedInDefNextExample()
+        public void EvaluateNextDefinedInDefNextExample()
         {
             Parser parser = new Parser(File.OpenText("DefNext.ajshp"));
             Machine machine = new Machine();
@@ -166,7 +166,7 @@
 
         [TestMethod]
         [DeploymentItem("Examples/DefRest.ajshp")]
-        public void ShouldParseDefRestExample()
+        public void ParseDefRestExample()
         {
             Parser parser = new Parser(File.OpenText("DefRest.ajshp"));
             object result = parser.ParseForm();
@@ -177,7 +177,7 @@
 
         [TestMethod]
         [DeploymentItem("Examples/DefRest.ajshp")]
-        public void ShouldEvaluateDefRestExample()
+        public void EvaluateDefRestExample()
         {
             Parser parser = new Parser(File.OpenText("DefRest.ajshp"));
             Machine machine = new Machine();
@@ -194,7 +194,7 @@
 
         [TestMethod]
         [DeploymentItem("Examples/DefRest.ajshp")]
-        public void ShouldEvaluateRestDefinedInDefRestExample()
+        public void EvaluateRestDefinedInDefRestExample()
         {
             Parser parser = new Parser(File.OpenText("DefRest.ajshp"));
             Machine machine = new Machine();
@@ -218,7 +218,7 @@
 
         [TestMethod]
         [DeploymentItem("Examples/DefListOps.ajshp")]
-        public void ShouldParseAndEvaluateDefListOpsExample()
+        public void ParseAndEvaluateDefListOpsExample()
         {
             Parser parser = new Parser(File.OpenText("DefListOps.ajshp"));
             Machine machine = new Machine();
@@ -244,7 +244,7 @@
         [TestMethod]
         [DeploymentItem("Examples/DefListOps.ajshp")]
         [DeploymentItem("Examples/ListOpsTests.ajshp")]
-        public void ShouldTestListOpsFromExample()
+        public void TestListOpsFromExample()
         {
             Parser parser = new Parser(File.OpenText("DefListOps.ajshp"));
             Machine machine = new Machine();
@@ -275,7 +275,7 @@
 
         [TestMethod]
         [DeploymentItem("Examples/DefListOpsWithTests.ajshp")]
-        public void ShouldDefAndTestListOpsFromExample()
+        public void DefAndTestListOpsFromExample()
         {
             Parser parser = new Parser(File.OpenText("DefListOpsWithTests.ajshp"));
             Machine machine = new Machine();
@@ -304,49 +304,49 @@
 
         [TestMethod]
         [DeploymentItem("Examples/DefMyListAsMacroWithTests.ajshp")]
-        public void ShouldDefAndTestMyListAsMacroFromExample()
+        public void DefAndTestMyListAsMacroFromExample()
         {
-            this.ShouldLoadAndEvaluateDefsWithTests("DefMyListAsMacroWithTests.ajshp");
+            this.LoadAndEvaluateDefsWithTests("DefMyListAsMacroWithTests.ajshp");
         }
 
         [TestMethod]
         [DeploymentItem("Examples/DefTypePredicatesWithTests.ajshp")]
-        public void ShouldDefAndTestTypePredicatesFromExample()
+        public void DefAndTestTypePredicatesFromExample()
         {
-            Assert.AreEqual(4, this.ShouldLoadAndEvaluateDefsWithTests("DefTypePredicatesWithTests.ajshp"));
+            Assert.AreEqual(4, this.LoadAndEvaluateDefsWithTests("DefTypePredicatesWithTests.ajshp"));
         }
 
         [TestMethod]
         [DeploymentItem("Examples/DefConsWithTests.ajshp")]
-        public void ShouldDefAndTestConsFromExample()
+        public void DefAndTestConsFromExample()
         {
-            Assert.AreEqual(1, this.ShouldLoadAndEvaluateDefsWithTests("DefConsWithTests.ajshp"));
+            Assert.AreEqual(1, this.LoadAndEvaluateDefsWithTests("DefConsWithTests.ajshp"));
         }
 
         [TestMethod]
         [DeploymentItem("Examples/DefFnWithTests.ajshp")]
-        public void ShouldDefAndTestFnFromExample()
+        public void DefAndTestFnFromExample()
         {
-            Assert.AreEqual(1, this.ShouldLoadAndEvaluateDefsWithTests("DefFnWithTests.ajshp"));
+            Assert.AreEqual(1, this.LoadAndEvaluateDefsWithTests("DefFnWithTests.ajshp"));
         }
 
         [TestMethod]
         [DeploymentItem("Examples/DefAssocWithTests.ajshp")]
-        public void ShouldDefAndTestAssocFromExample()
+        public void DefAndTestAssocFromExample()
         {
-            Assert.AreEqual(1, this.ShouldLoadAndEvaluateDefsWithTests("DefAssocWithTests.ajshp"));
+            Assert.AreEqual(1, this.LoadAndEvaluateDefsWithTests("DefAssocWithTests.ajshp"));
         }
 
         [TestMethod]
         [DeploymentItem("Examples/DefDefnWithTests.ajshp")]
-        public void ShouldDefAndTestDefnFromExample()
+        public void DefAndTestDefnFromExample()
         {
-            Assert.IsTrue(this.ShouldLoadAndEvaluateDefsWithTests("DefDefnWithTests.ajshp") > 0);
+            Assert.IsTrue(this.LoadAndEvaluateDefsWithTests("DefDefnWithTests.ajshp") > 0);
         }
 
         [TestMethod]
         [DeploymentItem("Examples/DefCore.ajshp")]
-        public void ShouldParseDefCoreExample()
+        public void ParseDefCoreExample()
         {
             Parser parser = new Parser(File.OpenText("DefCore.ajshp"));
 
@@ -356,12 +356,12 @@
 
         [TestMethod]
         [DeploymentItem("Examples/DefCoreWithTests.ajshp")]
-        public void ShouldDefAndTestCoreFromExample()
+        public void DefAndTestCoreFromExample()
         {
-            Assert.IsTrue(this.ShouldLoadAndEvaluateDefsWithTests("DefCoreWithTests.ajshp") > 20);
+            Assert.IsTrue(this.LoadAndEvaluateDefsWithTests("DefCoreWithTests.ajshp") > 20);
         }
 
-        private int ShouldLoadAndEvaluateDefsWithTests(string filename)
+        private int LoadAndEvaluateDefsWithTests(string filename)
         {
             Parser parser = new Parser(File.OpenText(filename));
             Machine machine = new Machine();

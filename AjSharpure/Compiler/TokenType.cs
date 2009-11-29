@@ -8,6 +8,7 @@
         Integer,
         Separator,
         Operator,
-        Macro
+        Macro,
+        Character
     }
 }
