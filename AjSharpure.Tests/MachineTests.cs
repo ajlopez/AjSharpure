@@ -22,7 +22,7 @@
             Machine machine = new Machine();
 
             Assert.IsNotNull(machine.Environment);
-            Assert.AreEqual(Machine.AjSharpureCoreKey, machine.Environment.GetValue(Machine.CurrentNamespaceKey));
+            Assert.AreEqual(Machine.AjSharpureCoreNamespaceName, machine.Environment.GetValue(Machine.CurrentNamespaceKey));
         }
 
         [TestMethod]
@@ -1427,6 +1427,95 @@
             Assert.AreEqual(3, result);
 
             Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
+        public void EvaluateBackquoteWithSimpleObject()
+        {
+            Machine machine = new Machine();
+            Parser parser = new Parser("`1");
+
+            Assert.AreEqual(1, machine.Evaluate(parser.ParseForm()));
+            Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
+        public void EvaluateBackquoteWithNonqualifiedSymbol()
+        {
+            Machine machine = new Machine();
+            Parser parser = new Parser("`x");
+
+            object result = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(Symbol));
+
+            Symbol symbol = (Symbol) result;
+
+            Assert.AreEqual("x", symbol.Name);
+            Assert.AreEqual(machine.Environment.GetValue(Machine.CurrentNamespaceKey), symbol.Namespace);
+            Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
+        public void EvaluateBackquoteWithQualifiedSymbol()
+        {
+            Machine machine = new Machine();
+            Parser parser = new Parser("`foo/x");
+
+            object result = machine.Evaluate(parser.ParseForm());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(Symbol));
+
+            Symbol symbol = (Symbol)result;
+
+            Assert.AreEqual("x", symbol.Name);
+            Assert.AreEqual("foo", symbol.Namespace);
+            Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
+        public void EvaluateBackquoteWithSimpleList()
+        {
+            Machine machine = new Machine();
+            Parser parser = new Parser("`(1 2 3)");
+            Parser listparser = new Parser("(1 2 3)");
+
+            object result = machine.Evaluate(parser.ParseForm());
+            object result2 = listparser.ParseForm();
+
+            Assert.IsTrue(Utilities.Equals(result, result2));
+        }
+
+        [TestMethod]
+        public void EvaluateBackquoteWithListWithUnquotedSymbol()
+        {
+            Machine machine = new Machine();
+            machine.Environment.SetValue("x", 2);
+            Parser parser = new Parser("`(1 ~x 3)");
+            Parser listparser = new Parser("(1 2 3)");
+
+            object result = machine.Evaluate(parser.ParseForm());
+            object result2 = listparser.ParseForm();
+
+            Assert.IsTrue(Utilities.Equals(result, result2));
+        }
+
+        [TestMethod]
+        public void EvaluateBackquoteWithListWithUnquotedVariable()
+        {
+            Machine machine = new Machine();
+            Variable variable = Variable.Intern(machine, (string) machine.Environment.GetValue(Machine.CurrentNamespaceKey), "x");
+            machine.SetVariableValue(variable, 2);
+
+            Parser parser = new Parser("`(1 ~x 3)");
+            Parser listparser = new Parser("(1 2 3)");
+
+            object result = machine.Evaluate(parser.ParseForm());
+            object result2 = listparser.ParseForm();
+
+            Assert.IsTrue(Utilities.Equals(result, result2));
         }
     }
 }

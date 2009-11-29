@@ -12,11 +12,11 @@
     {
         private string name;
         private ICollection arguments;
-        private IList body;
+        private object body;
         private int arity = 0;
         private bool variableArity = false;
 
-        public DefinedMacro(string name, ICollection arguments, IList body)
+        public DefinedMacro(string name, ICollection arguments, object body)
         {
             this.name = name;
             this.arguments = arguments;

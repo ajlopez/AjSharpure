@@ -55,9 +55,9 @@
             get { return this; }
         }
 
-        public override void CopyTo(Array array, int index)
-        {
-            throw new NotImplementedException();
-        }
+        //public override void CopyTo(Array array, int index)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

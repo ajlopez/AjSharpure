@@ -23,9 +23,14 @@
         public string Name { get { return this.name; } }
 
 
-        public DefinedMacro ToMacro()
+        public DefinedMultiMacro ToMacro()
         {
-            throw new NotImplementedException();
+            List<DefinedMacro> macros = new List<DefinedMacro>();
+
+            foreach (DefinedFunction fn in this.functions)
+                macros.Add(fn.ToMacro());
+
+            return new DefinedMultiMacro(this.name, macros);
         }
 
         public object Apply(Machine machine, ValueEnvironment environment, object[] argumentValues)

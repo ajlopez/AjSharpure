@@ -202,6 +202,20 @@
         }
 
         [TestMethod]
+        public void ParseNegativeInteger()
+        {
+            Lexer lexer = new Lexer("-123");
+
+            Token token = lexer.NextToken();
+
+            Assert.IsNotNull(token);
+            Assert.AreEqual(TokenType.Integer, token.TokenType);
+            Assert.AreEqual("-123", token.Value);
+
+            Assert.IsNull(lexer.NextToken());
+        }
+
+        [TestMethod]
         public void PushToken()
         {
             Lexer lexer = new Lexer(string.Empty);
@@ -239,7 +253,7 @@
         [TestMethod]
         public void ParseDispatchMacros()
         {
-            string macros = "#' #( #{ #^ #_";
+            string macros = "#' #( #{ #^ #_ ~@";
             Lexer lexer = new Lexer(macros);
 
             Token token;

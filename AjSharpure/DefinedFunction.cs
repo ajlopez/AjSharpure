@@ -41,7 +41,7 @@
 
         public DefinedMacro ToMacro()
         {
-            return new DefinedMacro(name, arguments, (IList)expression.Value);
+            return new DefinedMacro(name, arguments, expression);
         }
 
         public object Apply(Machine machine, ValueEnvironment environment, object[] argumentValues)

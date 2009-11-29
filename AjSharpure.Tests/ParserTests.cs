@@ -227,7 +227,7 @@
         }
 
         [TestMethod]
-        public void ParseBackQuotedSymbol()
+        public void ParseBackquotedSymbol()
         {
             Parser parser = new Parser("`foo");
 
@@ -244,6 +244,52 @@
             Assert.IsInstanceOfType(list[1], typeof(Symbol));
 
             Assert.AreEqual("backquote", ((Symbol)list[0]).Name);
+            Assert.AreEqual("foo", ((Symbol)list[1]).Name);
+
+            Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
+        public void ParseUnquotedSymbol()
+        {
+            Parser parser = new Parser("~foo");
+
+            object form = parser.ParseForm();
+
+            Assert.IsNotNull(form);
+            Assert.IsInstanceOfType(form, typeof(IList));
+
+            IList list = (IList)form;
+
+            Assert.AreEqual(2, list.Count);
+
+            Assert.IsInstanceOfType(list[0], typeof(Symbol));
+            Assert.IsInstanceOfType(list[1], typeof(Symbol));
+
+            Assert.AreEqual("unquote", ((Symbol)list[0]).Name);
+            Assert.AreEqual("foo", ((Symbol)list[1]).Name);
+
+            Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
+        public void ParseUnquotedSplicingSymbol()
+        {
+            Parser parser = new Parser("~@foo");
+
+            object form = parser.ParseForm();
+
+            Assert.IsNotNull(form);
+            Assert.IsInstanceOfType(form, typeof(IList));
+
+            IList list = (IList)form;
+
+            Assert.AreEqual(2, list.Count);
+
+            Assert.IsInstanceOfType(list[0], typeof(Symbol));
+            Assert.IsInstanceOfType(list[1], typeof(Symbol));
+
+            Assert.AreEqual("unquote-splicing", ((Symbol)list[0]).Name);
             Assert.AreEqual("foo", ((Symbol)list[1]).Name);
 
             Assert.IsNull(parser.ParseForm());

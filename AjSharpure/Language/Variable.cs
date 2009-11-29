@@ -145,6 +145,11 @@
                 obj = ((DefinedFunction)obj).ToMacro();
                 machine.SetVariableValue(this, obj);
             }
+            else if (obj is DefinedMultiFunction)
+            {
+                obj = ((DefinedMultiFunction)obj).ToMacro();
+                machine.SetVariableValue(this, obj);
+            }
             else if (!(obj is DefinedMacro))
                 throw new InvalidOperationException();
             

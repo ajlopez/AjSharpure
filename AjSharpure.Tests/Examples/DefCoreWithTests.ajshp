@@ -520,7 +520,7 @@
   will cache the result and return it on all subsequent force
   calls."  
   [& body]
-    (list 'new 'AjSharpure.Language.Delay (list 'closure (list* `#^{:once true} fn* [] body))))
+    (list 'new 'AjSharpure.Language.Delay (list 'closure (list* '#^{:once true} fn* [] body))))
     
 (defn delay?
   "returns true if x is a Delay created with delay"
@@ -535,10 +535,107 @@
 (= 1 (force (delay 1)))
 
 ; TODO Review Variable.SetMacro, it doesn't support multifunctions
-;(defmacro if-not
-; "Evaluates test. If logical false, evaluates and returns then expr, otherwise else expr, if supplied, else nil."
-;  ([test then] `(if-not ~test ~then nil))
-;  ([test then else]
-;   `(if (not ~test) ~then ~else)))
+(defmacro if-not
+ "Evaluates test. If logical false, evaluates and returns then expr, otherwise else expr, if supplied, else nil."
+  ([test then] `(if-not ~test ~then nil))
+  ([test then else]
+   `(if (not ~test) ~then ~else)))
 
-;(= true (if-not false))
+(= true (if-not false true))
+(= 1 (if-not false 1 2))
+(= 2 (if-not true 1 2))
+(= 3 (if-not false (+ 1 2)))
+(= 5 (if-not true (+ 1 2) (+ 2 3)))
+
+; Skipped: = is defined as EqualPrimitive
+;(defn =
+;  "Equality. Returns true if x equals y, false if not. Same as
+;  Java x.equals(y) except it also works for nil, and compares
+;  numbers and collections in a type-independent manner.  Clojure's immutable data
+;  structures define equals() (and thus =) as a value, not an identity,
+;  comparison."
+;  {:tag Boolean
+;   :inline (fn [x y] `(. clojure.lang.Util equiv ~x ~y))
+;   :inline-arities #{2}}
+;  ([x] true)
+;  ([x y] (clojure.lang.Util/equiv x y))
+;  ([x y & more]
+;   (if (= x y)
+;     (if (next more)
+;       (recur y (first more) (next more))
+;       (= y (first more)))
+;     false)))
+
+(defn not=
+  "Same as (not (= obj1 obj2))"
+  {:tag Boolean}
+  ([x] false)
+  ([x y] (not (= x y)))
+  ([x y & more]
+   (not (apply = x y more))))
+
+(not= 1 2)
+(not= true false)
+(not (not= 1))
+(not= 1 1 2)
+
+(defn compare
+  "Comparator. Returns 0 if x equals y, -1 if x is logically 'less
+  than' y, else 1. Same as Java x.compareTo(y) except it also works
+  for nil, and compares numbers and collections in a type-independent
+  manner. x must implement Comparable"
+  {:tag Integer
+   :inline (fn [x y] `(. AjSharpure.Utilities Compare ~x ~y))}
+  [x y] (. AjSharpure.Utilities (Compare x y)))
+
+(= 0 (compare 1 1))
+(= -1 (compare 1 2))
+(= 1 (compare 2 1))
+
+(= 0 (compare "foo" "foo"))
+(= -1 (compare "bar" "foo"))
+(= 1 (compare "foo" "bar"))
+
+(defmacro and
+  "Evaluates exprs one at a time, from left to right. If a form
+  returns logical false (nil or false), and returns that value and
+  doesn't evaluate any of the other expressions, otherwise it returns
+  the value of the last expr. (and) returns true."
+  ([] true)
+  ([x] x)
+  ([x & next]
+   `(let [and# ~x]
+      (if and# (and ~@next) and#))))
+
+(and)
+(and true)
+(and true true)
+(and true true true)
+
+(= false (and false))
+(= false (and true false))
+(= false (and false true))
+(= false (and true true false))
+
+(defmacro or
+  "Evaluates exprs one at a time, from left to right. If a form
+  returns a logical true value, or returns that value and doesn't
+  evaluate any of the other expressions, otherwise it returns the
+  value of the last expression. (or) returns nil."
+  ([] nil)
+  ([x] x)
+  ([x & next]
+      `(let [or# ~x]
+         (if or# or# (or ~@next)))))
+
+(nil? (or))
+(or true)
+(or true false)
+(or false true)
+(or false false true)
+(or true false false)
+(or false true false)
+
+(= false (or false))
+(= false (or false false))
+(= false (or false false false))

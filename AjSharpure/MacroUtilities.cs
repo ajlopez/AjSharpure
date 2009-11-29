@@ -67,8 +67,8 @@
                 if (symbol.Name.Equals("unquote"))
                     return true;
 
-                if (symbol.Name.Equals("backquote"))
-                    return true;
+                //if (symbol.Name.Equals("backquote"))
+                //    return true;
             }
 
             return false;

@@ -146,6 +146,16 @@
                     return list;
                 }
 
+                if (token.TokenType == TokenType.Macro && token.Value == "~@")
+                {
+                    IList list = new ArrayList();
+
+                    list.Add(unquoteSplicingSymbol);
+                    list.Add(this.ParseForm());
+
+                    return list;
+                }
+
                 if (token.TokenType == TokenType.Macro)
                     throw new ParserException(string.Format("Unknown macro {0}", token.Value));
             }

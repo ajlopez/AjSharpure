@@ -230,15 +230,15 @@
                 result = parser.ParseForm();
             }
 
-            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreKey, "cons"));
-            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreKey, "first"));
-            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreKey, "next"));
-            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreKey, "rest"));
-            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreKey, "second"));
-            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreKey, "ffirst"));
-            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreKey, "nfirst"));
-            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreKey, "fnext"));
-            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreKey, "nnext"));
+            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreNamespaceName, "cons"));
+            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreNamespaceName, "first"));
+            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreNamespaceName, "next"));
+            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreNamespaceName, "rest"));
+            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreNamespaceName, "second"));
+            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreNamespaceName, "ffirst"));
+            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreNamespaceName, "nfirst"));
+            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreNamespaceName, "fnext"));
+            Assert.IsNotNull(machine.GetVariableValue(Machine.AjSharpureCoreNamespaceName, "nnext"));
         }
 
         [TestMethod]
@@ -302,12 +302,13 @@
             }
         }
 
-        [TestMethod]
-        [DeploymentItem("Examples/DefMyListAsMacroWithTests.ajshp")]
-        public void DefAndTestMyListAsMacroFromExample()
-        {
-            this.LoadAndEvaluateDefsWithTests("DefMyListAsMacroWithTests.ajshp");
-        }
+        // TODO: Review, the code is not right, it doesn't run in Clojure
+        //[TestMethod]
+        //[DeploymentItem("Examples/DefMyListAsMacroWithTests.ajshp")]
+        //public void DefAndTestMyListAsMacroFromExample()
+        //{
+        //    this.LoadAndEvaluateDefsWithTests("DefMyListAsMacroWithTests.ajshp");
+        //}
 
         [TestMethod]
         [DeploymentItem("Examples/DefTypePredicatesWithTests.ajshp")]

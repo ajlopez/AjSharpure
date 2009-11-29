@@ -617,5 +617,38 @@
             Assert.IsNotNull(addresult);
             Assert.AreEqual(3, addresult);
         }
+
+        [TestMethod]
+        public void EvaluateQuote()
+        {
+            QuotePrimitive quote = new QuotePrimitive();
+            Assert.IsNull(quote.Apply(null, null, null));
+            Assert.AreEqual(1, quote.Apply(null, null, new object[] { 1 }));
+            Symbol symbol = Symbol.Create("foo");
+            Assert.AreEqual(symbol, quote.Apply(null, null, new object[] { symbol }));
+            IPersistentList list = PersistentList.Create(new object[] { 1, 2, 3 });
+            Assert.AreEqual(list, quote.Apply(null, null, new object[] { list }));
+        }
+
+        [TestMethod]
+        public void EvaluateBackquoteWithSimpleValues()
+        {
+            BackquotePrimitive quote = new BackquotePrimitive();
+            Assert.IsNull(quote.Apply(null, null, null));
+            Assert.AreEqual(1, quote.Apply(null, null, new object[] { 1 }));
+            Symbol symbol = Symbol.Create("foo");
+            IPersistentList list = PersistentList.Create(new object[] { 1, 2, 3 });
+            Assert.AreEqual(list, quote.Apply(null, null, new object[] { list }));
+        }
+
+        [TestMethod]
+        public void EvaluateBackquoteWithSymbol()
+        {
+            BackquotePrimitive quote = new BackquotePrimitive();
+            Symbol symbol = Symbol.Create("foo");
+            Machine machine = new Machine();
+            Symbol qsymbol = Symbol.Create(Machine.AjSharpureCoreNamespaceName, "foo");
+            Assert.AreEqual(qsymbol, quote.Apply(machine, machine.Environment, new object[] { symbol }));
+        }
     }
 }

@@ -10,7 +10,7 @@
     {
         private const string NameCharacters = "?_-.";
         private const string MacroCharacters = ";^#'@`~";
-        private static string[] MacroBicharacters = { "#'", "#_", "#^", "#(", "#{" };
+        private static string[] MacroBicharacters = { "#'", "#_", "#^", "#(", "#{", "~@" };
         private const string SeparatorCharacters = "()[]{},";
 
         private TextReader reader;
@@ -63,6 +63,20 @@
 
                 if (char.IsDigit(ch))
                     return this.NextInteger(ch);
+
+                if (ch == '-')
+                {
+                    char ch2 = this.NextChar();
+
+                    if (char.IsDigit(ch2))
+                    {
+                        Token token = this.NextInteger(ch2);
+                        token.Value = "-" + token.Value;
+                        return token;
+                    }
+
+                    this.PushChar(ch2);
+                }
 
                 return this.NextSymbol(ch);
             }

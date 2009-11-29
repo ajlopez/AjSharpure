@@ -22,7 +22,7 @@
             object argumentNames = parser.ParseForm();
             object body = parser.ParseForm();
 
-            DefinedMacro func = new DefinedMacro("simple-list", (ICollection)argumentNames, (IList) body);
+            DefinedMacro func = new DefinedMacro("simple-list", (ICollection)argumentNames, body);
 
             Assert.AreEqual("simple-list", func.Name);
 

@@ -124,5 +124,31 @@
             Assert.IsFalse(cons1.Equals(cons2));
             Assert.IsFalse(cons2.Equals(cons1));
         }
+
+        [TestMethod]
+        public void CopyToArray()
+        {
+            Cons cons = new Cons(1, new Cons(2, new Cons(3)));
+            object[] array = new object[3];
+
+            cons.CopyTo(array, 0);
+
+            Assert.AreEqual(1, array[0]);
+            Assert.AreEqual(2, array[1]);
+            Assert.AreEqual(3, array[2]);
+        }
+
+        [TestMethod]
+        public void CopyToSubarray()
+        {
+            Cons cons = new Cons(1, new Cons(2, new Cons(3)));
+            object[] array = new object[4];
+
+            cons.CopyTo(array, 1);
+
+            Assert.AreEqual(1, array[1]);
+            Assert.AreEqual(2, array[2]);
+            Assert.AreEqual(3, array[3]);
+        }
     }
 }

@@ -53,6 +53,7 @@
     <Compile Include="Compiler\ParserException.cs" />
     <Compile Include="Compiler\Token.cs" />
     <Compile Include="Compiler\TokenType.cs" />
+    <Compile Include="DefinedMultiMacro.cs" />
     <Compile Include="DefinedMultiFunction.cs" />
     <Compile Include="DefinedSpecialForm.cs" />
     <Compile Include="DefinedMacro.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Operations.cs" />
     <Compile Include="Primitives\AddPrimitive.cs" />
     <Compile Include="Primitives\ClosurePrimitive.cs" />
+    <Compile Include="Primitives\BackquotePrimitive.cs" />
     <Compile Include="Primitives\CurrentEnvironmentPrimitive.cs" />
     <Compile Include="Primitives\CurrentMachinePrimitive.cs" />
     <Compile Include="Primitives\ThrowPrimitive.cs" />

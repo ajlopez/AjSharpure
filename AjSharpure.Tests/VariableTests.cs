@@ -8,12 +8,15 @@
     using AjSharpure.Language;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using AjSharpure.Compiler;
+    using System.Collections;
+    using AjSharpure.Primitives;
 
     [TestClass]
     public class VariableTests
     {
         [TestMethod]
-        public void ShouldCreateWithNameAndNamespace()
+        public void CreateWithNameAndNamespace()
         {
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
@@ -27,7 +30,7 @@
         }
 
         [TestMethod]
-        public void ShouldCreateWithNameAndImplicitNamespace()
+        public void CreateWithNameAndImplicitNamespace()
         {
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
@@ -41,7 +44,7 @@
         }
 
         [TestMethod]
-        public void ShouldBeEqualToVariableWithSameName()
+        public void BeEqualToVariableWithSameName()
         {
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
@@ -54,7 +57,7 @@
         }
 
         [TestMethod]
-        public void ShouldBeNotEqualToVariableWithOtherName()
+        public void BeNotEqualToVariableWithOtherName()
         {
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
@@ -66,7 +69,7 @@
         }
 
         [TestMethod]
-        public void ShouldBeEqualToVariableWithSameNameAndNamespace()
+        public void BeEqualToVariableWithSameNameAndNamespace()
         {
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
@@ -79,7 +82,7 @@
         }
 
         [TestMethod]
-        public void ShouldCompareToOtherVariables()
+        public void CompareToOtherVariables()
         {
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
@@ -100,7 +103,7 @@
         }
 
         [TestMethod]
-        public void ShouldCreateVariableWithNullMetadata()
+        public void CreateVariableWithNullMetadata()
         {
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
@@ -113,7 +116,7 @@
         }
 
         [TestMethod]
-        public void ShouldCreateVariableWithMetadata()
+        public void CreateVariableWithMetadata()
         {
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
@@ -129,7 +132,7 @@
         }
 
         [TestMethod]
-        public void ShouldResetVariableMetadata()
+        public void ResetVariableMetadata()
         {
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
@@ -143,7 +146,7 @@
         }
 
         [TestMethod]
-        public void ShouldCreateAVariable()
+        public void CreateAVariable()
         {
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
@@ -162,7 +165,7 @@
         }
 
         [TestMethod]
-        public void ShouldBeEquals()
+        public void BeEquals()
         {
             Machine machine = new Machine();
             machine.CreateNamespace("foo");
@@ -180,18 +183,54 @@
         }
 
         [TestMethod]
-        public void ShouldHaveSameHashCode()
+        public void SetMacroOnDefinedFunction()
         {
             Machine machine = new Machine();
-            machine.CreateNamespace("foo");
+            machine.CreateNamespace("ns");
 
-            Variable variable = Variable.Intern(machine, "foo/bar");
-            Variable var1 = Variable.Intern(machine, "foo", "bar");
-            Variable var2 = Variable.Intern(machine, "foo", "bar");
-            Variable var3 = Variable.Intern(machine, "foo/bar");
+            Variable variable = Variable.Intern(machine, "ns/func");
 
-            Assert.AreEqual(var1.GetHashCode(), var2.GetHashCode());
-            Assert.AreEqual(var1.GetHashCode(), var3.GetHashCode());
+            Parser parser = new Parser("[x y] (list x y) 1 2");
+            object argumentNames = parser.ParseForm();
+            object body = parser.ParseForm();
+
+            DefinedFunction func = new DefinedFunction("simple-list", (ICollection)argumentNames, Utilities.ToExpression(body));
+
+            machine.SetVariableValue(variable, func);
+
+            variable.SetMacro(machine);
+
+            object result = machine.GetVariableValue(variable);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DefinedMacro));
+        }
+
+        [TestMethod]
+        public void SetMacroOnDefinedMultiFunction()
+        {
+            Machine machine = new Machine();
+            machine.CreateNamespace("ns");
+            FnStarPrimitive fnprim = new FnStarPrimitive();
+            Parser parser = new Parser("([x] (+ x 1)) ([x y] (+ x y 1))");
+
+            object[] parameters = new object[2];
+            parameters[0] = parser.ParseForm();
+            parameters[1] = parser.ParseForm();
+
+            object result = fnprim.Apply(machine, machine.Environment, parameters);
+            DefinedMultiFunction multifn = (DefinedMultiFunction)result;
+
+            Variable variable = Variable.Intern(machine, "ns/func");
+
+            machine.SetVariableValue(variable, multifn);
+
+            variable.SetMacro(machine);
+
+            object mresult = machine.GetVariableValue(variable);
+
+            Assert.IsNotNull(mresult);
+            Assert.IsInstanceOfType(mresult, typeof(DefinedMultiMacro));
         }
     }
 }

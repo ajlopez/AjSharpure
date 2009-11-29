@@ -3,6 +3,7 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
 
@@ -12,9 +13,9 @@
 
     public class Machine
     {
-        public const string AjSharpureCoreKey = "AjSharpure.Core";
+        public const string AjSharpureCoreNamespaceName = "AjSharpure.Core";
         private const string AjSharpureCurrentNamespaceName = "*ns*";
-        private static string currentNamespaceKey = Utilities.GetFullName(AjSharpureCoreKey, AjSharpureCurrentNamespaceName);
+        private static string currentNamespaceKey = Utilities.GetFullName(AjSharpureCoreNamespaceName, AjSharpureCurrentNamespaceName);
 
         public static string CurrentNamespaceKey { get { return currentNamespaceKey; } }
 
@@ -28,12 +29,13 @@
 
         public Machine()
         {
-            this.CreateNamespace(AjSharpureCoreKey);
-            this.environment.SetValue(CurrentNamespaceKey, AjSharpureCoreKey);
+            this.CreateNamespace(AjSharpureCoreNamespaceName);
+            this.environment.SetValue(CurrentNamespaceKey, AjSharpureCoreNamespaceName);
             this.environment.SetValue("true", true);
             this.environment.SetValue("false", false);
             this.environment.SetValue("nil", null);
             this.environment.SetValue("quote", new QuotePrimitive());
+            this.environment.SetValue("backquote", new BackquotePrimitive());
             this.environment.SetValue("set!", new SetBangPrimitive());
             this.environment.SetValue("list", new ListPrimitive());
             this.environment.SetValue("vector", new VectorPrimitive());
