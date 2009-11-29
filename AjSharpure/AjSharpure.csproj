@@ -73,7 +73,9 @@
     <Compile Include="Language\BasePersistentSet.cs" />
     <Compile Include="Language\BaseSequence.cs" />
     <Compile Include="Language\Cons.cs" />
+    <Compile Include="Language\Delay.cs" />
     <Compile Include="Language\FnFunction.cs" />
+    <Compile Include="Language\IDereference.cs" />
     <Compile Include="Language\IPersistentSet.cs" />
     <Compile Include="Language\VectorEnumerator.cs" />
     <Compile Include="Language\IIndexedSequence.cs" />

@@ -3,6 +3,7 @@
 - dotted form names as in Clojure (.doSomething ...)
 + char support in Lexer, Parser, Utilities.PrintString
 - defn review commented code in definition DefCoreWithTests.ajshp
+- MacroUtilities: difference bwn backquote and unquote ???
 - core.clj implement lines 246-275 (from cast to sorted-map-by)
 - review Variable.SetMacro implementation (now it receives Machine parameter)
 - related to above: Machine.SetValue("machine",this) is it needed????

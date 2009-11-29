@@ -50,8 +50,10 @@
     <Compile Include="EnumeratorSequenceTests.cs" />
     <Compile Include="ExamplesTests.cs" />
     <Compile Include="ExpressionsSimpleTests.cs" />
+    <Compile Include="FakeFn.cs" />
     <Compile Include="FakePersistentMap.cs" />
     <Compile Include="KeywordTests.cs" />
+    <Compile Include="LanguageTests.cs" />
     <Compile Include="LazySequenceTests.cs" />
     <Compile Include="LexerTests.cs" />
     <Compile Include="ListObjectTests.cs" />

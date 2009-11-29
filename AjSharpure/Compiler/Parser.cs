@@ -14,6 +14,8 @@
     {
         private static Symbol quoteSymbol = Symbol.Create("quote");
         private static Symbol backquoteSymbol = Symbol.Create("backquote");
+        private static Symbol unquoteSymbol = Symbol.Create("unquote");
+        private static Symbol unquoteSplicingSymbol = Symbol.Create("unquote-splicing");
         private static Symbol metaSymbol = Symbol.Create("meta");
         private static Symbol derefSymbol = Symbol.Create("deref");
         private static Symbol varSymbol = Symbol.Create("var");
@@ -129,6 +131,16 @@
                     IList list = new ArrayList();
 
                     list.Add(backquoteSymbol);
+                    list.Add(this.ParseForm());
+
+                    return list;
+                }
+
+                if (token.TokenType == TokenType.Macro && token.Value == "~")
+                {
+                    IList list = new ArrayList();
+
+                    list.Add(unquoteSymbol);
                     list.Add(this.ParseForm());
 
                     return list;

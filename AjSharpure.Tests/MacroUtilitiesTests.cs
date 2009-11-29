@@ -65,9 +65,9 @@
         }
 
         [TestMethod]
-        public void ShouldExpandBackquotedSymbol()
+        public void ShouldExpandUnquotedSymbol()
         {
-            Parser parser = new Parser("(backquote x)");
+            Parser parser = new Parser("(unquote x)");
             object list = parser.ParseForm();
             Machine machine = new Machine();
 
@@ -81,9 +81,9 @@
         }
 
         [TestMethod]
-        public void ShouldExpandBackquotedSymbolInList()
+        public void ShouldExpandUnquotedSymbolInList()
         {
-            Parser parser = new Parser("(1 (backquote x) 3)");
+            Parser parser = new Parser("(1 (unquote x) 3)");
             object list = parser.ParseForm();
             Machine machine = new Machine();
 
@@ -103,9 +103,31 @@
         }
 
         [TestMethod]
-        public void ShouldExpandBacklistedSymbolInList()
+        public void ShouldExpandImplicitUnquotedSymbolInList()
         {
-            Parser parser = new Parser("(def x (list 2 3)) (1 (backlist x) 4)");
+            Parser parser = new Parser("(1 ~x 3)");
+            object list = parser.ParseForm();
+            Machine machine = new Machine();
+
+            machine.Environment.SetValue("x", 2);
+
+            object result = MacroUtilities.Expand(list, machine, machine.Environment);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IList));
+
+            IList resultList = (IList)result;
+
+            Assert.AreEqual(3, resultList.Count);
+            Assert.AreEqual(1, resultList[0]);
+            Assert.AreEqual(2, resultList[1]);
+            Assert.AreEqual(3, resultList[2]);
+        }
+
+        [TestMethod]
+        public void ShouldExpandUnquotedSplicingSymbolInList()
+        {
+            Parser parser = new Parser("(def x (list 2 3)) (1 (unquote-splicing x) 4)");
 
             Machine machine = new Machine();
             machine.Evaluate(parser.ParseForm());

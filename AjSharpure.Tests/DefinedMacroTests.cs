@@ -18,7 +18,7 @@
         [TestMethod]
         public void ShouldDefineAndEvaluateSimpleList()
         {
-            Parser parser = new Parser("[x y] (list 'list (backquote x) (backquote y)) 1 2");
+            Parser parser = new Parser("[x y] (list 'list (unquote x) (unquote y)) 1 2");
             object argumentNames = parser.ParseForm();
             object body = parser.ParseForm();
 

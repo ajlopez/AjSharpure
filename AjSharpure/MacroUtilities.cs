@@ -64,6 +64,9 @@
             {
                 Symbol symbol = (Symbol) list[0];
 
+                if (symbol.Name.Equals("unquote"))
+                    return true;
+
                 if (symbol.Name.Equals("backquote"))
                     return true;
             }
@@ -83,7 +86,7 @@
             {
                 Symbol symbol = (Symbol)list[0];
 
-                if (symbol.Name.Equals("backlist"))
+                if (symbol.Name.Equals("unquote-splicing"))
                     return true;
             }
 
