@@ -27,19 +27,19 @@
         }
 
         [TestMethod]
-        public void ShouldBeReadOnly()
+        public void BeReadOnly()
         {
             Assert.IsTrue(this.dictionary.IsReadOnly);
         }
 
         [TestMethod]
-        public void ShouldBeFixedSize()
+        public void BeFixedSize()
         {
             Assert.IsTrue(this.dictionary.IsFixedSize);
         }
 
         [TestMethod]
-        public void ShouldBeSynchronized()
+        public void BeSynchronized()
         {
             Assert.IsTrue(this.dictionary.IsSynchronized);
             object obj = this.dictionary.SyncRoot;
@@ -49,7 +49,7 @@
         }
 
         [TestMethod]
-        public void ShouldHaveTheThreeDefinedKeysAndValues()
+        public void HaveTheThreeDefinedKeysAndValues()
         {
             Assert.IsNotNull(this.dictionary.Keys);
 
@@ -64,41 +64,41 @@
 
         [TestMethod]
         [ExpectedException(typeof(NotSupportedException))]
-        public void ShouldRaiseIfSetNewKeyValue()
+        public void RaiseIfSetNewKeyValue()
         {
             this.dictionary["four"] = 4;
         }
 
         [TestMethod]
         [ExpectedException(typeof(NotSupportedException))]
-        public void ShouldRaiseIfResetKeyValue()
+        public void RaiseIfResetKeyValue()
         {
             this.dictionary["three"] = 30;
         }
 
         [TestMethod]
         [ExpectedException(typeof(NotSupportedException))]
-        public void ShouldRaiseIfAddKeyValue()
+        public void RaiseIfAddKeyValue()
         {
             this.dictionary.Add("four", 4);
         }
 
         [TestMethod]
         [ExpectedException(typeof(NotSupportedException))]
-        public void ShouldRaiseIfRemoveKeyValue()
+        public void RaiseIfRemoveKeyValue()
         {
             this.dictionary.Remove("three");
         }
 
         [TestMethod]
         [ExpectedException(typeof(NotSupportedException))]
-        public void ShouldRaiseIfClear()
+        public void RaiseIfClear()
         {
             this.dictionary.Clear();
         }
 
         [TestMethod]
-        public void ShouldGetTheSameObjectWithNullMetadata()
+        public void GetTheSameObjectWithNullMetadata()
         {
             IObject iobj = this.dictionary.WithMetadata(null);
 
@@ -107,7 +107,7 @@
         }
 
         [TestMethod]
-        public void ShouldGetNewDictionaryWithSameValuesUsingNotNullMetadata()
+        public void GetNewDictionaryWithSameValuesUsingNotNullMetadata()
         {
             IObject iobj = this.dictionary.WithMetadata(FakePersistentMap.Instance);
 
@@ -127,7 +127,7 @@
         }
 
         [TestMethod]
-        public void ShouldGetEnumerator()
+        public void GetEnumerator()
         {
             IDictionaryEnumerator enumerator = this.dictionary.GetEnumerator();
 
@@ -148,13 +148,13 @@
         }
 
         [TestMethod]
-        public void ShouldContainsDefinedKey()
+        public void ContainsDefinedKey()
         {
             Assert.IsTrue(this.dictionary.ContainsKey("three"));
         }
 
         [TestMethod]
-        public void ShouldGetEntryAtDefinedKey()
+        public void GetEntryAtDefinedKey()
         {
             DictionaryEntry entry = this.dictionary.EntryAt("three");
 
@@ -163,7 +163,7 @@
         }
 
         [TestMethod]
-        public void AssociateShouldReturnTheSameObjectIfEntryIsInOriginalObject()
+        public void AssociateReturnTheSameObjectIfEntryIsInOriginalObject()
         {
             IAssociative assoc = this.dictionary.Associate("three", 3);
 
@@ -172,7 +172,7 @@
         }
 
         [TestMethod]
-        public void AssociateShouldReturnNewDictionaryWithKeyRedefined()
+        public void AssociateReturnNewDictionaryWithKeyRedefined()
         {
             IAssociative assoc = this.dictionary.Associate("three", 30);
 
@@ -195,7 +195,7 @@
         }
 
         [TestMethod]
-        public void AssociateShouldReturnNewDictionaryWithNewEntry()
+        public void AssociateReturnNewDictionaryWithNewEntry()
         {
             IAssociative assoc = this.dictionary.Associate("four", 4);
 
@@ -218,7 +218,7 @@
         }
 
         [TestMethod]
-        public void AssociateShouldLeaveOriginalObjectUnaltered()
+        public void AssociateLeaveOriginalObjectUnaltered()
         {
             IAssociative assoc = this.dictionary.Associate("four", 4);
 
@@ -233,7 +233,7 @@
         }
 
         [TestMethod]
-        public void ShouldRetrieveValueAt()
+        public void RetrieveValueAt()
         {
             object result = this.dictionary.ValueAt("three");
 
@@ -243,7 +243,7 @@
         }
 
         [TestMethod]
-        public void ShouldRetrieveValueAtWithNotFoundObject()
+        public void RetrieveValueAtWithNotFoundObject()
         {
             object result = this.dictionary.ValueAt("four", 4);
 
@@ -253,26 +253,26 @@
         }
 
         [TestMethod]
-        public void ShouldNotBeEquivalentToNull()
+        public void NotBeEquivalentToNull()
         {
             Assert.IsFalse(this.dictionary.Equiv(null));
         }
 
         [TestMethod]
-        public void ShouldNotBeEquivalentToANonIDictionaryObject()
+        public void NotBeEquivalentToANonIDictionaryObject()
         {
             Assert.IsFalse(this.dictionary.Equiv(1));
             Assert.IsFalse(this.dictionary.Equiv("foo"));
         }
 
         [TestMethod]
-        public void ShouldBeEquivalentToItself()
+        public void BeEquivalentToItself()
         {
             Assert.IsTrue(this.dictionary.Equiv(this.dictionary));
         }
 
         [TestMethod]
-        public void ShouldBeEquivalentToADictionaryWithSameEntries()
+        public void BeEquivalentToADictionaryWithSameEntries()
         {
             Hashtable dict = new Hashtable(this.dictionary);
 
@@ -281,7 +281,7 @@
         }
 
         [TestMethod]
-        public void ShouldBeNotEquivalentToADictionaryWithSameKeysAndDifferentValues()
+        public void BeNotEquivalentToADictionaryWithSameKeysAndDifferentValues()
         {
             Hashtable dict = new Hashtable(this.dictionary);
             dict["three"] = 30;
@@ -291,7 +291,7 @@
         }
 
         [TestMethod]
-        public void ShouldBeNotEquivalentToADictionaryWithAdditionalEntry()
+        public void BeNotEquivalentToADictionaryWithAdditionalEntry()
         {
             Hashtable dict = new Hashtable(this.dictionary);
             dict["four"] = 4;
@@ -301,14 +301,14 @@
         }
 
         [TestMethod]
-        public void ShouldBeNotEquivalentToAnEmptyDictionary()
+        public void BeNotEquivalentToAnEmptyDictionary()
         {
             Assert.IsFalse(this.dictionary.Equiv(this.dictionary.Empty));
             Assert.IsFalse(this.dictionary.Empty.Equiv(this.dictionary));
         }
 
         [TestMethod]
-        public void ShouldBeConvertedToSequence()
+        public void BeConvertedToSequence()
         {
             ISequence sequence = this.dictionary.ToSequence();
 

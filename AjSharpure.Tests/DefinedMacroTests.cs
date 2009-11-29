@@ -16,7 +16,7 @@
     public class DefinedMacroTests
     {
         [TestMethod]
-        public void ShouldDefineAndEvaluateSimpleList()
+        public void DefineAndEvaluateSimpleList()
         {
             Parser parser = new Parser("[x y] (list 'list (unquote x) (unquote y)) 1 2");
             object argumentNames = parser.ParseForm();

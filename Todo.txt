@@ -3,6 +3,8 @@
 - dotted form names as in Clojure (.doSomething ...)
 + char support in Lexer, Parser, Utilities.PrintString
 - defn review commented code in definition DefCoreWithTests.ajshp
+- implements <= >= and others num operators as in clojure, over numbers
+	now there are implemented using Utilities.Compare
 + MacroUtilities: difference bwn backquote and unquote ???
 - Difference btw Utilities.Equals, Utilities.Equiv
 - core.clj implement lines 246-275 (from cast to sorted-map-by)

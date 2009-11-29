@@ -120,6 +120,7 @@
     <Compile Include="Primitives\AddPrimitive.cs" />
     <Compile Include="Primitives\ClosurePrimitive.cs" />
     <Compile Include="Primitives\BackquotePrimitive.cs" />
+    <Compile Include="Primitives\EqualEqualPrimitive.cs" />
     <Compile Include="Primitives\CurrentEnvironmentPrimitive.cs" />
     <Compile Include="Primitives\CurrentMachinePrimitive.cs" />
     <Compile Include="Primitives\ThrowPrimitive.cs" />

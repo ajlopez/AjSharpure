@@ -21,6 +21,9 @@
 
         public object Evaluate(Machine machine, ValueEnvironment environment)
         {
+            if (this.elements == null || this.elements.Count == 0)
+                return null;
+
             IExpression formhead = (IExpression) Utilities.ToExpression(elements[0]);
 
             IFunction function = (IFunction) formhead.Evaluate(machine, environment);

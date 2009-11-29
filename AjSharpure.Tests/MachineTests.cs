@@ -948,6 +948,22 @@
         }
 
         [TestMethod]
+        public void EvaluateEqualEqualWithNumbers()
+        {
+            Parser parser = new Parser("(== 1) (== 2 2 ) (== 2 2 2) (== 1 2) (== 1 1 2)");
+            Machine machine = new Machine();
+
+            Assert.IsTrue((bool)machine.Evaluate(parser.ParseForm()));
+            Assert.IsTrue((bool)machine.Evaluate(parser.ParseForm()));
+            Assert.IsTrue((bool)machine.Evaluate(parser.ParseForm()));
+
+            Assert.IsFalse((bool)machine.Evaluate(parser.ParseForm()));
+            Assert.IsFalse((bool)machine.Evaluate(parser.ParseForm()));
+
+            Assert.IsNull(parser.ParseForm());
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void RaiseIfSubtractWithoutParameters()
         {

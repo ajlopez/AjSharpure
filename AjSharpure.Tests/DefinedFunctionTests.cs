@@ -16,7 +16,7 @@
     public class DefinedFunctionTests
     {
         [TestMethod]
-        public void ShouldDefineAndEvaluateSimpleList()
+        public void DefineAndEvaluateSimpleList()
         {
             Parser parser = new Parser("[x y] (list x y) 1 2");
             object argumentNames = parser.ParseForm();

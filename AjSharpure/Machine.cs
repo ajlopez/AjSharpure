@@ -62,6 +62,7 @@
             this.environment.SetValue(">", new GreaterPrimitive());
             this.environment.SetValue("<=", new LessEqualPrimitive());
             this.environment.SetValue(">=", new GreaterEqualPrimitive());
+            this.environment.SetValue("==", new EqualEqualPrimitive());
             this.environment.SetValue("throw", new ThrowPrimitive());
             this.environment.SetValue("current-machine", new CurrentMachinePrimitive());
             this.environment.SetValue("current-environment", new CurrentEnvironmentPrimitive());

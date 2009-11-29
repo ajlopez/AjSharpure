@@ -639,3 +639,87 @@
 (= false (or false))
 (= false (or false false))
 (= false (or false false false))
+
+;;;;;;;;;;;;;;;;;;; sequence fns  ;;;;;;;;;;;;;;;;;;;;;;;
+(defn reduce
+  "f should be a function of 2 arguments. If val is not supplied,
+  returns the result of applying f to the first 2 items in coll, then
+  applying f to that result and the 3rd item, etc. If coll contains no
+  items, f must accept no arguments as well, and reduce returns the
+  result of calling f with no arguments.  If coll has only 1 item, it
+  is returned and f is not called.  If val is supplied, returns the
+  result of applying f to val and the first item in coll, then
+  applying f to that result and the 2nd item, etc. If coll contains no
+  items, returns val and f is not called."
+  ([f coll]
+   (let [s (seq coll)]
+     (if s
+       (if (instance? AjSharpure.Language.IReduce s)
+         (. #^AjSharpure.Language.IReduce s (reduce f))
+         (reduce f (first s) (next s)))
+       (f))))
+  ([f val coll]
+     (let [s (seq coll)]
+       (if (instance? AjSharpure.Language.IReduce s)
+         (. #^AjSharpure.Language.IReduce s (reduce f val))
+         ((fn [f val s]
+            (if s
+              (recur f (f val (first s)) (next s))
+              val))
+          f val s)))))
+
+(defn reverse
+  "Returns a seq of the items in coll in reverse order. Not lazy."
+  [coll]
+    (reduce conj () coll))
+
+(= '(1 2) (reverse '(2 1)))
+(= '(1 2 3) (reverse '(3 2 1)))
+(= '(1 (2 3) 4) (reverse '(4 (2 3) 1)))
+(= '(\o \o \f) (reverse "foo"))
+
+; Skipped + - * / implemented as primitives
+; Skipped < > <= >= == implemented as primitives
+
+(defn max
+  "Returns the greatest of the nums."
+  ([x] x)
+  ([x y] (if (> x y) x y))
+  ([x y & more]
+   (reduce max (max x y) more)))
+   
+(= 1 (max 1))
+(= 2 (max 1 2))
+(= 3 (max 3 1))
+(= 4 (max 1 2 4 3))
+
+(defn min
+  "Returns the least of the nums."
+  ([x] x)
+  ([x y] (if (< x y) x y))
+  ([x y & more]
+   (reduce min (min x y) more)))
+
+(= 1 (min 1))
+(= 1 (min 1 2))
+(= 1 (min 3 1))
+(= 2 (min 4 2 4 3))
+
+(defn inc
+  "Returns a number one greater than num."
+  {:inline (fn [x] `(. AjSharpure.Language.Numbers (Increment ~x)))}
+  [x] (. AjSharpure.Language.Numbers (Increment x)))
+  
+(= 1 (inc 0))
+(= 2 (inc 1))
+(= 3 (inc 2))
+
+(defn dec
+  "Returns a number one less than num."
+  {:inline (fn [x] `(. AjSharpure.Language.Numbers (Decrement ~x)))}
+  [x] (. AjSharpure.Language.Numbers (Decrement x)))
+
+(= 1 (dec 2))
+(= 2 (dec 3))
+(= 3 (dec 4))
+
