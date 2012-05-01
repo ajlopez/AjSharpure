@@ -13,17 +13,6 @@
         private ISequence rest;
         private bool restWasCalculated;
 
-        public static EnumeratorSequence Create(IEnumerator enumerator)
-        {
-            if (enumerator == null)
-                return null;
-
-            if (!enumerator.MoveNext())
-                return null;
-
-            return new EnumeratorSequence(enumerator, enumerator.Current);
-        }
-
         private EnumeratorSequence(IEnumerator enumerator, object first)
             : this(enumerator, first, null)
         {
@@ -43,6 +32,17 @@
             this.first = first;
             this.rest = rest;
             this.restWasCalculated = true;
+        }
+
+        public static EnumeratorSequence Create(IEnumerator enumerator)
+        {
+            if (enumerator == null)
+                return null;
+
+            if (!enumerator.MoveNext())
+                return null;
+
+            return new EnumeratorSequence(enumerator, enumerator.Current);
         }
 
         public override IObject WithMetadata(IPersistentMap metadata)
