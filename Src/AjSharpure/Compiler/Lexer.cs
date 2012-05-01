@@ -10,8 +10,8 @@
     {
         private const string NameCharacters = "?_-.";
         private const string MacroCharacters = ";^#'@`~";
+        private const string SeparatorCharacters = "()[]{},";
         private static string[] macroBicharacters = { "#'", "#_", "#^", "#(", "#{", "~@" };
-        private const string separatorCharacters = "()[]{},";
 
         private TextReader reader;
         private char lastChar;
@@ -49,7 +49,7 @@
                 if (MacroCharacters.IndexOf(ch) >= 0)
                     return this.NextMacro(ch);
 
-                if (separatorCharacters.IndexOf(ch) >= 0)
+                if (SeparatorCharacters.IndexOf(ch) >= 0)
                     return new Token() { TokenType = TokenType.Separator, Value = ch.ToString() };
 
                 if (ch == '"')
@@ -129,7 +129,7 @@
             {
                 char ch = this.NextChar();
 
-                if (!char.IsWhiteSpace(ch) && separatorCharacters.IndexOf(ch) == -1)
+                if (!char.IsWhiteSpace(ch) && SeparatorCharacters.IndexOf(ch) == -1)
                     throw new LexerException("Invalid character");
 
                 this.PushChar(ch);
@@ -185,7 +185,7 @@
             {
                 ch = this.NextChar();
 
-                while (!char.IsWhiteSpace(ch) && !char.IsControl(ch) && separatorCharacters.IndexOf(ch) < 0)
+                while (!char.IsWhiteSpace(ch) && !char.IsControl(ch) && SeparatorCharacters.IndexOf(ch) < 0)
                 {
                     name += ch;
                     ch = this.NextChar();
@@ -212,7 +212,7 @@
             {
                 ch = this.NextChar();
 
-                while (!char.IsWhiteSpace(ch) && !char.IsControl(ch) && separatorCharacters.IndexOf(ch) < 0 && ch != '.')
+                while (!char.IsWhiteSpace(ch) && !char.IsControl(ch) && SeparatorCharacters.IndexOf(ch) < 0 && ch != '.')
                 {
                     name += ch;
                     ch = this.NextChar();
