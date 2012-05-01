@@ -38,7 +38,7 @@
                 values.Push(obj);
 
             while (values.Count > 0)
-                result = (IPersistentList) result.Cons(values.Pop());
+                result = (IPersistentList)result.Cons(values.Pop());
 
             return result;
         }
@@ -51,14 +51,14 @@
             return new PersistentList(this.first, this.rest, this.count, metadata);
         }
 
-        public IPersistentCollection Cons(object obj)
+        public new IPersistentCollection Cons(object obj)
         {
             return new PersistentList(obj, this, this.count + 1, this.Metadata);
         }
 
         public object Reduce(IFn function)
         {
-            Object ret = this.First();
+            object ret = this.First();
 
             for (ISequence sequence = this.Next(); sequence != null; sequence = sequence.Next())
                 ret = function.Invoke(ret, sequence.First());
@@ -68,7 +68,7 @@
 
         public object Reduce(IFn function, object start)
         {
-            Object ret = function.Invoke(start, this.First());
+            object ret = function.Invoke(start, this.First());
 
             for (ISequence sequence = this.Next(); sequence != null; sequence = sequence.Next())
                 ret = function.Invoke(ret, sequence.First());

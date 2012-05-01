@@ -9,8 +9,6 @@
     // TODO inherit from BaseFunction
     public abstract class BasePersistentMap : BaseObject, IPersistentMap, IDictionary, IEnumerable
     {
-        private int hash = -1;
-
         protected BasePersistentMap()
         {
         }

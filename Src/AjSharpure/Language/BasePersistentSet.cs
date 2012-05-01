@@ -10,7 +10,6 @@
     // TODO java version implements java.util.Set
     public class BasePersistentSet : BaseFunction, IPersistentSet, ICollection
     {
-        private int hash = -1;
         private IPersistentMap implementation;
 
         protected BasePersistentSet(IPersistentMap metadata, IPersistentMap implementation)
