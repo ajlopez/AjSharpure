@@ -9,6 +9,11 @@
 
     public class AddPrimitive : IFunction
     {
+        public bool IsSpecialForm
+        {
+            get { return false; }
+        }
+
         public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
         {
             object result = 0;
@@ -20,11 +25,6 @@
                 result = Numbers.Add(result, argument);
 
             return result;
-        }
-
-        public bool IsSpecialForm
-        {
-            get { return false; }
         }
     }
 }

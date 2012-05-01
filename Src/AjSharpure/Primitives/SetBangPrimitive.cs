@@ -10,6 +10,11 @@
 
     public class SetBangPrimitive : IFunction
     {
+        public bool IsSpecialForm
+        {
+            get { return true; }
+        }
+
         public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
         {
             Symbol symbol = (Symbol)arguments[0];
@@ -26,11 +31,6 @@
             environment.SetValue(symbol.FullName, value);
 
             return value;
-        }
-
-        public bool IsSpecialForm
-        {
-            get { return true; }
         }
     }
 }

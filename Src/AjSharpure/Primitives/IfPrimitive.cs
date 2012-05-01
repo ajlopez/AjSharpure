@@ -11,6 +11,11 @@
 
     public class IfPrimitive : IFunction
     {
+        public bool IsSpecialForm
+        {
+            get { return true; }
+        }
+
         public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
         {
             if (arguments == null || arguments.Length < 2)
@@ -28,11 +33,6 @@
             }
             else
                 return machine.Evaluate(arguments[1], environment);
-        }
-
-        public bool IsSpecialForm
-        {
-            get { return true; }
         }
     }
 }

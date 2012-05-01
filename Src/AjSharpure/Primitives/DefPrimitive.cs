@@ -12,6 +12,11 @@
     {
         private static Keyword macroKeyword = Keyword.Create("macro");
 
+        public bool IsSpecialForm
+        {
+            get { return true; }
+        }
+
         public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
         {
             Symbol symbol = (Symbol)arguments[0];
@@ -51,11 +56,6 @@
                 machine.Environment.SetValue(variable.Name, value, true);
 
             return value;
-        }
-
-        public bool IsSpecialForm
-        {
-            get { return true; }
         }
     }
 }

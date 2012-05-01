@@ -11,6 +11,11 @@
 
     public class FnStarPrimitive : IFunction
     {
+        public bool IsSpecialForm
+        {
+            get { return true; }
+        }
+
         public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
         {
             ICollection argumentNames;
@@ -18,8 +23,8 @@
 
             if (arguments[0] is Symbol)
             {
-                if (arguments.Length>1 && arguments[1] != null && !(arguments[1] is IPersistentVector))
-                    return ApplyMultiFunction(machine, environment, arguments);
+                if (arguments.Length > 1 && arguments[1] != null && !(arguments[1] is IPersistentVector))
+                    return this.ApplyMultiFunction(machine, environment, arguments);
 
                 Symbol symbol = (Symbol)arguments[0];
                 argumentNames = (ICollection)arguments[1];
@@ -29,8 +34,8 @@
                 return new DefinedFunction(symbol.Name, argumentNames, body);
             }
 
-            if (arguments.Length>1 && arguments[0]!=null && !(arguments[0] is IPersistentVector))
-                return ApplyMultiFunction(machine, environment, arguments);
+            if (arguments.Length > 1 && arguments[0] != null && !(arguments[0] is IPersistentVector))
+                return this.ApplyMultiFunction(machine, environment, arguments);
 
             argumentNames = (ICollection)arguments[0];
             this.CheckArgumentNames(argumentNames);
@@ -47,18 +52,13 @@
             if (arguments[0] is Symbol)
                 symbol = (Symbol)arguments[0];
 
-            for (int k = ((symbol == null) ? 0 : 1); k < arguments.Length; k++)
+            for (int k = (symbol == null) ? 0 : 1; k < arguments.Length; k++)
             {
                 object[] funarguments = (new ArrayList((IList)arguments[k])).ToArray();
                 functions.Add((DefinedFunction)this.Apply(machine, environment, funarguments));
             }
 
             return new DefinedMultiFunction((symbol == null) ? null : symbol.Name, functions);
-        }
-
-        public bool IsSpecialForm
-        {
-            get { return true; }
         }
 
         private void CheckArgumentNames(ICollection argumentNames)

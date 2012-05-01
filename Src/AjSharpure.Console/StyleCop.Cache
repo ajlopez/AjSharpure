@@ -1,0 +1,30 @@
+<stylecopresultscache>
+  <version>10</version>
+  <project key="-1092563663">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <sourcecode name="AssemblyInfo.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>05/01/2012 18:12:56</timestamp>
+      <milliseconds>314</milliseconds>
+    </settings>
+    <timestamp>05/01/2012 14:13:33</timestamp>
+    <milliseconds>912</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Program.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>05/01/2012 18:12:56</timestamp>
+      <milliseconds>314</milliseconds>
+    </settings>
+    <timestamp>05/01/2012 14:13:33</timestamp>
+    <milliseconds>791</milliseconds>
+    <violations>
+      <violation namespace="Microsoft.StyleCop.CSharp.MaintainabilityRules" rule="AccessModifierMustBeDeclared" ruleCheckId="SA1400">
+        <context>The method must have an access modifier.</context>
+        <line>13</line>
+        <warning>False</warning>
+      </violation>
+    </violations>
+  </sourcecode>
+</stylecopresultscache>

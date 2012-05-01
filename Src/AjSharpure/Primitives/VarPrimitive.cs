@@ -10,6 +10,11 @@
 
     public class VarPrimitive : IFunction
     {
+        public bool IsSpecialForm
+        {
+            get { return true; }
+        }
+
         public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
         {
             Symbol symbol = (Symbol)arguments[0];
@@ -17,7 +22,7 @@
             string ns = symbol.Namespace;
 
             if (string.IsNullOrEmpty(ns))
-                ns = (string) environment.GetValue(Machine.CurrentNamespaceKey);
+                ns = (string)environment.GetValue(Machine.CurrentNamespaceKey);
 
             Variable variable = machine.GetVariable(ns, symbol.Name);
 
@@ -25,11 +30,6 @@
                 throw new InvalidOperationException(string.Format("Unable to resolve Variable from Symbol {0}", symbol.FullName));
 
             return variable;
-        }
-
-        public bool IsSpecialForm
-        {
-            get { return true; }
         }
     }
 }

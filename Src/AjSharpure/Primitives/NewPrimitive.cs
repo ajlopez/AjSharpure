@@ -11,6 +11,11 @@
 
     public class NewPrimitive : IFunction
     {
+        public bool IsSpecialForm
+        {
+            get { return true; }
+        }
+
         public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
         {
             object name = arguments[0];
@@ -36,11 +41,6 @@
                 parameters[k - 1] = machine.Evaluate(arguments[k], environment);
 
             return Activator.CreateInstance(type, parameters);
-        }
-
-        public bool IsSpecialForm
-        {
-            get { return true; }
         }
     }
 }

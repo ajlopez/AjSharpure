@@ -11,6 +11,11 @@
 
     public class LetPrimitive : IFunction
     {
+        public bool IsSpecialForm
+        {
+            get { return true; }
+        }
+
         public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
         {
             object result = null;
@@ -18,7 +23,7 @@
 
             foreach (object argument in arguments)
             {
-                if (newenv == null) // first argument
+                if (newenv == null)
                 {
                     newenv = new ValueEnvironment(environment);
 
@@ -35,11 +40,6 @@
             }
 
             return result;
-        }
-
-        public bool IsSpecialForm
-        {
-            get { return true; }
         }
     }
 }

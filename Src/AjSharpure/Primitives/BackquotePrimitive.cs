@@ -10,6 +10,11 @@
 
     public class BackquotePrimitive : IFunction
     {
+        public bool IsSpecialForm
+        {
+            get { return true; }
+        }
+
         public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
         {
             if (arguments == null || arguments.Length == 0)
@@ -20,17 +25,12 @@
                 Symbol symbol = (Symbol)arguments[0];
 
                 if (string.IsNullOrEmpty(symbol.Namespace))
-                    return Symbol.Create((string) environment.GetValue(Machine.CurrentNamespaceKey), symbol.Name);
+                    return Symbol.Create((string)environment.GetValue(Machine.CurrentNamespaceKey), symbol.Name);
 
                 return symbol;
             }
 
             return MacroUtilities.Expand(arguments[0], machine, environment);
-        }
-
-        public bool IsSpecialForm
-        {
-            get { return true; }
         }
     }
 }

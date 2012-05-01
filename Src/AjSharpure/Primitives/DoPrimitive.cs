@@ -11,6 +11,11 @@
 
     public class DoPrimitive : IFunction
     {
+        public bool IsSpecialForm
+        {
+            get { return true; }
+        }
+
         public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
         {
             object result = null;
@@ -19,11 +24,6 @@
                 result = machine.Evaluate(argument, environment);
 
             return result;
-        }
-
-        public bool IsSpecialForm
-        {
-            get { return true; }
         }
     }
 }

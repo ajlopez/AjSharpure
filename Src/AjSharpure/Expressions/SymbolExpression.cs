@@ -16,28 +16,33 @@
             this.symbol = symbol;
         }
 
+        public object Value
+        {
+            get { return this.symbol; }
+        }
+
         public object Evaluate(Machine machine, ValueEnvironment environment)
         {
             string nsname = null;
 
-            if (string.IsNullOrEmpty(symbol.Namespace))
+            if (string.IsNullOrEmpty(this.symbol.Namespace))
             {
                 // TODO this lookup should be for special forms
-                if (machine.Environment.IsDefined(symbol.Name))
-                    return machine.Environment.GetValue(symbol.Name);
+                if (machine.Environment.IsDefined(this.symbol.Name))
+                    return machine.Environment.GetValue(this.symbol.Name);
 
                 // Test if it is a Type
                 // TODO import treatment
-                if (symbol.Name.IndexOf('.') > 0)
+                if (this.symbol.Name.IndexOf('.') > 0)
                 {
-                    Type type = Utilities.GetType(symbol.Name);
+                    Type type = Utilities.GetType(this.symbol.Name);
 
                     if (type != null)
                         return type;
                 }
 
-                if (environment.IsDefined(symbol.Name))
-                    return environment.GetValue(symbol.Name);
+                if (environment.IsDefined(this.symbol.Name))
+                    return environment.GetValue(this.symbol.Name);
 
                 nsname = (string)environment.GetValue(Machine.CurrentNamespaceKey);
             }
@@ -45,11 +50,6 @@
                 nsname = this.symbol.Namespace;
 
             return machine.GetVariableValue(nsname, this.symbol.Name);
-        }
-
-        public object Value
-        {
-            get { return this.symbol; }
         }
     }
 }

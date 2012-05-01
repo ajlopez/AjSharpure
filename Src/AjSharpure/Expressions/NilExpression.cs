@@ -9,11 +9,11 @@
     {
         private static NilExpression instance = new NilExpression();
 
-        public static NilExpression Instance { get { return instance; } }
-
         private NilExpression()
             : base(null)
         {
         }
+
+        public static NilExpression Instance { get { return instance; } }
     }
 }

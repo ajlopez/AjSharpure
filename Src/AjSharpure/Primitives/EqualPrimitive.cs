@@ -9,6 +9,11 @@
 
     public class EqualPrimitive : IFunction
     {
+        public bool IsSpecialForm
+        {
+            get { return false; }
+        }
+
         public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
         {
             if (arguments == null || arguments.Length == 0)
@@ -22,7 +27,7 @@
 
             for (int k = 0; k < arguments.Length; k++)
             {
-                if (k>0)
+                if (k > 0)
                     result = result && Utilities.Equals(argument, arguments[k]);
 
                 if (!result)
@@ -32,11 +37,6 @@
             }
 
             return true;
-        }
-
-        public bool IsSpecialForm
-        {
-            get { return false; }
         }
     }
 }

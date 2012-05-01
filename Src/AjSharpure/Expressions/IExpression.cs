@@ -7,7 +7,8 @@
 
     public interface IExpression
     {
-        object Evaluate(Machine machine, ValueEnvironment environment);
         object Value { get; }
+
+        object Evaluate(Machine machine, ValueEnvironment environment);
     }
 }

@@ -11,6 +11,11 @@
 
     public class SfStarPrimitive : IFunction
     {
+        public bool IsSpecialForm
+        {
+            get { return true; }
+        }
+
         public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
         {
             ICollection argumentNames;
@@ -29,11 +34,6 @@
             body = Utilities.ToExpression(arguments[1]);
 
             return new DefinedFunction(null, argumentNames, body);
-        }
-
-        public bool IsSpecialForm
-        {
-            get { return true; }
         }
     }
 }

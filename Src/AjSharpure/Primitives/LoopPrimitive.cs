@@ -11,9 +11,14 @@
 
     public class LoopPrimitive : IFunction
     {
+        public bool IsSpecialForm
+        {
+            get { return true; }
+        }
+
         public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
         {
-            if (arguments == null || arguments.Length==0)
+            if (arguments == null || arguments.Length == 0)
                 return null;
 
             object result = null;
@@ -32,7 +37,7 @@
                 names = Utilities.EvaluateBindings(machine, newenv, (ICollection)argument);
             }
 
-            for (int k=1; k<arguments.Length; k++)
+            for (int k = 1; k < arguments.Length; k++)
                 result = machine.Evaluate(arguments[k], newenv);
 
             while (result != null && result is RecursionData)
@@ -53,11 +58,6 @@
             }
 
             return result;
-        }
-
-        public bool IsSpecialForm
-        {
-            get { return true; }
         }
     }
 }

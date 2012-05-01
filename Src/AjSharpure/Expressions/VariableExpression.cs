@@ -16,14 +16,14 @@
             this.variable = variable;
         }
 
-        public object Evaluate(Machine machine, ValueEnvironment environment)
-        {
-            return machine.GetVariableValue(this.variable);
-        }
-
         public object Value
         {
             get { return this.variable; }
+        }
+
+        public object Evaluate(Machine machine, ValueEnvironment environment)
+        {
+            return machine.GetVariableValue(this.variable);
         }
     }
 }

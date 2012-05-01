@@ -9,6 +9,11 @@
 
     public class MultiplyPrimitive : IFunction
     {
+        public bool IsSpecialForm
+        {
+            get { return false; }
+        }
+
         public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
         {
             object result = 1;
@@ -20,11 +25,6 @@
                 result = Numbers.Multiply(result, argument);
 
             return result;
-        }
-
-        public bool IsSpecialForm
-        {
-            get { return false; }
         }
     }
 }

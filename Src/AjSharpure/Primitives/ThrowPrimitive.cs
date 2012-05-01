@@ -9,14 +9,14 @@
 
     public class ThrowPrimitive : IFunction
     {
-        public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
-        {
-            throw (Exception)arguments[0];
-        }
-
         public bool IsSpecialForm
         {
             get { return false; }
+        }
+
+        public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
+        {
+            throw (Exception)arguments[0];
         }
     }
 }

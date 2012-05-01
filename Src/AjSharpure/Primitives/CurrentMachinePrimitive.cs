@@ -11,14 +11,14 @@
 
     public class CurrentMachinePrimitive : IFunction
     {
-        public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
-        {
-            return machine;
-        }
-
         public bool IsSpecialForm
         {
             get { return true; }
+        }
+
+        public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
+        {
+            return machine;
         }
     }
 }

@@ -10,6 +10,11 @@
 
     public class MacroStarPrimitive : IFunction
     {
+        public bool IsSpecialForm
+        {
+            get { return true; }
+        }
+
         public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
         {
             object[] argumentNames;
@@ -19,20 +24,15 @@
             {
                 Symbol symbol = (Symbol)arguments[0];
                 argumentNames = (object[])arguments[1];
-                body = (IList) arguments[2];
+                body = (IList)arguments[2];
 
                 return new DefinedMacro(symbol.Name, argumentNames, body);
             }
 
             argumentNames = (object[])arguments[0];
-            body = (IList) arguments[1];
+            body = (IList)arguments[1];
 
             return new DefinedMacro(null, argumentNames, body);
-        }
-
-        public bool IsSpecialForm
-        {
-            get { return true; }
         }
     }
 }

@@ -9,6 +9,11 @@
 
     public class DividePrimitive : IFunction
     {
+        public bool IsSpecialForm
+        {
+            get { return false; }
+        }
+
         public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
         {
             if (arguments == null || arguments.Length == 0)
@@ -23,11 +28,6 @@
                 result = Numbers.Divide(result, arguments[k]);
 
             return result;
-        }
-
-        public bool IsSpecialForm
-        {
-            get { return false; }
         }
     }
 }
