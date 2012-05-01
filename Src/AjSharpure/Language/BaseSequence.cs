@@ -19,6 +19,47 @@
 
         public IPersistentCollection Empty { get { return EmptyList.Instance; } }
 
+        public virtual bool IsSynchronized { get { return true; } }
+
+        public virtual object SyncRoot { get { return this; } }
+
+        public bool IsFixedSize
+        {
+            get { return true; }
+        }
+
+        public bool IsReadOnly
+        {
+            get { return true; }
+        }
+
+        public virtual int Count
+        {
+            get
+            {
+                int count = 1;
+
+                for (ISequence sequence = this.Next(); sequence != null; sequence = sequence.Next(), count++)
+                    if (sequence is ICounted)
+                        return count + ((ICounted)sequence).Count;
+
+                return count;
+            }
+        }
+
+        public virtual object this[int index]
+        {
+            get
+            {
+                return Operations.NthElement(this, index);
+            }
+
+            set
+            {
+                throw new NotSupportedException();
+            }
+        }
+
         IPersistentCollection IPersistentCollection.Cons(object obj)
         {
             return new Cons(obj, this);
@@ -81,8 +122,6 @@
             return new Cons(obj, this);
         }
 
-        #region IList Members
-
         public int Add(object value)
         {
             throw new NotSupportedException();
@@ -108,16 +147,6 @@
             throw new NotSupportedException();
         }
 
-        public bool IsFixedSize
-        {
-            get { return true; }
-        }
-
-        public bool IsReadOnly
-        {
-            get { return true; }
-        }
-
         public void Remove(object value)
         {
             throw new NotSupportedException();
@@ -128,54 +157,15 @@
             throw new NotSupportedException();
         }
 
-        public virtual object this[int index]
-        {
-            get
-            {
-                return Operations.NthElement(this, index);
-            }
-            set
-            {
-                throw new NotSupportedException();
-            }
-        }
-
-        #endregion
-
-        #region ICollection Members
-
         public virtual void CopyTo(Array array, int index)
         {
             foreach (object element in this)
                 array.SetValue(element, index++);
         }
 
-        public virtual int Count
-        {
-            get {
-                int count = 1;
-
-                for (ISequence sequence = this.Next(); sequence != null; sequence = sequence.Next(), count++)
-                    if (sequence is ICounted)
-                        return count + ((ICounted)sequence).Count;
-
-                return count;
-            }
-        }
-
-        public virtual bool IsSynchronized { get { return true; } }
-
-        public virtual object SyncRoot { get { return this; } }
-
-        #endregion
-
-        #region IEnumerable Members
-
         public virtual IEnumerator GetEnumerator()
         {
             return new SequenceEnumerator(this);
         }
-
-        #endregion
     }
 }
