@@ -16,9 +16,9 @@
         {
         }
 
-        public override bool  IsSpecialForm
+        public override bool IsSpecialForm
         {
-        	get { return true; }
-        }   
+            get { return true; }
+        }
     }
 }

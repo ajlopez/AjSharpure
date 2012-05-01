@@ -51,101 +51,6 @@
       </violation>
     </violations>
   </sourcecode>
-  <sourcecode name="DefinedFunction.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>05/01/2012 16:50:08</timestamp>
-      <milliseconds>956</milliseconds>
-    </settings>
-    <timestamp>05/01/2012 14:13:34</timestamp>
-    <milliseconds>529</milliseconds>
-    <violations>
-      <violation namespace="Microsoft.StyleCop.CSharp.OrderingRules" rule="ElementsMustAppearInTheCorrectOrder" ruleCheckId="SA1201">
-        <context>All methods must be placed after all properties.</context>
-        <line>118</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="Microsoft.StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
-        <context>The call to name must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
-        <line>44</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="Microsoft.StyleCop.CSharp.SpacingRules" rule="SingleLineCommentsMustBeginWithSingleSpace" ruleCheckId="SA1005">
-        <context>The comment must start with a single space. To ignore this error when commenting out a line of code, begin the comment with '////' rather than '//'.</context>
-        <line>74</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="Microsoft.StyleCop.CSharp.SpacingRules" rule="SingleLineCommentsMustBeginWithSingleSpace" ruleCheckId="SA1005">
-        <context>The comment must start with a single space. To ignore this error when commenting out a line of code, begin the comment with '////' rather than '//'.</context>
-        <line>76</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="Microsoft.StyleCop.CSharp.SpacingRules" rule="SymbolsMustBeSpacedCorrectly" ruleCheckId="SA1003">
-        <context>The spacing around the symbol '!=' is invalid.</context>
-        <line>85</line>
-        <warning>False</warning>
-      </violation>
-    </violations>
-  </sourcecode>
-  <sourcecode name="DefinedMultiFunction.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>05/01/2012 16:50:08</timestamp>
-      <milliseconds>956</milliseconds>
-    </settings>
-    <timestamp>05/01/2012 14:13:34</timestamp>
-    <milliseconds>568</milliseconds>
-    <violations>
-      <violation namespace="Microsoft.StyleCop.CSharp.LayoutRules" rule="CodeMustNotContainMultipleBlankLinesInARow" ruleCheckId="SA1507">
-        <context>The code must not contain multiple blank lines in a row.</context>
-        <line>25</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="Microsoft.StyleCop.CSharp.OrderingRules" rule="ElementsMustAppearInTheCorrectOrder" ruleCheckId="SA1201">
-        <context>All methods must be placed after all properties.</context>
-        <line>45</line>
-        <warning>False</warning>
-      </violation>
-    </violations>
-  </sourcecode>
-  <sourcecode name="DefinedMultiMacro.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>05/01/2012 16:50:08</timestamp>
-      <milliseconds>956</milliseconds>
-    </settings>
-    <timestamp>05/01/2012 14:13:34</timestamp>
-    <milliseconds>568</milliseconds>
-    <violations>
-      <violation namespace="Microsoft.StyleCop.CSharp.LayoutRules" rule="CodeMustNotContainMultipleBlankLinesInARow" ruleCheckId="SA1507">
-        <context>The code must not contain multiple blank lines in a row.</context>
-        <line>25</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="Microsoft.StyleCop.CSharp.OrderingRules" rule="ElementsMustAppearInTheCorrectOrder" ruleCheckId="SA1201">
-        <context>All methods must be placed after all properties.</context>
-        <line>35</line>
-        <warning>False</warning>
-      </violation>
-    </violations>
-  </sourcecode>
-  <sourcecode name="DefinedSpecialForm.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>05/01/2012 16:50:08</timestamp>
-      <milliseconds>956</milliseconds>
-    </settings>
-    <timestamp>05/01/2012 14:13:34</timestamp>
-    <milliseconds>581</milliseconds>
-    <violations>
-      <violation namespace="Microsoft.StyleCop.CSharp.SpacingRules" rule="CodeMustNotContainMultipleWhitespaceInARow" ruleCheckId="SA1025">
-        <context>The code contains multiple spaces in a row. Only one space is needed.</context>
-        <line>19</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="Microsoft.StyleCop.CSharp.SpacingRules" rule="TabsMustNotBeUsed" ruleCheckId="SA1027">
-        <context>Tabs are not allowed. Use spaces instead.</context>
-        <line>21</line>
-        <warning>False</warning>
-      </violation>
-    </violations>
-  </sourcecode>
   <sourcecode name="DictionaryExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>05/01/2012 16:50:08</timestamp>
@@ -339,26 +244,6 @@
       </violation>
     </violations>
   </sourcecode>
-  <sourcecode name="IFunction.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>05/01/2012 16:50:08</timestamp>
-      <milliseconds>956</milliseconds>
-    </settings>
-    <timestamp>05/01/2012 14:13:34</timestamp>
-    <milliseconds>625</milliseconds>
-    <violations>
-      <violation namespace="Microsoft.StyleCop.CSharp.OrderingRules" rule="ElementsMustAppearInTheCorrectOrder" ruleCheckId="SA1201">
-        <context>All methods must be placed after all properties.</context>
-        <line>11</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="Microsoft.StyleCop.CSharp.LayoutRules" rule="ElementsMustBeSeparatedByBlankLine" ruleCheckId="SA1516">
-        <context>Adjacent elements must be separated by a blank line.</context>
-        <line>12</line>
-        <warning>False</warning>
-      </violation>
-    </violations>
-  </sourcecode>
   <sourcecode name="BaseObject.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>05/01/2012 16:50:08</timestamp>
@@ -394,21 +279,6 @@
     <timestamp>05/01/2012 14:13:34</timestamp>
     <milliseconds>795</milliseconds>
     <violations />
-  </sourcecode>
-  <sourcecode name="IDictionaryObject.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>05/01/2012 16:50:08</timestamp>
-      <milliseconds>956</milliseconds>
-    </settings>
-    <timestamp>05/01/2012 14:13:34</timestamp>
-    <milliseconds>806</milliseconds>
-    <violations>
-      <violation namespace="Microsoft.StyleCop.CSharp.MaintainabilityRules" rule="AccessModifierMustBeDeclared" ruleCheckId="SA1400">
-        <context>The interface must have an access modifier.</context>
-        <line>8</line>
-        <warning>False</warning>
-      </violation>
-    </violations>
   </sourcecode>
   <sourcecode name="IFn.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
@@ -455,26 +325,6 @@
     <milliseconds>836</milliseconds>
     <violations />
   </sourcecode>
-  <sourcecode name="INamed.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>05/01/2012 16:50:08</timestamp>
-      <milliseconds>956</milliseconds>
-    </settings>
-    <timestamp>05/01/2012 14:13:34</timestamp>
-    <milliseconds>835</milliseconds>
-    <violations>
-      <violation namespace="Microsoft.StyleCop.CSharp.LayoutRules" rule="ElementsMustBeSeparatedByBlankLine" ruleCheckId="SA1516">
-        <context>Adjacent elements must be separated by a blank line.</context>
-        <line>11</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="Microsoft.StyleCop.CSharp.LayoutRules" rule="ElementsMustBeSeparatedByBlankLine" ruleCheckId="SA1516">
-        <context>Adjacent elements must be separated by a blank line.</context>
-        <line>12</line>
-        <warning>False</warning>
-      </violation>
-    </violations>
-  </sourcecode>
   <sourcecode name="IPersistentList.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>05/01/2012 16:50:08</timestamp>
@@ -492,26 +342,6 @@
     <timestamp>05/01/2012 14:13:34</timestamp>
     <milliseconds>844</milliseconds>
     <violations />
-  </sourcecode>
-  <sourcecode name="IPersistentSet.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>05/01/2012 16:50:08</timestamp>
-      <milliseconds>956</milliseconds>
-    </settings>
-    <timestamp>05/01/2012 14:13:34</timestamp>
-    <milliseconds>845</milliseconds>
-    <violations>
-      <violation namespace="Microsoft.StyleCop.CSharp.LayoutRules" rule="ElementsMustBeSeparatedByBlankLine" ruleCheckId="SA1516">
-        <context>Adjacent elements must be separated by a blank line.</context>
-        <line>11</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="Microsoft.StyleCop.CSharp.LayoutRules" rule="ElementsMustBeSeparatedByBlankLine" ruleCheckId="SA1516">
-        <context>Adjacent elements must be separated by a blank line.</context>
-        <line>12</line>
-        <warning>False</warning>
-      </violation>
-    </violations>
   </sourcecode>
   <sourcecode name="IPersistentStack.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
@@ -604,56 +434,6 @@
     <timestamp>05/01/2012 14:13:35</timestamp>
     <milliseconds>67</milliseconds>
     <violations />
-  </sourcecode>
-  <sourcecode name="Machine.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>05/01/2012 16:50:08</timestamp>
-      <milliseconds>956</milliseconds>
-    </settings>
-    <timestamp>05/01/2012 14:13:35</timestamp>
-    <milliseconds>57</milliseconds>
-    <violations>
-      <violation namespace="Microsoft.StyleCop.CSharp.OrderingRules" rule="ElementsMustAppearInTheCorrectOrder" ruleCheckId="SA1201">
-        <context>All properties must be placed after all fields.</context>
-        <line>22</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="Microsoft.StyleCop.CSharp.OrderingRules" rule="ElementsMustAppearInTheCorrectOrder" ruleCheckId="SA1201">
-        <context>All properties must be placed after all fields.</context>
-        <line>24</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="Microsoft.StyleCop.CSharp.OrderingRules" rule="ElementsMustAppearInTheCorrectOrder" ruleCheckId="SA1201">
-        <context>All properties must be placed after all fields.</context>
-        <line>26</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="Microsoft.StyleCop.CSharp.OrderingRules" rule="ElementsMustAppearInTheCorrectOrder" ruleCheckId="SA1201">
-        <context>All properties must be placed after all constructors.</context>
-        <line>30</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="Microsoft.StyleCop.CSharp.MaintainabilityRules" rule="StatementMustNotUseUnnecessaryParenthesis" ruleCheckId="SA1119">
-        <context>The line contains unnecessary parenthesis.</context>
-        <line>85</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="Microsoft.StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
-        <context>The call to namespaces must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
-        <line>131</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="Microsoft.StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
-        <context>The call to namespaces must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
-        <line>143</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="Microsoft.StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
-        <context>The call to namespaces must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
-        <line>146</line>
-        <warning>False</warning>
-      </violation>
-    </violations>
   </sourcecode>
   <sourcecode name="AddPrimitive.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
@@ -1348,21 +1128,6 @@
     <milliseconds>354</milliseconds>
     <violations />
   </sourcecode>
-  <sourcecode name="Parser.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>05/01/2012 16:50:08</timestamp>
-      <milliseconds>956</milliseconds>
-    </settings>
-    <timestamp>05/01/2012 16:53:59</timestamp>
-    <milliseconds>402</milliseconds>
-    <violations>
-      <violation namespace="Microsoft.StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
-        <context>The call to lexer must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
-        <line>201</line>
-        <warning>False</warning>
-      </violation>
-    </violations>
-  </sourcecode>
   <sourcecode name="Lexer.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>05/01/2012 16:50:08</timestamp>
@@ -1615,24 +1380,6 @@
     <milliseconds>539</milliseconds>
     <violations />
   </sourcecode>
-  <sourcecode name="Variable.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>05/01/2012 16:50:08</timestamp>
-      <milliseconds>956</milliseconds>
-    </settings>
-    <timestamp>05/01/2012 17:41:34</timestamp>
-    <milliseconds>722</milliseconds>
-    <violations>
-      <violation namespace="Microsoft.StyleCop.CSharp.SpacingRules" rule="ClosingParenthesisMustBeSpacedCorrectly" ruleCheckId="SA1009">
-        <context>Invalid spacing around the closing parenthesis.</context>
-        <line>105</line>
-        <warning>False</warning>
-      </violation>
-    </violations>
-  </sourcecode>
-  <project key="-580248681">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
   <sourcecode name="VectorEnumerator.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>05/01/2012 16:50:08</timestamp>
@@ -1640,6 +1387,108 @@
     </settings>
     <timestamp>05/01/2012 17:42:41</timestamp>
     <milliseconds>33</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Parser.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>05/01/2012 16:50:08</timestamp>
+      <milliseconds>956</milliseconds>
+    </settings>
+    <timestamp>05/01/2012 16:54:07</timestamp>
+    <milliseconds>716</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="IDictionaryObject.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>05/01/2012 16:50:08</timestamp>
+      <milliseconds>956</milliseconds>
+    </settings>
+    <timestamp>05/01/2012 17:28:50</timestamp>
+    <milliseconds>902</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="INamed.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>05/01/2012 16:50:08</timestamp>
+      <milliseconds>956</milliseconds>
+    </settings>
+    <timestamp>05/01/2012 17:29:20</timestamp>
+    <milliseconds>522</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="IPersistentSet.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>05/01/2012 16:50:08</timestamp>
+      <milliseconds>956</milliseconds>
+    </settings>
+    <timestamp>05/01/2012 17:29:55</timestamp>
+    <milliseconds>792</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Variable.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>05/01/2012 16:50:08</timestamp>
+      <milliseconds>956</milliseconds>
+    </settings>
+    <timestamp>05/01/2012 17:41:42</timestamp>
+    <milliseconds>433</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="DefinedFunction.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>05/01/2012 16:50:08</timestamp>
+      <milliseconds>956</milliseconds>
+    </settings>
+    <timestamp>05/01/2012 17:44:20</timestamp>
+    <milliseconds>728</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="DefinedMultiFunction.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>05/01/2012 16:50:08</timestamp>
+      <milliseconds>956</milliseconds>
+    </settings>
+    <timestamp>05/01/2012 17:44:53</timestamp>
+    <milliseconds>47</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="DefinedMultiMacro.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>05/01/2012 16:50:08</timestamp>
+      <milliseconds>956</milliseconds>
+    </settings>
+    <timestamp>05/01/2012 17:45:10</timestamp>
+    <milliseconds>812</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="DefinedSpecialForm.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>05/01/2012 16:50:08</timestamp>
+      <milliseconds>956</milliseconds>
+    </settings>
+    <timestamp>05/01/2012 17:45:36</timestamp>
+    <milliseconds>994</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="IFunction.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>05/01/2012 16:50:08</timestamp>
+      <milliseconds>956</milliseconds>
+    </settings>
+    <timestamp>05/01/2012 17:45:54</timestamp>
+    <milliseconds>725</milliseconds>
+    <violations />
+  </sourcecode>
+  <project key="-580248681">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <sourcecode name="Machine.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>05/01/2012 16:50:08</timestamp>
+      <milliseconds>956</milliseconds>
+    </settings>
+    <timestamp>05/01/2012 17:47:06</timestamp>
+    <milliseconds>815</milliseconds>
     <violations />
   </sourcecode>
 </stylecopresultscache>

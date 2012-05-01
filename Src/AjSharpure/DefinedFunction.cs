@@ -39,9 +39,14 @@
 
         public bool VariableArity { get { return this.variableArity; } }
 
+        public virtual bool IsSpecialForm
+        {
+            get { return false; }
+        }
+
         public DefinedMacro ToMacro()
         {
-            return new DefinedMacro(name, arguments, expression);
+            return new DefinedMacro(this.name, this.arguments, this.expression);
         }
 
         public object Apply(Machine machine, ValueEnvironment environment, object[] argumentValues)
@@ -71,18 +76,14 @@
                 {
                     if (!islast)
                     {
-                        //if (argumentValues == null || argumentValues.Length <= k)
-                        //    newenv.SetValue(argname.Name, null);
-                        //else
-                            newenv.SetValue(argname.Name, argumentValues[k]);
-
+                        newenv.SetValue(argname.Name, argumentValues[k]);
                         k++;
                     }
                     else
                     {
                         IList rest = new ArrayList();
 
-                        while (argumentValues!=null && k < argumentValues.Length)
+                        while (argumentValues != null && k < argumentValues.Length)
                             rest.Add(argumentValues[k++]);
 
                         if (rest.Count > 0)
@@ -113,11 +114,6 @@
             }
 
             return result;
-        }
-
-        public virtual bool IsSpecialForm
-        {
-            get { return false; }
         }
     }
 }

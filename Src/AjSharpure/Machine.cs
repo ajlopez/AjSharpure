@@ -17,15 +17,11 @@
         private const string AjSharpureCurrentNamespaceName = "*ns*";
         private static string currentNamespaceKey = Utilities.GetFullName(AjSharpureCoreNamespaceName, AjSharpureCurrentNamespaceName);
 
-        public static string CurrentNamespaceKey { get { return currentNamespaceKey; } }
-
         private ValueEnvironment environment = new ValueEnvironment();
 
         private Dictionary<Variable, object> variableEnvironment = new Dictionary<Variable, object>();
 
         private Dictionary<string, Namespace> namespaces = new Dictionary<string, Namespace>();
-
-        public ValueEnvironment Environment { get { return this.environment; } }
 
         public Machine()
         {
@@ -71,6 +67,10 @@
             this.environment.SetValue("AjSharpure.Utilities", typeof(Utilities));
         }
 
+        public static string CurrentNamespaceKey { get { return currentNamespaceKey; } }
+
+        public ValueEnvironment Environment { get { return this.environment; } }
+
         public object Evaluate(object obj)
         {
             return this.Evaluate(obj, this.environment);
@@ -82,7 +82,7 @@
                 return null;
 
             if (Utilities.IsEvaluable(obj))
-                return (Utilities.ToExpression(obj)).Evaluate(this, environment);
+                return Utilities.ToExpression(obj).Evaluate(this, environment);
 
             return obj;
         }
@@ -128,7 +128,7 @@
 
         public Namespace CreateNamespace(string name)
         {
-            if (namespaces.ContainsKey(name))
+            if (this.namespaces.ContainsKey(name))
                 throw new InvalidOperationException(string.Format("Namespace '{0}' already exists", name));
 
             Namespace ns = new Namespace(this, name);
@@ -140,10 +140,10 @@
 
         public Namespace GetNamespace(string name)
         {
-            if (!namespaces.ContainsKey(name))
+            if (!this.namespaces.ContainsKey(name))
                 throw new InvalidOperationException(string.Format("Namespace '{0}' doesn't exists", name));
 
-            return namespaces[name];
+            return this.namespaces[name];
         }
     }
 }

@@ -8,7 +8,8 @@
 
     public interface IFunction
     {
-        object Apply(Machine machine, ValueEnvironment environment, object[] arguments);
         bool IsSpecialForm { get; }
+
+        object Apply(Machine machine, ValueEnvironment environment, object[] arguments);
     }
 }

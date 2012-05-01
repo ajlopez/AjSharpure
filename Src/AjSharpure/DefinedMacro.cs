@@ -39,6 +39,11 @@
 
         public bool VariableArity { get { return this.variableArity; } }
 
+        public bool IsSpecialForm
+        {
+            get { return true; }
+        }
+
         public object Apply(Machine machine, ValueEnvironment environment, object[] argumentValues)
         {
             ValueEnvironment newenv = new ValueEnvironment(environment);
@@ -87,11 +92,6 @@
             result = machine.Evaluate(result, environment);
 
             return result;
-        }
-
-        public bool IsSpecialForm
-        {
-            get { return true; }
         }
     }
 }

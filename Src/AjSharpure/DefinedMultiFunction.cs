@@ -22,6 +22,10 @@
 
         public string Name { get { return this.name; } }
 
+        public virtual bool IsSpecialForm
+        {
+            get { return false; }
+        }
 
         public DefinedMultiMacro ToMacro()
         {
@@ -40,11 +44,6 @@
                     return func.Apply(machine, environment, argumentValues);
 
             throw new InvalidOperationException("Invalid number of parameters");
-        }
-
-        public virtual bool IsSpecialForm
-        {
-            get { return false; }
         }
     }
 }

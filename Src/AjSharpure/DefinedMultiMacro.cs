@@ -22,6 +22,10 @@
 
         public string Name { get { return this.name; } }
 
+        public virtual bool IsSpecialForm
+        {
+            get { return true; }
+        }
 
         public object Apply(Machine machine, ValueEnvironment environment, object[] argumentValues)
         {
@@ -30,11 +34,6 @@
                     return macro.Apply(machine, environment, argumentValues);
 
             throw new InvalidOperationException("Invalid number of parameters");
-        }
-
-        public virtual bool IsSpecialForm
-        {
-            get { return true; }
         }
     }
 }
