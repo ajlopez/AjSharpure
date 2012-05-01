@@ -18,6 +18,26 @@
             this.implementation = implementation;
         }
 
+        public IPersistentCollection Empty
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public int Count
+        {
+            get { return this.implementation.Count; }
+        }
+
+        public bool IsSynchronized
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object SyncRoot
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         public override string ToString()
         {
             return Utilities.PrintString(this);
@@ -33,14 +53,22 @@
             throw new NotImplementedException();
         }
 
+        public IPersistentSet Disjoin(object obj)
+        {
+            throw new NotImplementedException();
+        }
+
         public override int GetHashCode()
         {
             return base.GetHashCode();
         }
 
-        #region IPersistentSet Members
+        public IPersistentCollection Cons(object obj)
+        {
+            throw new NotImplementedException();
+        }
 
-        public IPersistentSet Disjoin(object obj)
+        public IEnumerator GetEnumerator()
         {
             throw new NotImplementedException();
         }
@@ -50,62 +78,14 @@
             throw new NotImplementedException();
         }
 
-        #endregion
-
-        #region IPersistentCollection Members
-
-        public IPersistentCollection Cons(object obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IPersistentCollection Empty
-        {
-            get { throw new NotImplementedException(); }
-        }
-
         public bool Equiv(object obj)
         {
             return this.Equals(obj);
         }
 
-        #endregion
-
-        #region ICounted Members
-
-        public int Count
-        {
-            get { return this.implementation.Count; }
-        }
-
-        #endregion
-
-        #region ICollection Members
-
         public void CopyTo(Array array, int index)
         {
             throw new NotImplementedException();
         }
-
-        public bool IsSynchronized
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public object SyncRoot
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        #endregion
-
-        #region IEnumerable Members
-
-        public IEnumerator GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
     }
 }
