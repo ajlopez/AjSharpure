@@ -62,13 +62,10 @@
 
             if (list[0] is Symbol)
             {
-                Symbol symbol = (Symbol) list[0];
+                Symbol symbol = (Symbol)list[0];
 
                 if (symbol.Name.Equals("unquote"))
                     return true;
-
-                //if (symbol.Name.Equals("backquote"))
-                //    return true;
             }
 
             return false;
