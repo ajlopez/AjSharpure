@@ -23,8 +23,8 @@
         {
             object[] result = new object[this.vector.Count];
 
-            for (int k = 0; k < vector.Length; k++)
-                result[k] = machine.Evaluate(vector[k], environment);
+            for (int k = 0; k < this.vector.Length; k++)
+                result[k] = machine.Evaluate(this.vector[k], environment);
 
             return PersistentVector.Create(result);
         }
