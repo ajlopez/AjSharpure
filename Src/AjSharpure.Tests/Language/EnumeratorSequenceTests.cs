@@ -1,4 +1,4 @@
-﻿namespace AjSharpure.Tests
+﻿namespace AjSharpure.Tests.Language
 {
     using System;
     using System.Text;
@@ -8,6 +8,7 @@
     using AjSharpure.Language;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using AjSharpure.Tests.Language;
 
     [TestClass]
     public class EnumeratorSequenceTests

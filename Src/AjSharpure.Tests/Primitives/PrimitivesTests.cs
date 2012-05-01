@@ -1,4 +1,4 @@
-﻿namespace AjSharpure.Tests
+﻿namespace AjSharpure.Tests.Primitives
 {
     using System;
     using System.Text;

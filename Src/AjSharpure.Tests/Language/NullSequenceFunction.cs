@@ -1,4 +1,4 @@
-﻿namespace AjSharpure.Tests
+﻿namespace AjSharpure.Tests.Language
 {
     using System;
     using System.Collections.Generic;
@@ -7,11 +7,15 @@
 
     using AjSharpure.Language;
 
-    class AddIntegersFunction : IFn
+    class NullSequenceFunction : IFn
     {
+        internal NullSequenceFunction()
+        {
+        }
+
         public object Invoke(params object[] parameters)
         {
-            return ((int)parameters[0]) + ((int)parameters[1]);
+            return null;
         }
     }
 }

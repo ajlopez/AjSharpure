@@ -9,7 +9,7 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AjSharpure.Console</RootNamespace>
-    <AssemblyName>AjSharpure.Console</AssemblyName>
+    <AssemblyName>ajsharpure</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

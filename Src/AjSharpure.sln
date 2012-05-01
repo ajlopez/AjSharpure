@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		AjSharpure.vsmdi = AjSharpure.vsmdi
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
-		Todo.txt = Todo.txt
+		..\Todo.txt = ..\Todo.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AjSharpure.Console", "AjSharpure.Console\AjSharpure.Console.csproj", "{37F8B3CB-18CA-4B44-8C44-2A395600239B}"
