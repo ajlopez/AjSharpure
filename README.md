@@ -4,7 +4,7 @@ Clojure-like Lisp Interpreter, written in C#.
 
 Work in progress
 
-Blog posts about AjTalk: http://ajlopez.wordpress.com/category/ajtalk
+Blog posts about AjLisp and AjSharpure: http://ajlopez.wordpress.com/category/ajlisp
 
 ## Origin
 
