@@ -39,16 +39,9 @@
             this.lexer = lexer;
         }
 
-        //public IExpression ParseExpression()
-        //{
-        //    object obj = this.ParseForm();
-
-        //    return Utilities.ToExpression(obj);
-        //}
-
         public object ParseForm()
         {
-            Token token = lexer.NextToken();
+            Token token = this.lexer.NextToken();
 
             if (token == null)
                 return null;
@@ -57,8 +50,8 @@
             {
                 while (token != null && token.Value == ";")
                 {
-                    lexer.SkipUpToEndOfLine();
-                    token = lexer.NextToken();
+                    this.lexer.SkipUpToEndOfLine();
+                    token = this.lexer.NextToken();
                 }
 
                 if (token == null)
@@ -123,7 +116,7 @@
 
                     object form = this.ParseForm();
 
-                    return Utilities.ToObject(form).WithMetadata((IPersistentMap) metadata);
+                    return Utilities.ToObject(form).WithMetadata((IPersistentMap)metadata);
                 }
 
                 if (token.TokenType == TokenType.Macro && token.Value == "`")
@@ -199,17 +192,17 @@
         {
             IList list = new ArrayList();
 
-            Token token = lexer.NextToken();
+            Token token = this.lexer.NextToken();
 
             while (token != null && !(token.TokenType == TokenType.Separator && token.Value == ")"))
             {
-                lexer.PushToken(token);
+                this.lexer.PushToken(token);
                 list.Add(this.ParseForm());
-                token = lexer.NextToken();
+                token = this.lexer.NextToken();
             }
 
             if (token != null && !(token.TokenType == TokenType.Separator && token.Value == ")"))
-                lexer.PushToken(token);
+                this.lexer.PushToken(token);
 
             return list;
         }
@@ -218,19 +211,19 @@
         {
             IDictionary dictionary = new Hashtable();
 
-            Token token = lexer.NextToken();
+            Token token = this.lexer.NextToken();
 
             while (token != null && !(token.TokenType == TokenType.Separator && token.Value == "}"))
             {
-                lexer.PushToken(token);
+                this.lexer.PushToken(token);
                 object key = this.ParseForm();
                 object value = this.ParseForm();
                 dictionary[key] = value;
-                token = lexer.NextToken();
+                token = this.lexer.NextToken();
             }
 
             if (token != null && !(token.TokenType == TokenType.Separator && token.Value == "}"))
-                lexer.PushToken(token);
+                this.lexer.PushToken(token);
 
             return new DictionaryObject(dictionary);
         }
@@ -239,17 +232,17 @@
         {
             ArrayList list = new ArrayList();
 
-            Token token = lexer.NextToken();
+            Token token = this.lexer.NextToken();
 
             while (token != null && !(token.TokenType == TokenType.Separator && token.Value == "]"))
             {
-                lexer.PushToken(token);
+                this.lexer.PushToken(token);
                 list.Add(this.ParseForm());
-                token = lexer.NextToken();
+                token = this.lexer.NextToken();
             }
 
             if (token != null && !(token.TokenType == TokenType.Separator && token.Value == "]"))
-                lexer.PushToken(token);
+                this.lexer.PushToken(token);
 
             return PersistentVector.Create(list);
         }
