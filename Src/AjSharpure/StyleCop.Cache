@@ -383,41 +383,6 @@
       </violation>
     </violations>
   </sourcecode>
-  <sourcecode name="Cons.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>05/01/2012 16:50:08</timestamp>
-      <milliseconds>956</milliseconds>
-    </settings>
-    <timestamp>05/01/2012 14:13:34</timestamp>
-    <milliseconds>681</milliseconds>
-    <violations>
-      <violation namespace="Microsoft.StyleCop.CSharp.SpacingRules" rule="SingleLineCommentsMustBeginWithSingleSpace" ruleCheckId="SA1005">
-        <context>The comment must start with a single space. To ignore this error when commenting out a line of code, begin the comment with '////' rather than '//'.</context>
-        <line>58</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="Microsoft.StyleCop.CSharp.SpacingRules" rule="SingleLineCommentsMustBeginWithSingleSpace" ruleCheckId="SA1005">
-        <context>The comment must start with a single space. To ignore this error when commenting out a line of code, begin the comment with '////' rather than '//'.</context>
-        <line>59</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="Microsoft.StyleCop.CSharp.SpacingRules" rule="SingleLineCommentsMustBeginWithSingleSpace" ruleCheckId="SA1005">
-        <context>The comment must start with a single space. To ignore this error when commenting out a line of code, begin the comment with '////' rather than '//'.</context>
-        <line>61</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="Microsoft.StyleCop.CSharp.OrderingRules" rule="ElementsMustAppearInTheCorrectOrder" ruleCheckId="SA1201">
-        <context>All methods must be placed after all properties.</context>
-        <line>48</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="Microsoft.StyleCop.CSharp.OrderingRules" rule="ElementsMustAppearInTheCorrectOrder" ruleCheckId="SA1201">
-        <context>All methods must be placed after all properties.</context>
-        <line>53</line>
-        <warning>False</warning>
-      </violation>
-    </violations>
-  </sourcecode>
   <sourcecode name="EmptyList.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>05/01/2012 16:50:08</timestamp>
@@ -2238,9 +2203,6 @@
     <milliseconds>464</milliseconds>
     <violations />
   </sourcecode>
-  <project key="-580248681">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
   <sourcecode name="BaseSequence.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>05/01/2012 16:50:08</timestamp>
@@ -2248,6 +2210,18 @@
     </settings>
     <timestamp>05/01/2012 17:16:52</timestamp>
     <milliseconds>48</milliseconds>
+    <violations />
+  </sourcecode>
+  <project key="-580248681">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <sourcecode name="Cons.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>05/01/2012 16:50:08</timestamp>
+      <milliseconds>956</milliseconds>
+    </settings>
+    <timestamp>05/01/2012 17:17:38</timestamp>
+    <milliseconds>790</milliseconds>
     <violations />
   </sourcecode>
 </stylecopresultscache>

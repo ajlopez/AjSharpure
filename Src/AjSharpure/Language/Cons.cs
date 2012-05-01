@@ -27,6 +27,16 @@
             this.rest = rest;
         }
 
+        public override bool IsSynchronized
+        {
+            get { return true; }
+        }
+
+        public override object SyncRoot
+        {
+            get { return this; }
+        }
+
         public override object First()
         {
             return this.first;
@@ -44,20 +54,5 @@
 
             return new Cons(this.first, this.rest, metadata);
         }
-
-        public override bool IsSynchronized
-        {
-            get { return true; }
-        }
-
-        public override object SyncRoot
-        {
-            get { return this; }
-        }
-
-        //public override void CopyTo(Array array, int index)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }
