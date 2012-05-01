@@ -23,6 +23,59 @@
             this.values = values;
         }
 
+        public bool IsFixedSize
+        {
+            get { return true; }
+        }
+
+        public bool IsReadOnly
+        {
+            get { return true; }
+        }
+
+        public ICollection Keys
+        {
+            get { return this.values.Keys; }
+        }
+
+        public ICollection Values
+        {
+            get { return this.values.Values; }
+        }
+
+        public int Count
+        {
+            get { return this.values.Count; }
+        }
+
+        public bool IsSynchronized
+        {
+            get { return true; }
+        }
+
+        public object SyncRoot
+        {
+            get { return this.values; }
+        }
+
+        public IPersistentCollection Empty
+        {
+            get { return DictionaryObject.empty; }
+        }
+
+        public object this[object key]
+        {
+            get
+            {
+                return this.values[key];
+            }
+
+            set
+            {
+                throw new NotSupportedException();
+            }
+        }
+
         public override IObject WithMetadata(IPersistentMap metadata)
         {
             if (this.Metadata == metadata)
@@ -30,8 +83,6 @@
 
             return new DictionaryObject(this.values, metadata);
         }
-
-        #region IDictionary Members
 
         public void Add(object key, object value)
         {
@@ -53,79 +104,20 @@
             return this.values.GetEnumerator();
         }
 
-        public bool IsFixedSize
-        {
-            get { return true; }
-        }
-
-        public bool IsReadOnly
-        {
-            get { return true; }
-        }
-
-        public ICollection Keys
-        {
-            get { return this.values.Keys; }
-        }
-
         public void Remove(object key)
         {
             throw new NotSupportedException();
         }
 
-        public ICollection Values
-        {
-            get { return this.values.Values; }
-        }
-
-        public object this[object key]
-        {
-            get
-            {
-                return this.values[key];
-            }
-            set
-            {
-                throw new NotSupportedException();
-            }
-        }
-
-        #endregion
-
-        #region ICollection Members
-
         public void CopyTo(Array array, int index)
         {
-            this.values.CopyTo(array,index);
+            this.values.CopyTo(array, index);
         }
-
-        public int Count
-        {
-            get { return this.values.Count; }
-        }
-
-        public bool IsSynchronized
-        {
-            get { return true; }
-        }
-
-        public object SyncRoot
-        {
-            get { return this.values; }
-        }
-
-        #endregion
-
-        #region IEnumerable Members
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.values.GetEnumerator();
         }
-
-        #endregion
-
-        #region IAssociative Members
 
         public bool ContainsKey(object key)
         {
@@ -167,10 +159,6 @@
             return this[key];
         }
 
-        #endregion
-
-        #region IPersistentCollection Members
-
         public IPersistentCollection Cons(object obj)
         {
             if (obj is DictionaryEntry)
@@ -189,7 +177,6 @@
             }
 
             // TODO Implements on IPersistentVector or alike, as VectorObject
-
             IAssociative result = this;
 
             for (ISequence sequence = Utilities.ToSequence(obj); sequence != null; sequence = sequence.Next())
@@ -200,11 +187,6 @@
             }
 
             return result;
-        }
-
-        public IPersistentCollection Empty
-        {
-            get { return DictionaryObject.empty; }
         }
 
         public bool Equiv(object obj)
@@ -230,22 +212,14 @@
             return true;
         }
 
-        #endregion
-
-        #region ISequenceable Members
-
         public ISequence ToSequence()
         {
             return EnumeratorSequence.Create(this.GetEnumerator());
         }
 
-        #endregion
-
-        #region IPersistentMap Members
-
         IPersistentMap IPersistentMap.Associate(object key, object value)
         {
-            return (IPersistentMap) this.Associate(key, value);
+            return (IPersistentMap)this.Associate(key, value);
         }
 
         public IPersistentMap AssociateWithException(object key, object value)
@@ -257,7 +231,5 @@
         {
             throw new NotImplementedException();
         }
-
-        #endregion
     }
 }
