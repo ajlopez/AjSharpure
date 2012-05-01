@@ -9,8 +9,6 @@
     {
         private static EmptyList instance = new EmptyList();
 
-        public static EmptyList Instance { get { return instance; } }
-
         private EmptyList()
         {
         }
@@ -18,6 +16,47 @@
         private EmptyList(IPersistentMap metadata)
             : base(metadata)
         {
+        }
+
+        public static EmptyList Instance { get { return instance; } }
+
+        public bool IsEmpty { get { return true; } }
+
+        public int Count { get { return 0; } }
+
+        public IPersistentCollection Empty { get { return this; } }
+
+        public bool IsSynchronized
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object SyncRoot
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public bool IsFixedSize
+        {
+            get { return true; }
+        }
+
+        public bool IsReadOnly
+        {
+            get { return true; }
+        }
+
+        public object this[int index]
+        {
+            get
+            {
+                throw new NotSupportedException();
+            }
+
+            set
+            {
+                throw new NotSupportedException();
+            }
         }
 
         public object First()
@@ -47,7 +86,7 @@
 
         ISequence ISequence.Cons(object obj)
         {
-            return (ISequence) this.Cons(obj);
+            return (ISequence)this.Cons(obj);
         }
 
         public object Peek()
@@ -59,12 +98,6 @@
         {
             throw new InvalidOperationException("Can't pop empty list");
         }
-
-        public bool IsEmpty { get { return true; } }
-
-        public int Count { get { return 0; } }
-
-        public IPersistentCollection Empty { get { return this; } }
 
         public override IObject WithMetadata(IPersistentMap metadata)
         {
@@ -88,8 +121,6 @@
         {
             return this.Equals(obj);
         }
-
-        #region IList Members
 
         public int Add(object value)
         {
@@ -116,16 +147,6 @@
             throw new NotSupportedException();
         }
 
-        public bool IsFixedSize
-        {
-            get { return true; }
-        }
-
-        public bool IsReadOnly
-        {
-            get { return true; }
-        }
-
         public void Remove(object value)
         {
             throw new NotSupportedException();
@@ -136,46 +157,14 @@
             throw new NotSupportedException();
         }
 
-        public object this[int index]
-        {
-            get
-            {
-                throw new NotSupportedException();
-            }
-            set
-            {
-                throw new NotSupportedException();
-            }
-        }
-
-        #endregion
-
-        #region ICollection Members
-
         public void CopyTo(Array array, int index)
         {
             throw new NotImplementedException();
         }
 
-        public bool IsSynchronized
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public object SyncRoot
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        #endregion
-
-        #region IEnumerable Members
-
         public IEnumerator GetEnumerator()
         {
             return EmptyListEnumerator.Instance;
         }
-
-        #endregion
     }
 }
