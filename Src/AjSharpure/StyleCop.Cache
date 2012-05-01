@@ -359,21 +359,6 @@
       </violation>
     </violations>
   </sourcecode>
-  <sourcecode name="BaseFunction.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>05/01/2012 16:50:08</timestamp>
-      <milliseconds>956</milliseconds>
-    </settings>
-    <timestamp>05/01/2012 14:13:34</timestamp>
-    <milliseconds>627</milliseconds>
-    <violations>
-      <violation namespace="Microsoft.StyleCop.CSharp.OrderingRules" rule="ElementsMustAppearInTheCorrectOrder" ruleCheckId="SA1201">
-        <context>All methods must be placed after all properties.</context>
-        <line>37</line>
-        <warning>False</warning>
-      </violation>
-    </violations>
-  </sourcecode>
   <sourcecode name="BaseObject.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>05/01/2012 16:50:08</timestamp>
@@ -2408,9 +2393,6 @@
     <milliseconds>26</milliseconds>
     <violations />
   </sourcecode>
-  <project key="-580248681">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
   <sourcecode name="Utilities.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>05/01/2012 16:50:08</timestamp>
@@ -2418,6 +2400,18 @@
     </settings>
     <timestamp>05/01/2012 17:01:07</timestamp>
     <milliseconds>71</milliseconds>
+    <violations />
+  </sourcecode>
+  <project key="-580248681">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <sourcecode name="BaseFunction.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>05/01/2012 16:50:08</timestamp>
+      <milliseconds>956</milliseconds>
+    </settings>
+    <timestamp>05/01/2012 17:02:25</timestamp>
+    <milliseconds>943</milliseconds>
     <violations />
   </sourcecode>
 </stylecopresultscache>

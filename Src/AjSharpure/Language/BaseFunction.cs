@@ -17,6 +17,11 @@
         {
         }
 
+        public bool IsSpecialForm
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         public override IObject WithMetadata(IPersistentMap metadata)
         {
             throw new NotSupportedException();
@@ -27,27 +32,14 @@
             return this.Apply(machine, environment, null);
         }
 
-        #region IFunction Members
-
         public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
         {
             throw new NotImplementedException();
         }
 
-        public bool IsSpecialForm
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        #endregion
-
-        #region ISerializable Members
-
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             throw new NotImplementedException();
         }
-
-        #endregion
     }
 }
