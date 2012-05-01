@@ -8,7 +8,9 @@
     public interface INamed
     {
         string Name { get; }
+
         string Namespace { get; }
+
         string FullName { get; }
     }
 }

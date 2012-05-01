@@ -7,9 +7,9 @@
 
     public interface IPersistentCollection : ISequenceable, ICounted
     {
-        IPersistentCollection Cons(object obj);
-
         IPersistentCollection Empty { get; }
+
+        IPersistentCollection Cons(object obj);
 
         bool Equiv(object obj);
     }

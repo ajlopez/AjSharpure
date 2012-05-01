@@ -11,21 +11,6 @@
         private string name;
         private int hash;
 
-        public static Keyword Create(string ns, string name)
-        {
-            return new Keyword(ns, name);
-        }
-
-        public static Keyword Create(string name)
-        {
-            int position = name.LastIndexOf('/');
-
-            if (position == -1)
-                return Create(null, name);
-
-            return Create(name.Substring(0, position), name.Substring(position + 1));
-        }
-
         private Keyword(string ns, string name)
             : this(ns, name, null)
         {
@@ -53,8 +38,23 @@
         {
             get
             {
-                return (this.ns == null ? this.name : string.Format("{0}/{1}", this.ns, this.name));
+                return this.ns == null ? this.name : string.Format("{0}/{1}", this.ns, this.name);
             }
+        }
+
+        public static Keyword Create(string ns, string name)
+        {
+            return new Keyword(ns, name);
+        }
+
+        public static Keyword Create(string name)
+        {
+            int position = name.LastIndexOf('/');
+
+            if (position == -1)
+                return Create(null, name);
+
+            return Create(name.Substring(0, position), name.Substring(position + 1));
         }
 
         public override IObject WithMetadata(IPersistentMap metadata)
@@ -77,7 +77,7 @@
             if (!(this is Keyword))
                 return false;
             
-            Keyword keyword = (Keyword) obj;
+            Keyword keyword = (Keyword)obj;
 
             return this.name == keyword.name && this.ns == keyword.ns;
         }

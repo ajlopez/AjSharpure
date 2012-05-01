@@ -8,7 +8,9 @@
     public interface IPersistentSet : IPersistentCollection, ICounted
     {
         IPersistentSet Disjoin(object obj);
+
         bool Contains(object obj);
+
         object GetObject(object obj);
     }
 }

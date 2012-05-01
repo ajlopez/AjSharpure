@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Text;
 
-    interface IDictionaryObject : IObject, IAssociative, IDictionary
+    internal interface IDictionaryObject : IObject, IAssociative, IDictionary
     {
     }
 }

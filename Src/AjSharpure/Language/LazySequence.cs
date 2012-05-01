@@ -24,24 +24,6 @@
             this.sequence = sequence;
         }
 
-        public override IObject WithMetadata(IPersistentMap metadata)
-        {
-            return new LazySequence(this.ToSequence(), metadata);
-        }
-
-        public ISequence ToSequence()
-        {
-            lock(this) {
-                if (this.function != null)
-                {
-                    this.sequence = Utilities.ToSequence(this.function.Invoke());
-                    this.function = null;
-                }
-
-                return this.sequence;
-            }
-        }
-
         public ISequence Empty { get { return EmptyList.Instance; } }
 
         IPersistentCollection IPersistentCollection.Empty { get { return EmptyList.Instance; } }
@@ -59,12 +41,61 @@
             }
         }
 
+        public bool IsSynchronized
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object SyncRoot
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public bool IsFixedSize
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public bool IsReadOnly
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object this[int index]
+        {
+            get
+            {
+                return Operations.NthElement(this, index);
+            }
+
+            set
+            {
+                throw new NotSupportedException();
+            }
+        }
+
+        public override IObject WithMetadata(IPersistentMap metadata)
+        {
+            return new LazySequence(this.ToSequence(), metadata);
+        }
+
+        public ISequence ToSequence()
+        {
+            lock (this) {
+                if (this.function != null)
+                {
+                    this.sequence = Utilities.ToSequence(this.function.Invoke());
+                    this.function = null;
+                }
+
+                return this.sequence;
+            }
+        }
+
         public bool Equiv(object obj)
         {
             return this.Equals(obj);
         }
-
-        #region ISequence Members
 
         public object First()
         {
@@ -100,8 +131,6 @@
         {
             return Operations.Cons(obj, this);
         }
-
-        #endregion
 
         IPersistentCollection IPersistentCollection.Cons(object obj)
         {
@@ -152,8 +181,6 @@
             return (obj is ISequential || obj is IList) && Utilities.ToSequence(obj) == null;
         }
 
-        #region IList Members
-
         public int Add(object value)
         {
             throw new NotSupportedException();
@@ -169,16 +196,6 @@
             throw new NotSupportedException();
         }
 
-        public bool IsFixedSize
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public bool IsReadOnly
-        {
-            get { throw new NotImplementedException(); }
-        }
-
         public void Remove(object value)
         {
             throw new NotSupportedException();
@@ -189,37 +206,9 @@
             throw new NotSupportedException();
         }
 
-        public object this[int index]
-        {
-            get
-            {
-                return Operations.NthElement(this, index);
-            }
-            set
-            {
-                throw new NotSupportedException();
-            }
-        }
-
-        #endregion
-
-        #region ICollection Members
-
         public void CopyTo(Array array, int index)
         {
             throw new NotImplementedException();
         }
-
-        public bool IsSynchronized
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public object SyncRoot
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        #endregion
     }
 }

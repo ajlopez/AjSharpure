@@ -8,8 +8,11 @@
     public interface ISequence : IPersistentCollection, ISequential
     {
         object First();
+
         ISequence Next();
+
         ISequence More();
+
         new ISequence Cons(object obj);
     }
 }
