@@ -10,11 +10,11 @@
     {
         private static EmptyListEnumerator instance = new EmptyListEnumerator();
 
-        public static IEnumerator Instance { get { return instance; } }
-
         private EmptyListEnumerator()
         {
         }
+
+        public static IEnumerator Instance { get { return instance; } }
 
         public object Current
         {
