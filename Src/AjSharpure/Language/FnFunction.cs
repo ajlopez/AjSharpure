@@ -18,6 +18,11 @@
             this.environment = environment;
         }
 
+        public bool IsSpecialForm
+        {
+            get { return this.function.IsSpecialForm; }
+        }
+
         public object Invoke(params object[] arguments)
         {
             return this.function.Apply(this.machine, this.environment, arguments);
@@ -26,11 +31,6 @@
         public object Apply(Machine machine, ValueEnvironment environment, object[] arguments)
         {
             return this.Invoke(arguments);
-        }
-
-        public bool IsSpecialForm
-        {
-            get { return this.function.IsSpecialForm; }
         }
     }
 }
