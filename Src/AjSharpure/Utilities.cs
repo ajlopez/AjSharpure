@@ -33,7 +33,6 @@
 
         public static int CombineHash(int seed, int hash)
         {
-            //a la boost
             unchecked
             {
                 seed ^= hash + (int)0x9e3779b9 + (seed << 6) + (seed >> 2);
@@ -88,7 +87,7 @@
             if (obj is Variable)
                 return new VariableExpression((Variable)obj);
 
-            if (obj is IList && !(obj is System.Array) && !(obj is String) && !(obj is System.ValueType))
+            if (obj is IList && !(obj is System.Array) && !(obj is string) && !(obj is System.ValueType))
                 return new ListExpression((IList)obj);
 
             if (obj is Symbol)
@@ -97,7 +96,7 @@
             if (obj is IFunction)
                 return new ConstantExpression(obj);
 
-            if (obj is String)
+            if (obj is string)
                 return new ConstantExpression(obj);
 
             if (obj.GetType().IsValueType)
@@ -121,7 +120,7 @@
                 return;
             }
 
-            if (obj is String)
+            if (obj is string)
             {
                 writer.Write('"');
                 writer.Write((string)obj);
@@ -240,7 +239,7 @@
             return false;
         }
 
-        public static bool Equals(object obj1, object obj2)
+        public static new bool Equals(object obj1, object obj2)
         {
             if (obj1 == obj2)
                 return true;
@@ -365,7 +364,7 @@
 
         public static string GetFullName(string ns, string name)
         {
-            return (ns == null ? name : string.Format("{0}/{1}", ns, name));
+            return ns == null ? name : string.Format("{0}/{1}", ns, name);
         }
 
         public static Type GetType(object typename)
@@ -376,7 +375,7 @@
             if (typename is Symbol)
                 return Type.GetType(((Symbol)typename).Name);
 
-            if (typename is String)
+            if (typename is string)
                 return Type.GetType((string)typename);
 
             return Type.GetType(typename.ToString());
