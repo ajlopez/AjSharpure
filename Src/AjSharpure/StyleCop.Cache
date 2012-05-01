@@ -368,21 +368,6 @@
     <milliseconds>628</milliseconds>
     <violations />
   </sourcecode>
-  <sourcecode name="Delay.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>05/01/2012 16:50:08</timestamp>
-      <milliseconds>956</milliseconds>
-    </settings>
-    <timestamp>05/01/2012 14:13:34</timestamp>
-    <milliseconds>691</milliseconds>
-    <violations>
-      <violation namespace="Microsoft.StyleCop.CSharp.OrderingRules" rule="StaticElementsMustAppearBeforeInstanceElements" ruleCheckId="SA1204">
-        <context>All static public methods must be placed before all non-static public methods.</context>
-        <line>35</line>
-        <warning>False</warning>
-      </violation>
-    </violations>
-  </sourcecode>
   <sourcecode name="EmptyList.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>05/01/2012 16:50:08</timestamp>
@@ -2212,9 +2197,6 @@
     <milliseconds>48</milliseconds>
     <violations />
   </sourcecode>
-  <project key="-580248681">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
   <sourcecode name="Cons.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>05/01/2012 16:50:08</timestamp>
@@ -2222,6 +2204,18 @@
     </settings>
     <timestamp>05/01/2012 17:17:38</timestamp>
     <milliseconds>790</milliseconds>
+    <violations />
+  </sourcecode>
+  <project key="-580248681">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <sourcecode name="Delay.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>05/01/2012 16:50:08</timestamp>
+      <milliseconds>956</milliseconds>
+    </settings>
+    <timestamp>05/01/2012 17:18:21</timestamp>
+    <milliseconds>66</milliseconds>
     <violations />
   </sourcecode>
 </stylecopresultscache>

@@ -15,6 +15,11 @@
             this.function = function;
         }
 
+        public static object Force(object obj)
+        {
+            return (obj is IDereference) ? ((IDereference)obj).Dereference() : obj;
+        }
+
         public object Dereference()
         {
             if (this.function != null)
@@ -30,11 +35,6 @@
             }
 
             return this.value;
-        }
-
-        public static object Force(object obj)
-        {
-            return (obj is IDereference) ? ((IDereference)obj).Dereference() : obj;
         }
     }
 }
