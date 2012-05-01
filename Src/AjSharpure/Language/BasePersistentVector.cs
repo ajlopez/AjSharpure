@@ -19,17 +19,39 @@
         {
         }
 
-        public override string ToString()
-        {
-            return Utilities.PrintString(this);
-        }
-
-        #region IPersistentVector Members
-
         public int Length
         {
             get { return this.Count; }
         }
+
+        public object SyncRoot
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public IPersistentCollection Empty
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public abstract int Count { get; }
+
+        public bool IsFixedSize
+        {
+            get { return true; }
+        }
+
+        public bool IsReadOnly
+        {
+            get { return true; }
+        }
+
+        public bool IsSynchronized
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public abstract object this[int index] { get; set; }
 
         public IPersistentVector AssociateN(int index, object value)
         {
@@ -38,9 +60,10 @@
 
         public abstract IPersistentVector Cons(object obj);
 
-        #endregion
-
-        #region IAssociative Members
+        public override string ToString()
+        {
+            return Utilities.PrintString(this);
+        }
 
         public bool ContainsKey(object key)
         {
@@ -67,18 +90,9 @@
             throw new NotImplementedException();
         }
 
-        #endregion
-
-        #region IPersistentCollection Members
-
         IPersistentCollection IPersistentCollection.Cons(object obj)
         {
             return this.Cons(obj);
-        }
-
-        public IPersistentCollection Empty
-        {
-            get { throw new NotImplementedException(); }
         }
 
         public bool Equiv(object obj)
@@ -86,24 +100,10 @@
             throw new NotImplementedException();
         }
 
-        #endregion
-
-        #region ISequenceable Members
-
         public ISequence ToSequence()
         {
             return EnumeratorSequence.Create(this.GetEnumerator());
         }
-
-        #endregion
-
-        #region ICounted Members
-
-        public abstract int Count { get; }
-
-        #endregion
-
-        #region IPersistentStack Members
 
         public object Peek()
         {
@@ -115,18 +115,10 @@
             throw new NotImplementedException();
         }
 
-        #endregion
-
-        #region IReversible Members
-
         public ISequence ReverseSequence()
         {
             throw new NotImplementedException();
         }
-
-        #endregion
-
-        #region IList Members
 
         public int Add(object value)
         {
@@ -147,16 +139,6 @@
             throw new NotSupportedException();
         }
 
-        public bool IsFixedSize
-        {
-            get { return true; }
-        }
-
-        public bool IsReadOnly
-        {
-            get { return true; }
-        }
-
         public void Remove(object value)
         {
             throw new NotSupportedException();
@@ -167,37 +149,15 @@
             throw new NotSupportedException();
         }
 
-        public abstract object this[int index] { get; set; }
-
-        #endregion
-
-        #region ICollection Members
-
         public void CopyTo(Array array, int index)
         {
             foreach (object element in this)
                 array.SetValue(element, index++);
         }
 
-        public bool IsSynchronized
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public object SyncRoot
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        #endregion
-
-        #region IEnumerable Members
-
         public IEnumerator GetEnumerator()
         {
             return new VectorEnumerator(this);
         }
-
-        #endregion
     }
 }
