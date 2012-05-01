@@ -14,14 +14,14 @@
             this.value = value;
         }
 
-        public object Evaluate(Machine machine, ValueEnvironment environment)
-        {
-            return this.value;
-        }
-
         public object Value
         {
             get { return this.value; }
+        }
+
+        public object Evaluate(Machine machine, ValueEnvironment environment)
+        {
+            return this.value;
         }
     }
 }

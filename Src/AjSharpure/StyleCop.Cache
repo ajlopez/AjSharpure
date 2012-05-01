@@ -9,36 +9,6 @@
     <milliseconds>467</milliseconds>
     <violations />
   </sourcecode>
-  <sourcecode name="LexerException.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>05/01/2012 16:50:08</timestamp>
-      <milliseconds>956</milliseconds>
-    </settings>
-    <timestamp>05/01/2012 14:13:34</timestamp>
-    <milliseconds>468</milliseconds>
-    <violations>
-      <violation namespace="Microsoft.StyleCop.CSharp.OrderingRules" rule="UsingDirectivesMustBePlacedWithinNamespace" ruleCheckId="SA1200">
-        <context>All using directives must be placed inside of the namespace.</context>
-        <line>1</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="Microsoft.StyleCop.CSharp.OrderingRules" rule="UsingDirectivesMustBePlacedWithinNamespace" ruleCheckId="SA1200">
-        <context>All using directives must be placed inside of the namespace.</context>
-        <line>2</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="Microsoft.StyleCop.CSharp.OrderingRules" rule="UsingDirectivesMustBePlacedWithinNamespace" ruleCheckId="SA1200">
-        <context>All using directives must be placed inside of the namespace.</context>
-        <line>3</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="Microsoft.StyleCop.CSharp.OrderingRules" rule="UsingDirectivesMustBePlacedWithinNamespace" ruleCheckId="SA1200">
-        <context>All using directives must be placed inside of the namespace.</context>
-        <line>4</line>
-        <warning>False</warning>
-      </violation>
-    </violations>
-  </sourcecode>
   <sourcecode name="ParserException.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>05/01/2012 16:50:08</timestamp>
@@ -172,21 +142,6 @@
       <violation namespace="Microsoft.StyleCop.CSharp.SpacingRules" rule="TabsMustNotBeUsed" ruleCheckId="SA1027">
         <context>Tabs are not allowed. Use spaces instead.</context>
         <line>21</line>
-        <warning>False</warning>
-      </violation>
-    </violations>
-  </sourcecode>
-  <sourcecode name="ConstantExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>05/01/2012 16:50:08</timestamp>
-      <milliseconds>956</milliseconds>
-    </settings>
-    <timestamp>05/01/2012 14:13:34</timestamp>
-    <milliseconds>582</milliseconds>
-    <violations>
-      <violation namespace="Microsoft.StyleCop.CSharp.OrderingRules" rule="ElementsMustAppearInTheCorrectOrder" ruleCheckId="SA1201">
-        <context>All methods must be placed after all properties.</context>
-        <line>22</line>
         <warning>False</warning>
       </violation>
     </violations>
@@ -2493,9 +2448,6 @@
       </violation>
     </violations>
   </sourcecode>
-  <project key="-580248681">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
   <sourcecode name="Lexer.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>05/01/2012 16:50:08</timestamp>
@@ -2503,6 +2455,27 @@
     </settings>
     <timestamp>05/01/2012 16:55:11</timestamp>
     <milliseconds>220</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="LexerException.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>05/01/2012 16:50:08</timestamp>
+      <milliseconds>956</milliseconds>
+    </settings>
+    <timestamp>05/01/2012 16:50:25</timestamp>
+    <milliseconds>491</milliseconds>
+    <violations />
+  </sourcecode>
+  <project key="-580248681">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <sourcecode name="ConstantExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>05/01/2012 16:50:08</timestamp>
+      <milliseconds>956</milliseconds>
+    </settings>
+    <timestamp>05/01/2012 16:56:07</timestamp>
+    <milliseconds>719</milliseconds>
     <violations />
   </sourcecode>
 </stylecopresultscache>
