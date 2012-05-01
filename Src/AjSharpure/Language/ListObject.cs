@@ -10,6 +10,41 @@
         private IList list;
         private int offset;
 
+        private ListObject(IList list)
+            : this(list, 0, null)
+        {
+        }
+
+        private ListObject(IList list, int offset, IPersistentMap metadata)
+            : base(metadata)
+        {
+            this.list = list;
+            this.offset = offset;
+        }
+
+        public override int Count
+        {
+            get { return this.list.Count - this.offset; }
+        }
+
+        public override object SyncRoot
+        {
+            get { return this.list; }
+        }
+
+        public override object this[int index]
+        {
+            get
+            {
+                return this.list[index + this.offset];
+            }
+
+            set
+            {
+                throw new NotSupportedException();
+            }
+        }
+
         public static IPersistentList Create(IList list)
         {
             if (list == null || list.Count == 0)
@@ -24,18 +59,6 @@
                 return EmptyList.Instance;
 
             return new ListObject(list, 0, metadata);
-        }
-
-        private ListObject(IList list)
-            : this(list, 0, null)
-        {
-        }
-
-        private ListObject(IList list, int offset, IPersistentMap metadata)
-            : base(metadata)
-        {
-            this.list = list;
-            this.offset = offset;
         }
 
         public object Peek()
@@ -80,14 +103,12 @@
             return this.list[this.offset];
         }
 
-        #region IList Members
-
         public override bool Contains(object value)
         {
             if (this.offset == 0)
                 return this.list.Contains(value);
 
-            for (int k = this.offset; k < list.Count; k++)
+            for (int k = this.offset; k < this.list.Count; k++)
                 if (Utilities.Equals(value, this.list[k]))
                     return true;
 
@@ -99,28 +120,12 @@
             if (this.offset == 0)
                 return this.list.IndexOf(value);
 
-            for (int k = this.offset; k < list.Count; k++)
+            for (int k = this.offset; k < this.list.Count; k++)
                 if (Utilities.Equals(value, this.list[k]))
                     return k - this.offset;
 
             return -1;
         }
-
-        public override object this[int index]
-        {
-            get
-            {
-                return this.list[index + this.offset];
-            }
-            set
-            {                
-                throw new NotSupportedException();
-            }
-        }
-
-        #endregion
-
-        #region ICollection Members
 
         public override void CopyTo(Array array, int index)
         {
@@ -130,20 +135,6 @@
             throw new NotImplementedException();
         }
 
-        public override int Count
-        {
-            get { return this.list.Count - this.offset; }
-        }
-
-        public override object SyncRoot
-        {
-            get { return this.list; }
-        }
-
-        #endregion
-
-        #region IEnumerable Members
-
         public override IEnumerator GetEnumerator()
         {
             if (this.offset == 0)
@@ -151,7 +142,5 @@
 
             return new ListEnumerator(this.list, this.offset);
         }
-
-        #endregion
     }
 }

@@ -7,9 +7,9 @@
 
     public class ListEnumerator : IEnumerator
     {
-        IList original;
-        IEnumerator enumerator;
-        int offset;
+        private IList original;
+        private IEnumerator enumerator;
+        private int offset;
 
         public ListEnumerator(IList list, int offset)
         {
@@ -17,12 +17,6 @@
             this.enumerator = list.GetEnumerator();
             this.offset = offset;
             this.AdjustOffset();
-        }
-
-        private void AdjustOffset()
-        {
-            for (int k = 0; k < this.offset; k++)
-                this.enumerator.MoveNext();
         }
 
         public object Current
@@ -39,6 +33,12 @@
         {
             this.enumerator = this.original.GetEnumerator();
             this.AdjustOffset();
+        }
+
+        private void AdjustOffset()
+        {
+            for (int k = 0; k < this.offset; k++)
+                this.enumerator.MoveNext();
         }
     }
 }

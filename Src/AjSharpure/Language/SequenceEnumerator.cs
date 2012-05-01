@@ -7,9 +7,9 @@
 
     public class SequenceEnumerator : IEnumerator
     {
-        ISequence sequence;
-        ISequence original;
-        object current;
+        private ISequence sequence;
+        private ISequence original;
+        private object current;
 
         public SequenceEnumerator(ISequence sequence)
         {
@@ -19,7 +19,7 @@
 
         public object Current
         {
-            get { return current; }
+            get { return this.current; }
         }
 
         public bool MoveNext()
@@ -27,7 +27,7 @@
             if (this.sequence == null || this.sequence is EmptyList)
                 return false;
 
-            current = this.sequence.First();
+            this.current = this.sequence.First();
             this.sequence = this.sequence.Next();
 
             return true;

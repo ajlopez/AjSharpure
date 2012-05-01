@@ -8,36 +8,14 @@
 
     public class PersistentVector : BasePersistentVector
     {
+        private const int NodeSize = 32;
+
+        private static object[] emptyArray = new object[0];
+        private static PersistentVector emptyVector = new PersistentVector(null, emptyArray);
+
         private List<object[]> root;
         private object[] tail;
         private int count;
-
-        private static object[] emptyArray = new object[0];
-
-        private const int NodeSize = 32;
-
-        private static PersistentVector emptyVector = new PersistentVector(null, emptyArray);
-
-        public static PersistentVector Create(ISequence sequence)
-        {
-            PersistentVector vector = emptyVector;
-
-            for (; sequence != null; sequence = sequence.Next())
-                vector = (PersistentVector) vector.Cons(sequence.First());
-
-            return vector;
-        }
-
-        public static PersistentVector Create(IEnumerable elements)
-        {
-            PersistentVector vector = emptyVector;
-
-            if (elements != null)
-                foreach (object element in elements)
-                    vector = (PersistentVector) vector.Cons(element);
-
-            return vector;
-        }
 
         private PersistentVector(List<object[]> root, object[] tool)
             : this(null, root, tool)
@@ -79,13 +57,34 @@
                     return this.root[node][index];
                 }
 
-                return this.tail[index - this.root.Count * NodeSize];
+                return this.tail[index - (this.root.Count * NodeSize)];
             }
 
             set
             {
                 throw new NotSupportedException();
             }
+        }
+
+        public static PersistentVector Create(ISequence sequence)
+        {
+            PersistentVector vector = emptyVector;
+
+            for (; sequence != null; sequence = sequence.Next())
+                vector = (PersistentVector)vector.Cons(sequence.First());
+
+            return vector;
+        }
+
+        public static PersistentVector Create(IEnumerable elements)
+        {
+            PersistentVector vector = emptyVector;
+
+            if (elements != null)
+                foreach (object element in elements)
+                    vector = (PersistentVector)vector.Cons(element);
+
+            return vector;
         }
 
         public override IPersistentVector Cons(object obj)

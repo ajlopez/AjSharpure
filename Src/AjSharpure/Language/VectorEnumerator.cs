@@ -7,9 +7,9 @@
 
     public class VectorEnumerator : IEnumerator
     {
-        IPersistentVector vector;
-        int index;
-        object current;
+        private IPersistentVector vector;
+        private int index;
+        private object current;
 
         public VectorEnumerator(IPersistentVector vector)
         {
@@ -19,23 +19,23 @@
 
         public object Current
         {
-            get { return current; }
+            get { return this.current; }
         }
 
         public bool MoveNext()
         {
-            if (this.vector == null || this.vector.Count <= index)
+            if (this.vector == null || this.vector.Count <= this.index)
                 return false;
 
-            current = this.vector[index];
-            index++;
+            this.current = this.vector[this.index];
+            this.index++;
 
             return true;
         }
 
         public void Reset()
         {
-            index = 0;
+            this.index = 0;
         }
     }
 }

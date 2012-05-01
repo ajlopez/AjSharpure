@@ -12,24 +12,6 @@
         private int hash;
         private string fullName;
 
-        public static Symbol Create(string ns, string name)
-        {
-            return new Symbol(ns, name);
-        }
-
-        public static Symbol Create(string name)
-        {
-            if (name.Length == 1 && name.Equals("/"))
-                return Create(null, name);
-
-            int position = name.LastIndexOf('/');
-
-            if (position == -1)
-                return Create(null, name);
-
-            return Create(name.Substring(0, position), name.Substring(position + 1));
-        }
-
         protected Symbol(string ns, string name)
             : this(ns, name, null)
         {
@@ -62,6 +44,24 @@
             }
         }
 
+        public static Symbol Create(string ns, string name)
+        {
+            return new Symbol(ns, name);
+        }
+
+        public static Symbol Create(string name)
+        {
+            if (name.Length == 1 && name.Equals("/"))
+                return Create(null, name);
+
+            int position = name.LastIndexOf('/');
+
+            if (position == -1)
+                return Create(null, name);
+
+            return Create(name.Substring(0, position), name.Substring(position + 1));
+        }
+
         public override IObject WithMetadata(IPersistentMap metadata)
         {
             if (this.Metadata == metadata)
@@ -82,7 +82,7 @@
             if (!(this is Symbol))
                 return false;
             
-            Symbol symbol = (Symbol) obj;
+            Symbol symbol = (Symbol)obj;
 
             return this.name == symbol.name && this.ns == symbol.ns;
         }
